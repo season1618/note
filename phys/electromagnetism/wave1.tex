@@ -1,0 +1,258 @@
+\section{真空中の電磁波}
+
+\subsection{波動方程式}
+    真空中において物質が存在しないとする。電荷密度と電流密度は0となるので
+    \begin{align*}
+        \div E &= 0\\
+        \div B &= 0\\
+        \rot E &+ \pd[B]{t} = 0\\
+        \rot B &- \epsilon_0\mu_0\pd[E]{t} = 0
+    \end{align*}
+    第3式の両辺の$\rot$を計算すると
+    \begin{align*}
+        \rot\rot E + \pd{t}(\rot B) &= 0\\
+        \grad\div E - \Delta E + \pd{t}\(\epsilon_0\mu_0\pd[E]{t}\) &= 0\\
+        \(-\epsilon_0\mu_0\pdd{t} + \Delta\)E &= 0
+    \end{align*}
+    第4式も同様に
+        \[\(-\epsilon_0\mu_0\pdd{t} + \Delta\)B = 0\]
+    となる。この形の微分方程式は波動方程式と呼ばれる。電磁場が空間を伝わっていく現象を電磁波という。特に真空中の光速は
+        \[c = \frac{1}{\sqrt{\epsilon_0\mu_0}}\]
+    であり、$c$と表す。この値が当時の光速の測定値と一致したことは、光が電磁波であることの有力な証拠となった。物質中の場合は、電磁場によって電荷密度の偏りや電流密度が発生することを無視すれば、真空中と同じ形の方程式になる。物質中の光速は
+        \[v = \frac{1}{\sqrt{\epsilon\mu}}\]
+    である。物質中の光速は真空中の光速より遅くなり、それらの比
+        \[n = \frac{c}{v} = \frac{\sqrt{\epsilon\mu}}{\sqrt{\epsilon_0\mu_0}}\]
+    を(絶対)屈折率という。
+
+\subsection{平面波}
+    波数$k$、振動数$\omega$の平面波は
+        \[E(r, t) = f(k \cdot r - \omega t)\]
+    と表される。速さは$\omega / |k|$である。ガウスの法則に代入すると
+    \begin{align*}
+        \div E
+        &= \div f(k \cdot r - \omega t)\\
+        &= k_xf'_x + k_yf'_y + k_zf'_z\\
+        &= k \cdot f' = 0
+    \end{align*}
+    従って電場は電磁波の進行方向に対して変化しない。つまり電磁波の平面波解は横波である。
+        \[(E_x, E_y, E_z) = (f_x(k \cdot r - \omega t), f_y(k \cdot r - \omega t), f_z(k \cdot r - \omega t))\]
+    をファラデーの法則に代入する。
+        \[-\pd[B_x]{t} = k_yf_z'(k \cdot r - \omega t) - k_zf_y'(k \cdot r - \omega t)\]
+    だから
+        \[\(\pd[B_x]{t}, \pd[B_y]{t}, \pd[B_z]{t}\) = -k \times f'(k \cdot r - \omega t)\]
+    となる。この両辺を積分する。積分定数は静磁場を意味するので省略すると
+        \[(B_x, B_y, B_z) = \frac{k}{\omega} \times f(k \cdot r - \omega t)\]
+    つまり電場と磁場は互いに直交する方向に振動し、全く同じ形で伝わっていくことになる。
+
+    % \begin{align*}
+    %     E(r, t) &= E_0(r)\exp(i(k \cdot r - \omega t))\\
+    %     B(r, t) &= B_0(r)\exp(i(k \cdot r - \omega t))\\
+    % \end{align*}
+    % という形の解を考える。$E_0, B_0$は複素数を成分に持つベクトル場である。物質中のマクスウェル方程式
+    % \begin{align*}
+    %     \div E &= 0\\
+    %     \div B &= 0\\
+    %     \rot E &+ \pd[B]{t} = 0\\
+    %     \rot B &- \epsilon(\omega)\mu(\omega)\pd[E]{t} = 0\\
+    % \end{align*}
+    % に代入する。
+    % \begin{align*}
+    %     \pd[E]{x} &= \pd[E_0]{x}\exp(i(k \cdot r - \omega t)) + ik_xE_0\exp(i(k \cdot r - \omega t))\\
+    %     \pd[E]{t} &= -i\omega E_0\exp(i(k \cdot r - \omega t))\\
+    % \end{align*}
+    % となる。$y, z$或いは$B$についても同様であり
+    %     \[\div E_0 = \div B_0 = 0\]
+    % となる。
+    % \begin{align*}
+    %     \div E &= \div E_0 \exp(i(k \cdot r - \omega t)) + ik \cdot E_0\exp(i(k \cdot r - \omega t)) = 0\\
+    %     \div E_0 &= 0\, k \cdot E_0 = 0\\
+    % \end{align*}
+    % \begin{align*}
+    %     \rot E &= \rot E_0 \exp(i(k \cdot r - \omega t)) + ik \times E_0\exp(i(k \cdot r - \omega t)) - i\omega B_0\exp(i(k \cdot r - \omega t)) = 0\\
+    %     \rot E_0 = 0\, k \times E_0 = \omega B_0\\
+    % \end{align*}
+
+\subsection{球面波}
+    球対称な波動を考える。球座標におけるラプラシアンの角度に依存しない部分は
+        \[\Delta f = \frac{1}{r}\pd[^2]{r^2}(rf)\]
+    で表される。
+    \begin{align*}
+        \frac{1}{r}\pd[^2]{r^2}(rE) &= \frac{1}{c^2}\pd[^2E]{t^2}\\
+        \pd[^2]{r^2}(rE) &= \frac{1}{c^2}\pd[^2]{t^2}(rE)
+    \end{align*}
+    これは$rE$に関する一次元波動方程式である。
+        \[E(r, t) = \frac{1}{|r|}{f(k|r| - \omega t)}\]
+    とおくと、この式は原点から拡散または収束するような波を表している。振幅は原点からの距離に反比例する。ガウスの法則より
+    \begin{align*}
+        \div E
+        &= -\frac{x + y + z}{(x^2 + y^2 + z^2)^{3/2}}f(k|r| - \omega t) + \frac{1}{|r|}\frac{k(x + y + z)}{(x^2 + y^2 + z^2)^{1/2}}f'(k|r| - \omega t) = 0\\
+        \frac{1}{|r|}f(k|r| - \omega t) &= kf'(k|r| - \omega t)
+    \end{align*}
+    電場と磁場は垂直だが、そのどちらも動径方向と垂直になるとは限らない。$r$と電場が垂直なものをTE球面波(transverse electric wave)、磁場と垂直なものをTM球面波(transverse magnetic wave)という。
+
+\subsection{偏光}
+    電磁波の平面波解において、電場と磁場の振動方向は進行方向に垂直な面内で2次元の自由度を持っている。これを偏光という。$k$に垂直な直交する単位ベクトル$e_1, e_2$を用いて$E_0 = E_1e_1 + E_2e_2$とおく。$E_1, E_2$の偏角をそれぞれ$\alpha_1, \alpha_2$とすると、それぞれの成分は
+    \begin{align*}
+        E(r, t)
+        &= (E_1e_1 + E_2e_2)\exp(i(k \cdot r - \omega t))\\
+        &= |E_1|\exp(i(k \cdot r - \omega t + \alpha_1))e_1 + |E_2|\exp(i(k \cdot r - \omega t + \alpha_2))\\
+        &= |E_1|\cos(\theta + \alpha_1)e_1 + |E_2|\cos(\theta + \alpha_2)e_2
+    \end{align*}
+    より
+    \begin{align*}
+        E_x = |E_1|(\cos\alpha_1\cos\theta - \sin\alpha_1\sin\theta)\\
+        E_y = |E_2|(\cos\alpha_2\cos\theta - \sin\alpha_2\sin\theta)
+    \end{align*}
+    $\cos\theta, \sin\theta$について解くと
+    \begin{align*}
+        \cos\theta = \frac{E_x}{|E_1|}\sin\alpha_2 - \frac{E_y}{|E_2|}\sin\alpha_1\frac{1}{\sin(\alpha_2 - \alpha_1)}\\
+        \sin\theta = \frac{E_x}{|E_1|}\cos\alpha_2 - \frac{E_y}{|E_2|}\cos\alpha_1\frac{1}{\sin(\alpha_2 - \alpha_1)}
+    \end{align*}
+    となる。
+        \[\cos^2\theta + \sin^2\theta = \frac{\frac{E_x^2}{|E_1|^2} - \frac{2E_xE_y}{|E_1E_2|}\cos(\alpha_2 - \alpha_1) + \frac{E_y^2}{|E_2|^2}}{\sin^2(\alpha_2 - \alpha_1)}\]
+    位相差を$\delta = \alpha_2 - \alpha_1$とおくと
+        \[\frac{E_x^2}{|E_1|^2} - \frac{2E_xE_y}{|E_1E_2|}\cos\delta + \frac{E_y^2}{|E_2|^2} = \sin^2\delta\]
+    となる。判別式は
+        \[\frac{1}{|E_1|^2}\frac{1}{|E_2|^2} - \frac{\cos^2\delta}{|E_1E_2|^2} = \frac{\sin^2\delta}{|E_1E_2|^2} > 0\]
+    だから、電場の振動は楕円を描く。これを楕円偏光という。$E_1, E_2$の絶対値が等しく、直交するとき円偏光、$E_1, E_2$の位相差が$\pi$の整数倍であるとき直線偏光という。
+    \begin{align*}
+        E^+ = \frac{E_1 - iE_2}{2},\,
+        E^- = \frac{E_1 + iE_2}{2}
+    \end{align*}
+    とおくと
+    \begin{align*}
+        E(r, t)
+        &= ((E^+ + E^-)e_1 + i(E^+ - E^-)e_2)\exp(i(k \cdot r - \omega t))\\
+        &= (E^+e_1 + iE^+e_2)\exp(i(k \cdot r - \omega t)) + (E^-e_1 - iE^-e_2)\exp(i(k \cdot r - \omega t))
+    \end{align*}
+    となるので、二つの円偏光に分解することができる。第一項が左偏光、第二項が右偏光に対応する。
+
+\subsection{遅延ポテンシャルと先進ポテンシャル}
+    電磁場の原因が電荷密度$\rho$と電流密度$i$のみで、かつそれらが自己場の影響を受けないとした場合に、ローレンツゲージにおけるマクスウェル方程式の解を求める。
+    \begin{align*}
+        \(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\)\phi &= -\frac{\rho}{\epsilon_0}\\
+        \(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\)A &= -\mu_0 i
+    \end{align*}
+    二つの解があったとき、それらの差は波動方程式の解なので、特殊解に任意の電磁波を重ねたものとなる。
+
+    まず両辺をフーリエ変換する。
+    \begin{align*}
+        \phi(r, t) &= \frac{1}{2\pi}\int_{-\infty}^{\infty} \phi(r, \omega)e^{i\omega t}d\omega\\
+        \rho(r, t) &= \frac{1}{2\pi}\int_{-\infty}^{\infty} \rho(r, \omega)e^{i\omega t}d\omega
+    \end{align*}
+    として
+    \begin{align*}
+        \frac{\omega^2}{c^2}\phi(r, \omega)e^{i\omega t} + \Delta \phi(r, \omega)e^{i\omega t} &= -\frac{\rho(r, \omega)}{\epsilon_0}e^{i\omega t}\\
+        \(\Delta + \frac{\omega^2}{c^2}\)\phi(r, \omega) &= -\frac{\rho(r, \omega)}{\epsilon_0}
+    \end{align*}
+    この解は
+        \[\phi(r, \omega) = \frac{1}{4\pi\epsilon_0}\int \frac{Ae^{i\omega|r - r'|/c} + Be^{i\omega|r - r'|/c}}{|r - r'|}\rho(r, \omega)dr'^3\]
+    である。これを逆フーリエ変換して
+    \begin{align*}
+        \phi(r, t)
+        &= \frac{1}{2\pi}\int_{-\infty}^{\infty} \frac{1}{4\pi\epsilon_0}\int \frac{Ae^{i\omega|r - r'|/c} + Be^{-i\omega|r - r'|/c}}{|r - r'|}\rho(r, \omega)dr'^3 e^{i\omega t}d\omega\\
+        &= \frac{1}{4\pi\epsilon_0}\int \frac{1}{2\pi}\int_{-\infty}^{\infty} \frac{Ae^{i\omega(t + |r - r'|/c)} + Be^{i\omega(t - |r - r'|/c)}}{|r - r'|}\rho(r, \omega) d\omega dr'^3\\
+        &= \frac{1}{4\pi\epsilon_0}\int \frac{A\rho(r', t + |r - r'|/c) + B\rho(r', t - |r - r'|/c)}{|r - r'|} dr'^3
+    \end{align*}
+    第一項を先進ポテンシャル、第二項を遅延ポテンシャルという。ベクトルポテンシャルについても同様なので、まとめると
+    \begin{align*}
+        \phi(r, t) &= \frac{1}{4\pi\epsilon_0}\int \frac{\rho(r', t - |r - r'|/c)}{|r - r'|} dr'^3\\
+        A(r, t) &= \frac{\mu_0}{4\pi}\int \frac{i(r', t - |r - r'|/c)}{|r - r'|} dr'^3
+    \end{align*}
+    である。遅延ポテンシャルから電磁場を求めたものはジェフィメンコ方程式と呼ばれている。
+    % 第一項は近接項で、静電場と同じ形をしている。第二項は放射項で、電磁波による効果を表している。ジェフィメンコ方程式は電荷の保存則を満たすとは限らない。
+
+\subsection{リエナール・ヴィーヘルト・ポテンシャル}
+    遅延ポテンシャルから運動する点電荷の作る電磁場を求める。点電荷の軌道を$s(t)$とすると、電荷密度と電流密度はそれぞれ次のように表せる。
+    \begin{align*}
+        \rho(r, t) &= q\delta(r - s(t))\\
+        i(r, t) &= q\dot{s}(t)\delta(r - s(t))
+    \end{align*}
+    これを遅延ポテンシャルに代入する。
+    \begin{align*}
+        \phi(r, t)
+        &= \frac{1}{4\pi\epsilon_0}\int \frac{q\delta(r' - s(t - |r - r'|/c))}{|r - r'|} dr'^3\\
+        &= \frac{1}{4\pi\epsilon_0}\int\int \frac{q\delta(r' - s(t'))\delta(t' - (t - |r - r'|/c))}{|r - r'|} dt'dr'^3\\
+        &= \frac{1}{4\pi\epsilon_0}\int\int \frac{q\delta(r' - s(t'))\delta(t' - (t - |r - r'|/c))}{|r - r'|} dr'^3dt'\\
+        &= \frac{1}{4\pi\epsilon_0}\int \frac{q\delta(t' - (t - |r - s(t')|/c))}{|r - s(t')|} dt'
+    \end{align*}
+    ここで
+        \[f(t') = t' - \(t - \frac{|r - s(t')|}{c}\)\]
+    とおくと
+        \[f'(t') = 1 + \frac{(r - s(t')) \cdot -\dot{s}(t')}{c|r - s(t')|} = 1 - \frac{(r - s(t')) \cdot \dot{s}(t')}{c|r - s(t')|}\]
+    である。$f(t_r) = 0$として積分を計算すれば
+    \begin{align*}
+        \phi(r, t)
+        &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r - s(t_r)|(1 + (r - s(t_r)) \cdot \dot{s}(t_r) / (c|r - s(t_r)|))}\\
+        &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r - s(t_r)| + (r - s(t_r)) \cdot \dot{s}(t_r) / c}
+    \end{align*}
+    $A(r, t)$についても同様となる。まとめると
+    \begin{align*}
+        \phi(r, t) &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r - s(t_r)| + (r - s(t_r)) \cdot \dot{s}(t_r) / c}\\
+        A(r, t) &= \frac{\mu_0q}{4\pi}\frac{\dot{s}(t_r)}{|r - s(t_r)| + (r - s(t_r)) \cdot \dot{s}(t_r) / c}
+    \end{align*}
+    これをリエナール・ヴィーヘルト・ポテンシャルという。電磁場を求めると
+    \begin{align*}
+        E(r, t) &= \frac{q}{4\pi\epsilon_0}\left[\frac{(1 - v^2/c^2)(R/|R| - v/c)}{R^2b^3} + \frac{R \times ((R/|R| - v/c) \times a)}{R^2b^3c^2}\right]\\
+        b &= 1 - \frac{R \cdot v}{|R|c}
+    \end{align*}
+    である。
+
+\subsection{等速運動する点電荷}
+    リエナール・ヴィーヘルト・ポテンシャルから等速運動する点電荷の作る電磁ポテンシャルを求める。点電荷の軌道を$s(t) = (vt, 0, 0)$とすると
+    \begin{align*}
+        t - t_r &= \frac{\sqrt{(x - vt_r)^2 + y^2 + z^2}}{c}\\
+        c^2(t - t_r)^2 &= (x - vt_r)^2 + y^2 + z^2\\
+        (c^2 - v^2)t_r^2 - 2(c^2t - xv)t_r &= x^2 + y^2 + z^2 - c^2t^2
+    \end{align*}
+    だから
+    \begin{align*}
+        \phi(r, t)
+        &= \frac{q}{4\pi\epsilon_0}\frac{1}{c(t - t_r) - v/c \cdot (x - vt_r)}\\
+        &= \frac{q}{4\pi\epsilon_0}\frac{1}{(-c + v^2/c)t_r + ct - vx/c}\\
+        A(r, t)
+        &= \frac{\mu_0q}{4\pi}\frac{(v, 0, 0)}{(-c + v^2/c)t_r + ct - vx/c}
+    \end{align*}
+    ここで
+    \begin{align*}
+        \left\{\(-c + \frac{v^2}{c}\)t_r + ct - \frac{vx}{c}\right\}^2
+        &= c^2\left\{-\(1 - \frac{v^2}{c^2}\)t_r + t - \frac{vx}{c^2}\right\}^2\\
+        &= c^2\left\{\(1 - \frac{v^2}{c^2}\)^2t_r^2 - 2\(1 - \frac{v^2}{c^2}\)\(t - \frac{vx}{c^2}\)t_r + \(t - \frac{vx}{c^2}\)^2\right\}\\
+        &= \(1 - \frac{v^2}{c^2}\)(x^2 + y^2 + z^2 - c^2t^2) + \(ct - \frac{vx}{c}\)^2\\
+        &= x^2 - 2xvt + v^2t^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\\
+        &= (x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)
+    \end{align*}
+    なので
+    \begin{align*}
+        \phi(r, t) &= \frac{q}{4\pi\epsilon_0}\frac{1}{\sqrt{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)}}\\
+        A(r, t) &= \frac{\mu_0q}{4\pi}\frac{(v, 0, 0)}{\sqrt{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)}}
+    \end{align*}
+    となる。点電荷から見たとき、等ポテンシャル面は$yz$方向に引き伸ばされた回転楕円体であり、形を保ったまま点電荷に纏った状態で移動していく。つまり等速運動はエネルギーを必要としない。電場を計算すると
+    \begin{align*}
+        E(r, t)
+        &= -\grad\phi - \pd[A]{t}\\
+        &= \frac{q}{4\pi\epsilon_0}\frac{(x - vt, \(1 - \frac{v^2}{c^2}\)y, \(1 - \frac{v^2}{c^2}\)z)}{\{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\}^{3/2}} - \frac{\mu_0q}{4\pi}\frac{(v^2(x - vt), 0, 0)}{\{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\}^{3/2}}\\
+        &= \frac{q}{4\pi\epsilon_0}\(1 - \frac{v^2}{c^2}\)\frac{(x - vt, y, z)}{\{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\}^{3/2}}
+    \end{align*}
+    である。特に$x - vt = 0, y = z = 0$の場合はそれぞれ
+    \begin{align*}
+        E(r, t) &= \frac{q}{4\pi\epsilon_0}\frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}\frac{(0, y, z)}{\{(y^2 + z^2)\}^{3/2}}\\
+        E(r, t) &= \frac{q}{4\pi\epsilon_0}\(1 - \frac{v^2}{c^2}\)\frac{(x - vt, 0, 0)}{\{(x - vt)^2\}^{3/2}}
+    \end{align*}
+    となる。$x$軸から離れた点では速度が大きくなるほど電場も大きくなり、$x$軸上では速度が大きくなるほど電場が小さくなることが分かる。
+
+\subsection{加速運動する点電荷}
+    % $r - s(t_r) = R, \dot{s}(t_r) = v, \ddot{s}(t_r) = a$とおくと、リエナール・ヴィーヘルト・ポテンシャルは
+    % \begin{align*}
+    %     \phi(r, t)
+    %     &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r - s(t_r)| - \dot{s}(t_r) \cdot (r - s(t_r)) / c}\\
+    %     &= \frac{q}{4\pi\epsilon_0}\frac{1}{|R| - v \cdot R / c}\\
+    %     A(r, t)
+    %     &= \frac{\mu_0q}{4\pi}\frac{\dot{s}(t_r)}{|r - s(t_r)| - \dot{s}(t_r) \cdot (r - s(t_r)) / c}\\
+    %     &= \frac{\mu_0q}{4\pi}\frac{v}{|R| - v \cdot R / c}\\
+    % \end{align*}
+    次に点電荷が加速する場合に、放射される電磁波を求める。点電荷の位置を$s(t)$、観測者の位置を$r$とする。$R = |r-s(r)|,n = (r-s(r))/|r-s(r)|$とすれば、ポインティングベクトルは、
+        \[S(r, t) = \frac{q^2}{16\pi^2\epsilon_0c}\frac{n}{(1 - n \cdot v)^6R^2}[n \times \{(n - v) \times \dot{v}\}]^2\]
+    である。放射される電磁波の方向と強度は速度と加速度に依存する。
+
+    加速する電荷から電磁波が放射されることになると、原子核の周りを回る電子はいずれエネルギーを失い、安定した軌道を維持できないことになってしまう。この問題の解決には量子力学が必要となった。

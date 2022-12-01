@@ -1,0 +1,36 @@
+\documentclass{jsarticle}
+\usepackage{amssymb,amsmath}
+
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+\newcommand{\lr}[1]{\left(#1 \right)}
+\newcommand{\mlr}[1]{\left\{#1 \right\}}
+\newcommand{\llr}[1]{\left[#1 \right]}
+\newcommand{\de}[2][]{\frac{d #1}{d #2}}
+\newcommand{\dd}[2][]{\frac{d^2 #1}{d #2^2}}
+\newcommand{\pd}[2][]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2][]{\frac{\partial^2 #1}{\partial #2^2}}
+
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\grad}{\operatorname{grad}}
+\newcommand{\rot}{\operatorname{rot}}
+\renewcommand{\div}{\operatorname{div}}
+\renewcommand{\Re}{\operatorname{Re}}
+
+\title{電磁気学}
+\author{season07001674}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\input maxwell1.tex % 真空中のマクスウェル方程式
+\input maxwell2.tex % 物質中のマクスウェル方程式
+\input potential.tex % 電磁ポテンシャル
+\input conserve.tex % 電磁場の保存量
+\input wave1.tex % 真空中の電磁波
+\input wave2.tex % 物質中の電磁波
+\input optics.tex % 波動光学
+
+\end{document}

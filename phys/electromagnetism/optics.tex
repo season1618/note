@@ -1,0 +1,173 @@
+\section{波動光学}
+
+\subsection{電磁場の境界条件}
+    $xy$平面を境に2つの物質が存在しているとする。境界に垂直な長方形の周にファラデーの法則を適用して
+        \[\int (E_1 - E_2) \cdot t ds + \int \pd[B]{t} \cdot n dS = 0\]
+    長方形を小さくしていけば第二項は0に近づくので
+        \[E_1 \cdot t = E_2 \cdot t\]
+    同じ領域にアンペールの法則を適用する。電流密度は0として
+    \begin{gather*}
+        \int (H_1 - H_2) \cdot t ds - \int \pd[D]{t} \cdot n dS = 0\\
+        H_1 \cdot t = H_2 \cdot t\\
+    \end{gather*}
+    次に境界面の一部を覆うような直方体に電場に関するガウスの法則を適用する。直方体内の電荷を0として
+    \begin{gather*}
+        \int (D_1 - D_2) \cdot n dS = 0\\
+        D_1 \cdot n = D_2 \cdot n\\
+    \end{gather*}
+    同じ領域に磁場に関するガウスの法則を適用する。
+    \begin{gather*}
+        \int (B_1 - B_2) \cdot n dS = 0\\
+        B_1 \cdot n = B_2 \cdot n\\
+    \end{gather*}
+    となる。よって電磁場の境界条件は
+    \begin{itemize}
+        \item 境界面に平行な電場は連続
+        \item 境界面に平行な磁場は連続
+        \item 境界面に垂直な電束密度は連続
+        \item 境界面に垂直な磁束密度は連続
+    \end{itemize}
+    となる。
+
+\subsection{光の反射・屈折}
+    $xy$平面を境に2つの媒質が存在しているとする。空間内にはいくつかの平面波が存在しており、それぞれの半空間において$i$番目の平面波の波数と振動数は$k_i, \omega_i$である。
+    \begin{align*}
+        E(r, t) &=
+        \begin{cases}
+            \sum_i E_{+i}\exp(i(k_i \cdot r - \omega_i t)) & (z \geq 0)\\
+            \sum_i E_{-i}\exp(i(k_i \cdot r - \omega_i t)) & (z \leq 0)\\
+        \end{cases}\\
+        H(r, t) &=
+        \begin{cases}
+            \sum_i H_{+i}\exp(i(k_i \cdot r - \omega_i t)) & (z \geq 0)\\
+            \sum_i H_{-i}\exp(i(k_i \cdot r - \omega_i t)) & (z \leq 0)\\
+        \end{cases}\\
+    \end{align*}
+    電磁場の境界条件より
+    \begin{align*}
+        E_x(x, y, 0, t) = \sum_i E_{+ix}\exp(i(k_{ix}x + k_{iy}y - \omega_i t)) = \sum_i E_{-ix}\exp(i(k_{ix}x + k_{iy}y - \omega_i t))\\
+        E_y(x, y, 0, t) = \sum_i E_{+iy}\exp(i(k_{ix}x + k_{iy}y - \omega_i t)) = \sum_i E_{-iy}\exp(i(k_{ix}x + k_{iy}y - \omega_i t))\\
+        E_z(x, y, 0, t) = \epsilon_+ \sum_i E_{+iz}\exp(i(k_{ix}x + k_{iy}y - \omega_i t)) = \epsilon_- \sum_i E_{-iz}\exp(i(k_{ix}x + k_{iy}y - \omega_i t))
+    \end{align*}
+    領域$z \leq 0$で平面波は一つと仮定すると
+    \begin{align*}
+        \sum_i E_{+ix}\exp(i(k_{ix}x + k_{iy}y - \omega_i t)) = E_{-x}\exp(i(k_xx + k_yy - \omega t))\\
+        \sum_i E_{+iy}\exp(i(k_{ix}x + k_{iy}y - \omega_i t)) = E_{-y}\exp(i(k_xx + k_yy - \omega t))\\
+        \epsilon_+\sum_i E_{+iz}\exp(i(k_{ix}x + k_{iy}y - \omega_i t)) = \epsilon_-E_{-z}\exp(i(k_xx + k_yy - \omega t))\\
+    \end{align*}
+    $x, y, t$で$n$階偏微分し$(x, y, t) = (0, 0, 0)$とすることで$(k_{ix}, k_{iy}, \omega_i) = (k_x, k_y, \omega)$が分かる。ここで$k_y = 0$とする。同じ媒質では$|k| = \omega / v = n\omega / c$が等しいので、領域$z \geq 0$では$k_z = \pm d$の二つの平面波の合成となる。つまり光が透過するとき、波長は変化し振動数は変化しない。波数ベクトル$(k_x, 0, -d), (k_x, 0, d), (k_x, 0, k_z)$の平面波をそれぞれ入射光、反射光、透過光と呼ぶことにする。入射角$\theta_i$、反射角$\theta_r$、屈折角$\theta_t$は次のように表せる。
+        \[\sin\theta_i = \sin\theta_r = \frac{k_x}{\sqrt{k_x^2 + d^2}} = \frac{ck_x}{n_+\omega},\ \sin\theta_t = \frac{k_x}{\sqrt{k_x^2 + k_z^2}} = \frac{ck_x}{n_-\omega}\]
+    従って次が成り立つ。
+    \begin{align*}
+        \theta_i &= \theta_r (反射の法則)\\
+        n_+\sin\theta_i &= n_-\sin\theta_t (屈折の法則)\\
+    \end{align*}
+
+    入射光、反射光、透過光が存在している平面を入射面と呼ぶ。それぞれの電磁波は電場が入射面に平行な成分と磁場が入射面に平行な成分に分けることができる。前者をP偏光(parallel)、後者をS偏光(senkrecht)と呼ぶ。入射光の電磁場が
+    \begin{align*}
+        E_i &= (I_p\cos\theta_i, I_s, I_p\sin\theta_i)\exp(i(k_i \cdot r - \omega t))\\
+        H_i &= \frac{1}{\mu_+\omega}(dI_s, -dI_p\cos\theta_i - k_xI_p\sin\theta_i, k_xI_s)\exp(i(k_i \cdot r - \omega t))\\
+        E_r &= (R_p\cos\theta_i, R_s, -R_p\sin\theta_i)\exp(i(k_r \cdot r - \omega t))\\
+        H_r &= \frac{1}{\mu_+\omega}(-dR_s, dR_p\cos\theta_i + k_xR_p\sin\theta_i, k_xR_s)\exp(i(k_r \cdot r - \omega t))\\
+        E_t &= (T_p\cos\theta_t, T_s, T_p\sin\theta_t)\exp(i(k_t \cdot r - \omega t))\\
+        H_t &= \frac{1}{\mu_+\omega}(-k_zT_s, k_zT_p\cos\theta_t - k_xT_p\sin\theta_t, k_xT_s)\exp(i(k_t \cdot r - \omega t))
+    \end{align*}
+    であるとする。境界条件より
+    \begin{align*}
+        I_p\cos\theta_i + R_p\cos\theta_i &= T_p\cos\theta_t\\
+        I_s + R_s &= T_s\\
+        \epsilon_+(I_p\sin\theta_i - R_p\sin\theta_i) &= \epsilon_-T_p\sin\theta_t\\
+        \frac{dI_s}{\mu_+\omega} - \frac{dR_s}{\mu_+\omega} &= -\frac{k_zT_s}{\mu_-\omega}\\
+        \frac{-dI_p\cos\theta_i - k_xI_p\sin\theta_i}{\mu_+\omega} + \frac{dR_p\cos\theta_i + k_xR_p\sin\theta_i}{\mu_+\omega} &= \frac{k_zT_p\cos\theta_t - k_xT_p\sin\theta_t}{\mu_-\omega}\\
+        \frac{k_xI_s}{\omega} + \frac{k_xR_s}{\omega} &= \frac{k_xT_s}{\omega}
+    \end{align*}
+    透磁率が等しいとすると$\epsilon_- / \epsilon_+ = n_-^2 / n_+^2 = \sin^2\theta_i / \sin^2\theta_t$なので
+    \begin{align*}
+        I_p + R_p &= \frac{\cos\theta_t}{\cos\theta_i}T_p\\
+        I_p - R_p &= \frac{\epsilon_-}{\epsilon_+}\frac{\sin\theta_t}{\sin\theta_i}T_p \simeq \frac{\sin\theta_i}{\sin\theta_t}T_p\\
+        I_s + R_s &= T_s\\
+        I_s - R_s &= \frac{\mu_+}{\mu_-}\frac{\tan\theta_i}{\tan\theta_t}T_s \simeq \frac{\tan\theta_i}{\tan\theta_t}T_s\\
+    \end{align*}
+    つまり
+    \begin{align*}
+        T_p
+        &= \frac{2}{\frac{\cos\theta_t}{\cos\theta_i} + \frac{\sin\theta_i}{\sin\theta_t}}I_p\\
+        &= \frac{2\cos\theta_i\sin\theta_t}{\cos\theta_i\sin\theta_i + \cos\theta_t\sin\theta_t}I_p\\
+        &= \frac{2\cos\theta_i\sin\theta_t}{(\sin2\theta_i + \sin2\theta_t) / 2}I_p\\
+        &= \frac{2\cos\theta_i\sin\theta_t}{\sin(\theta_t + \theta_i)\cos(\theta_t - \theta_i)}I_p\\
+        T_s
+        &= \frac{2}{1 + \frac{\tan\theta_i}{\tan\theta_t}}I_p\\
+        &= \frac{2\tan\theta_t}{\tan\theta_i + \tan\theta_t}I_p\\
+        &= \frac{2\cos\theta_i\sin\theta_t}{\sin\theta_i\cos\theta_t + \cos\theta_i\sin\theta_t}\\
+        &= \frac{2\cos\theta_i\sin\theta_t}{\sin(\theta_i + \theta_t)}\\
+        R_p
+        &= \frac{\cos\theta_t\sin\theta_t - \cos\theta_i\sin\theta_i}{\cos\theta_i\sin\theta_i + \cos\theta_t\sin\theta_t}I_p\\
+        &= \frac{\sin(\theta_t - \theta_i)\cos(\theta_t + \theta_i)}{\sin(\theta_t + \theta_i)\cos(\theta_t - \theta_i)}I_p\\
+        &= \frac{\tan(\theta_t - \theta_i)}{\tan(\theta_t + \theta_i)}I_p\\
+        R_s
+        &= \frac{\sin(\theta_t - \theta_i)}{\sin(\theta_t + \theta_i)}I_p
+    \end{align*}
+    これらをフレネルの式という。つまり入射したP偏光は出射するときもP偏光であり、入射したS偏光は出射するときもS偏光である。反射率及び透過率は入射光に含まれるP偏光とS偏光の割合に依存する。$\theta_i = \pi / 2$のとき$R_p = R_s = 1$で反射率100\%になる。また、$\theta_i + \theta_t = \pi / 2$のとき$R_p = 0$でP偏光の反射率は0となる。このときの入射角$\theta_i$をブリュースター角という。
+    \begin{align*}
+        \frac{R_p}{R_s}
+        &= \frac{\cos(\theta_t + \theta_i)}{\cos(\theta_t - \theta_i)}
+    \end{align*}
+    S偏光の反射率はP偏光の反射率より高い。したがって偏光グラスなどでS偏光を遮れば、外光のうちS偏光が多く含まれている反射光を集中してカットできる。
+
+\subsection{散乱理論}
+
+    散乱とは、光が物質に入射したとき光を四方八方に放射する現象である。古典的には、入射光によって誘起された電気双極子の振動により二次波が放出される、と説明される。物質を原点に置き、$z$軸の正の方向から光が入射するとする。単位時間に単位面積当たりに入射する粒子数のうち、半径$r$の球面のある立体角$d\Omega$内に散乱される単位時間当たりの粒子数の割合を微分断面積という。光散乱の場合は粒子数の代わりにエネルギーで測る。電磁波は振動するので平均を取る。すなわち、散乱波のポインティングベクトルを$S_s$、入射波のポインティングベクトルを$S_i$とすれば、
+        \[\de[\sigma(\theta)]{\Omega} = \frac{|S_s|}{|S_i|}r^2\]
+    である。ここで$\theta$は散乱によって$z$軸から逸れた角度であり、散乱角と呼ばれる。これを全立体角で積分したものを全断面積という。
+    
+\subsection{トムソン散乱}
+    自由電子に振動数の低い電磁波が入射したときを考える。電子の運動方程式は、
+        \[m\de[u]{t} = eE_i\]
+    である。$E_i = E_0\sin\omega t$とすれば、
+        \[u = \frac{eE_i}{m\omega^2}\]
+    つまり
+        \[p(\omega) = \frac{e^2E_0}{m\omega^2}\]
+    である。この振動により双極子が誘起され、双極子放射が起こる。$n,E_i$のなす角を$\phi$とすると
+    \begin{align*}
+        E_s = \frac{\mu}{4\pi}\frac{\omega^2}{r}{n\times(n\times p(\omega))}e^{i\omega(t - r/c)} = \frac{\mu}{4\pi}\frac{e^2E_0}{mr}\sin\phi e^{i\omega(t - r/c)}
+        \intertext{それぞれのポインティングベクトルの時間平均は、}
+        |\overline{S_i}| = \frac{|\overline{E_i}|^2}{\mu c} = \frac{|E_0|^2}{2\mu c}\\
+        |\overline{S_s}| = \frac{|\overline{E_s}|^2}{\mu c} = \frac{1}{\mu c}\lr{\frac{\mu}{4\pi}\frac{\omega^2}{r}|p(\omega)|}^2\sin^2\phi = \frac{|E_0|^2}{2\mu c}\lr{\frac{\mu}{4\pi}\frac{\omega^2}{r}\alpha}^2\sin^2\phi
+        \intertext{ただし$\alpha$は分極率である。したがって微分断面積は}
+        \de[\sigma]{\Omega} = \lr{\frac{\mu}{4\pi}\omega^2\alpha}^2\sin^2\phi           
+    \end{align*}
+    無偏光の場合は、散乱角を$\theta$としたとき$n = (\sin\theta, 0, \cos\theta), E_0 / |E_0| = (\cos\psi, \sin\psi, 0)$と置くと
+    \begin{align*}
+            \cos\phi = n\cdot E_0 / |E_0| = \cos\psi\sin\theta
+        \intertext{なので$\psi$について平均を取ると}
+            \sin^2\phi = 1 - |\cos^2\psi\sin^2\theta| = \frac{1 + \cos^2\theta}{2}\\
+    \end{align*}
+    よって
+    \begin{align*}
+        \de[\sigma]{\Omega} = \lr{\frac{\mu}{4\pi}\omega^2\alpha}^2\frac{1 + \cos^2\theta}{2}
+        \intertext{となる。$\alpha = \frac{e^2}{m\omega^2}$を代入すれば}
+        \de[\sigma]{\Omega} = \lr{\frac{e^2}{4\pi mc^2\epsilon_0}}^2\frac{1 + \cos^2\theta}{2} = a_0^2\frac{1 + \cos^2\theta}{2}
+        \intertext{である。光の進行方向に対して最も強く散乱することが分かる。$a_0$は静電エネルギーと静止エネルギーが一致する半径を示し、古典的電子半径と呼ばれる。全立体角で積分すれば}
+        \int_0^\pi\int_0^{2\pi} \frac{1 + \cos^2\theta}{2}\sin\theta d\theta d\phi = \pi \int_0^\pi 2\sin\theta - \sin^3\theta d\theta = \pi \llr{\cos\theta + \frac{1}{3}\cos^3\theta}_0^\pi = \frac{8\pi}{3}
+    \end{align*}
+    より
+        \[\sigma = \frac{8\pi}{3}a_0^2\]
+    となる。このような自由電子による散乱をトムソン散乱と呼ぶ。
+
+\subsection{レイリー散乱}
+    微粒子のサイズが光の波長よりも十分に小さいとき、半径$a$の誘電体の双極子モーメントはクラウジウス・モソッティの関係式より
+        \[p = 4\pi\epsilon_0\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}a^3E_0\]
+    である。微分散乱断面積は
+    \begin{align*}
+        \de[\sigma]{\Omega} = \lr{\frac{\mu}{4\pi}\omega^2\alpha}^2\frac{1 + \cos^2\theta}{2}\\
+        = \lr{\epsilon_0\mu\omega^2\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}a^3}^2\frac{1 + \cos^2\theta}{2} = \lr{\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}}^2\lr{\frac{\omega}{c}}^4a^6\frac{1 + \cos^2\theta}{2}\\
+        \intertext{全断面積は}
+        \sigma = \frac{8\pi}{3}\lr{\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}}^2\lr{\frac{\omega}{c}}^4a^6
+    \end{align*}
+    つまり青い光は赤い光より多く散乱される。青空の原因はこのレイリー散乱である。光は空気中の微粒子にぶつかる度に散乱を繰り返し、青い光は垂直方向に離散していく。結果朝焼けや夕焼けが起こる。それでも地平線から離れた上空では青く見え、その中間当たりは白く見える。
+    太陽のない場所を見上げたとき、視線の先からやってくる光は散乱光である。
+
+\subsection{ミー散乱}
+
+\subsection{輝度}
+    ある面を単位時間当たりに通過するエネルギーを放射束という。電磁波の放射の場合波長ごとの放射束を分光放射束という。光源が広がりを持った場合を考える。放射束を光源表面の面積とその立体角で微分したものを放射輝度という。分光放射輝度も同様である。
