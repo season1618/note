@@ -1,0 +1,479 @@
+\documentclass{jsarticle}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+
+\newcommand{\F}{\mathbb{F}}
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\braket}[1]{\langle #1 \rangle}
+\DeclareMathOperator{\lcm}{lcm}
+
+\theoremstyle{definition}
+\renewcommand{\proofname}{\textbf{証明}}
+
+\newtheorem{dfn}{定義}
+\newtheorem{prop}{命題}
+\newtheorem{lem}{補題}
+\newtheorem{thm}{定理}
+\newtheorem{cor}{系}
+\newtheorem{ex}{例}
+
+\title{符号理論}
+\author{season1618}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{符号}
+
+\subsection{通信のモデル}
+
+通信において、送信者はメッセージ$m$を符号語$c(m)$に変換して、送信語として通信路に入力する。受信者は通信路の出力を受信語として、推定符号語に変換してメッセージを復元する。写像$c: m \in M \mapsto c(m) \in C$を符号化と呼び、$C = \{c(m) \mid m \in M\}$を符号空間または符号という。
+
+\subsection{多元符号}
+
+$C \subset \F^n$であるとき$n$を符号長という。
+\begin{dfn}[符号化率]
+    $R = \frac{1}{n}\log_{|F|}|C|$
+\end{dfn}
+
+\begin{dfn}[ハミング距離・ハミング重み]
+    $x = (x_1, x_2, \dots, x_n),\ y = (y_1, y_2, \dots, y_n) \in C \subset \F^n$とする。
+    \begin{description}
+        \item[ハミング距離] $d(x, y) = |\{1 \leq i \leq n \mid x_i \neq y_i\}|$
+        \item[ハミング重み] $w(x) = d(x, 0)$
+        \item[最小距離] $d_{min}(C) = \min_{x \neq y} d(x, y)$
+        \item[最小ハミング重み] $w_{min}(C) = \min_{x \neq 0} w(x)$
+    \end{description}
+    $(\F^n, d)$は距離空間となる。
+\end{dfn}
+
+符号長$n$、符号語数$M$、最小距離$d$の符号を$(n, M, d)$符号という。
+
+\begin{dfn}[ハミング球]
+    $q = |F|$として
+        \[B_q(c, r) = \{x \in \F^n \mid d(c, x) \leq r\}\]
+    をハミング球という。ハミング球の体積は$c$に依らず
+        \[V_q(n, r) = |B_q(c, r)| = \sum_{i=0}^r \begin{pmatrix}n\\ i\end{pmatrix}(q - 1)^i\]
+    となる。
+\end{dfn}
+
+\begin{dfn}[誤り訂正能力]
+    最小距離$d_{min}$の符号に対して
+        \[t = \floor{\frac{d_{min} - 1}{2}}\]
+    を誤り訂正能力という。(後述する)限界距離復号において$t$個以下の任意の誤りを訂正可能である。
+\end{dfn}
+
+\subsection{限界式}
+
+\begin{thm}[球充填限界(ハミング限界)]
+    $(n, M, d)$符号$C \subset \F^n, q = |F|$に対して
+        \[M \leq \frac{q^n}{V_q(n, t)}\]
+    が成り立つ。等号が成立するとき完全であるという。
+\end{thm}
+\begin{proof}
+    各符号語を中心とする半径$t$のハミング球は交わらない。
+\end{proof}
+
+\begin{thm}[球被覆限界]
+    符号語数の最大値$A_q(n, d)$は
+        \[A_q(n, d) \geq \frac{q^n}{V_q(n, d-1)}\]
+    となる。
+\end{thm}
+\begin{proof}
+    任意の符号語から距離$d$以上の位置に元が存在するなら、それを符号語として追加できる。よって最大符号において、任意の元はある符号語との距離が$d-1$以下。
+\end{proof}
+
+\begin{thm}[VG限界]
+        \[M \leq \frac{q^n}{V_q(n, d-1)}\]
+    なら$(n, M, d)$符号が存在する。
+\end{thm}
+\begin{proof}
+        \[M - 1 < \frac{q^n}{V_q(n, d-1)}\]
+    より$(n, M-1, d)$符号は最大ではない。
+\end{proof}
+
+\subsection{復号}
+
+\begin{description}
+    \item[最大事後確率復号] 受信語$y$に対して$p(x \mid y)$を最大にするような$x$を推定符号語とする。
+    \item[最尤復号] $p(y \mid x)$を最大にするような$x$を推定符号語とする。
+    \item[最小距離復号] $y$との距離が最小である符号語$x$を推定符号語とする。
+    \item[限界距離復号] 受信語$y$から距離$r$以内にある符号語が唯一存在すればそれを推定符号語とする。無ければerrorとして復号を中止する。
+\end{description}
+
+\begin{thm}
+    送信語が一様なら最大事後確立復号と最尤復号は等しい。
+\end{thm}
+\begin{thm}
+    反転確率$1/2$未満の二元対称通信路において、最尤復号と最小距離復号は等しい。
+\end{thm}
+
+\section{線形符号}
+
+\subsection{定義}
+
+\begin{dfn}[線形符号]
+    有限体(ガロア体)$\F_q$に対して、$C \subset \F_q^n$が$\F_q$上$k$次元線形空間となり、最小距離が$d$であるとき、$\F_q$上$(n, k)$線形符号または$(n, k, d)$線形符号という。
+\end{dfn}
+線形符号の符号化率は
+    \[R = \frac{1}{n}\log_{|\F_q|}|C| = \frac{k}{n}\]
+となる。線形符号において最小距離と最小ハミング重みは一致する。また、送信語$x$、受信語$y$に対して$e = y - x$を誤りベクトルという。
+
+\subsection{生成行列とパリティ検査行列}
+
+$C \subset \F_q^n$の基底を$\{g_1, g_2, \dots, g_k\}$として、符号化$c: \F_q^k \rightarrow \F_q^n$を
+    \[c(m) = m_1g_1 + m_2g_2 + \dots + m_kg_k\]
+と定義すると、これは$(n, k)$線形符号となる。$C$の基底を縦に並べたものを生成行列$G$という。
+
+$C \subset \F_q^n$に対して$C^\perp = \{y \in \F_q^n \mid \forall x \in C, x \cdot y = 0\}$を$C$の直交補空間と呼ぶ。$C^\perp$は$n - k$次元線形空間であり、$(C^\perp)^\perp = C$となる。$C^\perp$の基底を$\{h_1, h_2, \dots, h_{n-k}\}$とすると、$x \in C \leftrightarrow h_i \cdot x = 0\ (1 \leq i \leq n - k)$だから、符号語かどうかの判定ができる。$C^\perp$の基底を縦に並べたものをパリティ検査行列$H$という。
+
+$(C^\perp)^\perp = C$であることから、$C^\perp$を、$H$を生成行列、$G$をパリティ検査行列とする符号と考えることができ、$C$の双対符号という。
+
+\begin{ex}[双対符号]
+    以下は双対である。
+    \begin{description}
+        \item[繰り返し符号/$(n, 1, n)$符号] $C = \{(0, 0, \dots, 0), (1, 1, \dots, 1)\}$
+        \item[単一パリティ検査符号/$(n, n-1, 2)$符号] $C^\perp = \{(x_1, x_2, \dots, x_n) \in \F_2^n \mid \sum_i x_i = 0\}$
+    \end{description}
+\end{ex}
+
+$G = \begin{bmatrix} I_k & P \end{bmatrix}$のとき$H = \begin{bmatrix} -P^\top & I_{n-k} \end{bmatrix}$とできる。これを標準形という。任意の生成行列は行基本変形と列の入れ替えによって標準形に変換できる。生成行列が標準形であるとき組織的であるという。
+
+\begin{thm}
+    以下が成り立つ
+    \begin{itemize}
+        \item $H$の任意の$m$列が線形独立なら$d > m$
+        \item $H$のある$m$列が線形従属なら$d \leq m$
+    \end{itemize}
+\end{thm}
+\begin{proof}
+        \[H = \begin{bmatrix} h_1 & h_2 & \dots & h_{n-k} \end{bmatrix}\]
+    とする。$H$のある$m$列が線形独立であるとき、残りの列を0にして$Hx = 0$なら$x = 0$なので、任意の$m$列が線形独立なら$d_{min}(C) = w_{min}(C) > m$である。また、ある$m$列が線形従属であるとき、残りの列が0で$Hx = 0$であるような符号$x \neq 0$が存在するので、$d_{min}(C) = w_{min}(C) \leq m$である。
+\end{proof}
+つまり$H$の線形従属な列の最小数が最小距離となる。
+
+\subsection{限界式}
+
+\begin{thm}[シングルトン限界]
+    $(n, k, d)$線形符号に対して
+        \[d \leq n - k + 1\]
+    が成り立つ。等号が成立するとき最大距離分離(MDS)符号という。
+\end{thm}
+\begin{proof}
+    パリティ検査行列の線形独立な列の最大数は$n - k$なので、$d \leq n - k + 1$
+\end{proof}
+
+\begin{thm}[非構成的VG限界]
+        \[2^{k-1} < \frac{2^n}{V_2(n, d-1)}\]
+    なら$(n, k, d)$線形符号が存在する。
+\end{thm}
+
+\begin{thm}[構成的VG限界]
+        \[2^k < \frac{2^n}{\sum_{i=1}^{d-2} \begin{pmatrix} n-1\\ j \end{pmatrix}}\]
+    なら$(n, k, d)$線形符号が存在する。
+\end{thm}
+
+\subsection{復号}
+
+\begin{dfn}[シンドローム復号]
+    受信語$y$に対して、シンドローム$Hy$に対応するコセット$\{e \in \F_2^n \mid He = Hy\}$の要素でハミング重みが最小のものを推定誤りベクトルとする。
+\end{dfn}
+
+\begin{thm}
+    最小距離復号とシンドローム復号は等しい。
+\end{thm}
+\begin{proof}
+        \[He = Hy \leftrightarrow \text{ある$x \in C$が存在して$e = y - x$}\]
+    より、受信語と誤りベクトルのシンドロームは等しい。
+        \[\{e \in \F_q^n \mid He = Hy\} = y - C\]
+\end{proof}
+$|C| = q^k$に対して$|\F_q^n/C| = q^{n-k}$だから、シンドロームとコセット代表元の対応を持っておくことで効率の良い復号が可能となる。
+
+\subsection{ハミング符号}
+
+$(2^m - 1, 2^m - 1 - m, 3)$二元線形符号をハミング符号という。
+
+ハミング符号のパリティ検査行列$H$は$m \times 2^m - 1$行列であり、任意の2列が線形独立である。つまり任意の非零ベクトルからなる。
+
+\begin{thm}
+    ハミング符号は完全符号である。
+\end{thm}
+
+ハミング符号において推定誤りベクトルのハミング重みは1以下である。よってシンドローム復号を次のように行う。
+\begin{enumerate}
+    \item $Hy = 0$なら$0$を推定誤りベクトルとする。
+    \item $Hy = He_i = h_i$なら$e_i$を推定誤りベクトルとする。
+\end{enumerate}
+
+\subsection{誤り検出}
+
+重み分布多項式
+\begin{align*}
+    A(X, Y) &= \sum_{w=0}^n A_wX^{n-w}Y^w\\
+    A(X) &= \sum_{w=0}^n A_wX^w
+\end{align*}
+
+検出誤り確率を
+    \[P_u = Pr(Y \in C, Y \neq X)\]
+と定義する。
+
+\begin{thm}
+    反転確率$p$の二元対称通信路上の通信において、線形符号に対して検出誤り確率は
+        \[P_u = A(p, 1-p) - (1-p)^n\]
+    で与えられる。
+\end{thm}
+\begin{proof}
+    \begin{align*}
+        P_u
+        &= Pr(Y \in C, Y \neq X) = \sum_{x, y \in \F_2^n} Pr(X = x, Y = y, x \neq y \in C)\\
+        &= \sum_{x, z \in \F_2^n} Pr(X = x, Z = z, z \neq 0, x + z \in C)\\
+        &= \sum_{x, z \in \F_2^n} Pr(X = x)Pr(Z = z) (z \neq 0, x + z \in C)\\
+        &= \sum_{x, z \in C} Pr(X = x)Pr(Z = z \neq 0)\\
+        &= \sum_{x \in C}\sum_{1 \leq w \leq n} A_w(1-p)^{n-w}p^w Pr(X = x)\\
+        &= \sum_{1 \leq w \leq n} A_w(1-p)^{n-w}p^w\\
+        &= A(p, 1-p) - (1-p)^n\\
+    \end{align*}
+\end{proof}
+
+\begin{dfn}[アダマール変換]
+    単位的可換環$G$への写像$f: \F_2^n \rightarrow G$に対して
+        \[\hat{f}(u) = \sum_{v \in \F_2^n} (-1)^{\braket{u, v}} f(v)\]
+    を$f$のアダマール変換という。
+\end{dfn}
+\begin{lem}
+        \[\sum_{u \in C}\hat{f}(u) = |C|\sum_{v \in C^\perp}f(v)\]
+\end{lem}
+
+\begin{thm}[MacWilliamsの恒等式]
+    線形符号$C$とその双対符号$C^\perp$の重み分布多項式をそれぞれ$A(X, Y), B(X, Y)$とすると
+        \[B(X, Y) = \frac{1}{|C|}A(X + Y, X - Y)\]
+    が成り立つ。
+\end{thm}
+\begin{proof}
+        \[f(u) = X^{n-w(u)}Y^{w(u)}\]
+    についてアダマール変換を考える。
+\end{proof}
+
+\section{リード・ソロモン符号}
+
+\subsection{符号化}
+
+以降はベクトル$(f_0, f_1, \dots, f_{n-1}) \in \F_q^n$と多項式$f(X) = f_0 + f_1X + \dots + f_{n-1}X^{n-1} \in \F_q[X] / (X^n - 1)$を同一視する。
+
+\begin{dfn}[リード・ソロモン符号]
+    $k \leq n \leq q$と相異なる$\alpha_1, \dots, \alpha_n \in \F_q^n$に対して
+        \[c(f_0, \dots, f_{k-1}) = (f(\alpha_1), \dots, f(\alpha_n)) \in \F_q^n\]
+    を$\F_q$上$(n, k)$リード・ソロモン符号と呼ぶ。$f(X) \in \F_q[X] / (X^k - 1)$を情報多項式という。
+\end{dfn}
+
+RS符号は線形符号であり
+    \[\{c(e_i) = (\alpha_1^i, \dots, \alpha_n^i) \mid 0 \leq i < k\}\]
+は基底となる\footnote{$\F_q$において$0^0 = 1$とする}。このとき生成行列は
+    \[G = \begin{bmatrix}
+        \alpha_1^0 & \alpha_2^0 & \dots & \alpha_n^0\\
+        \alpha_1^1 & \alpha_2^1 & \dots & \alpha_n^1\\
+        \vdots & \vdots & \ddots & \vdots\\
+        \alpha_1^{k-1} & \alpha_2^{k-1} & \dots & \alpha_n^{k-1}\\
+    \end{bmatrix}\]
+となる。左側の$k \times k$行列はヴァンデルモンド行列であり、行列式が非零だから基本変形によって正方行列にできる。従って$(n, k)$RS符号は$(n, k)$線形符号である。
+
+\begin{prop}
+    RS符号の非零符号語$x$に対して
+        \[w(x) \geq n - k + 1\]
+    である。最小距離は$d_{min} = n - k + 1$である。つまり誤り訂正能力は$t = \floor{(n-k)/2}$となる。
+\end{prop}
+\begin{proof}
+        \[c(f) \neq 0 \leftrightarrow f \neq 0\]
+    であり、次数$k$未満の多項式の根は$k$未満だから、$c(f)$の非零要素は$n - k + 1$以上となる。$d_{min} = w_{min} \geq n - k + 1$だが、シングルトン限界より$d_{min} = n - k + 1$となる。
+\end{proof}
+
+RS符号は高い高い訂正能力を持ち、CD、DVD、BD、地上波デジタル放送、無線通信WiFi、QRコード、ハードディスク、SSDなどに用いられている。
+
+\subsection{復号}
+
+限界距離復号を次のように行う。
+\begin{align*}
+    Q_0(X) &= \sum_{i=0}^{n-t-1} q_{0i}X^i\\
+    Q_1(X) &= \sum_{i=0}^t q_{1i}X^i\\
+    Q(X, Y) &= Q_0(X) + Q_1(X)Y
+\end{align*}
+とする。このとき次元定理より線形方程式
+\begin{align*}
+    \begin{bmatrix}
+        Q(\alpha_1, y_1)\\
+        Q(\alpha_2, y_2)\\
+        \vdots\\
+        Q(\alpha_n, y_n)
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \alpha_1^0 & \dots & \alpha_1^{n-t-1} & \alpha_1^0y_1 & \dots & \alpha_1^ty_1\\
+        \alpha_2^0 & \dots & \alpha_2^{n-t-1} & \alpha_2^0y_2 & \dots & \alpha_2^ty_2\\
+        \vdots & \ddots & \vdots & \vdots & \ddots & \vdots\\
+        \alpha_n^0 & \dots & \alpha_n^{n-t-1} & \alpha_n^0y_n & \dots & \alpha_n^ty_n
+    \end{bmatrix}
+    \begin{bmatrix}
+        q_{0, 0}\\
+        \vdots\\
+        q_{0, n-t-1}\\
+        q_{1, 0}\\
+        \vdots\\
+        q_{1, t}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        0\\
+        \vdots\\
+        0\\
+        0\\
+        \vdots\\
+        0
+    \end{bmatrix}
+\end{align*}
+を満たすような非零多項式$Q(X, Y)$が存在する。これを補間多項式という。また線形方程式の係数行列を復号行列と呼ぶ。推定情報多項式と推定符号語をそれぞれ
+\begin{align*}
+    f(X) &= -Q_0(X) / Q_1(X)\\
+    c(f) &= (f(\alpha_1), \dots, f(\alpha_n))
+\end{align*}
+とする。ただし$w(c(f) - y) > t$ならエラーとする。
+
+$w = w(c(f) - y) \leq t$とすると$n - w$個の添え字について$y_i = f(\alpha_i)$となる。つまり$Q(X, f(X))$は$n - t$個の相異なる根を持つ。$Q(X, f(X)) = Q_0(X) + Q_1(X)f(X)$の$X$の次数は$\max(n-t-1, t + k-1)$以下となる。ここで$t + k-1 = 2t + k - t-1 \leq n-t-1$だから、次数は$n - t$未満である。非零多項式なら根の数が$n - t$未満ということになるので、$Q(X, f(X)) = 0$つまり$f(X) = -Q_0(X) / Q_1(X)$である。
+
+変数の数が$O(n)$の線形方程式の求解には$O(n^3)$かかるので、愚直な方法より高速に復号が可能である。
+
+\section{巡回符号}
+
+\subsection{定義}
+
+\begin{dfn}[巡回シフト]
+    (右)巡回シフト$S: \F^n \rightarrow \F^n$または$S: \F[X] / (X^n - 1) \leftrightarrow \F[X] / (X^n - 1)$を
+    \begin{align*}
+        S(c_0, c_1, \dots, c_{n-1}) &= (c_{n-1}, c_0, \dots, c_{n-2})\\
+        Sc(X) &= Xc(X)
+    \end{align*}
+    と定義する。巡回シフトは線形写像である。
+\end{dfn}
+
+\begin{dfn}[巡回符号]
+    巡回シフトに関して閉じている線形符号を巡回符号という。
+\end{dfn}
+
+\begin{ex}[巡回RS符号]
+    $\F_q$の非零元$\beta$の位数を$n(n \mid q - 1)$とするとき
+        \[c(f) = (f(\beta^0), \dots, f(\beta^{n-1}))\]
+    は巡回符号となる。
+\end{ex}
+
+\begin{thm}
+    $C \subset \F[X] / (X^n - 1)$に関して以下は同値である。
+    \begin{itemize}
+        \item $C$は符号長$n$の巡回符号
+        \item $C$は$\F[X] / (X^n - 1)$のイデアル
+    \end{itemize}
+\end{thm}
+\begin{proof}
+    巡回符号$C$は巡回シフトと和に関して閉じているので、$f(X) \in \F[X] / (X^n - 1),\ c(X) \in C$に対して$f(X)c(X) \in C$である。また、$\F[X] / (X^n - 1)$のイデアル$C$に対して、$X \in \F[X] / (X^n - 1),\ c(X) \in C$について$Xc(X) \in C$であり、イデアルは和に関して閉じているから、$C$は巡回符号である。
+\end{proof}
+
+\subsection{生成多項式とパリティ検査多項式}
+
+\begin{thm}
+    剰余類環$\F_q / (X^n - 1)$のイデアル$I$について、次数最小の非零多項式を$g(X)$とおくと、以下が成り立つ。
+    \begin{enumerate}
+        \item $I = \braket{g(X)}$である
+        \item $g(X) \mid X^n - 1$である。
+    \end{enumerate}
+\end{thm}
+
+巡回符号$C$の最小次数のモニックな非零符号語$g(X)$が一意に定まり、生成多項式と呼ぶ。$h(X) = (X^n - 1) / g(X)$をパリティ検査多項式と呼ぶ。
+
+\begin{thm}
+    零でない$n - k$次モニック多項式$g(X) \mid X^n - 1$に対して
+        \[C = \{u(X)g(X) \mid u(X) \in \F[X] / (X^n - 1)\}\]
+    は巡回符号となる。
+\end{thm}
+
+巡回符号の符号化を次のように行う。
+$u(X) \in \F[X] / (X^k - 1)$に対して、$u(X)X^{n-k}$を$g(X)$で割った商と余りを$q(X), r(X)$とする。このとき
+    \[c(X) = q(X)g(X) = u(X)X^{n-k} - r(X)\]
+とする。$u(X) \mapsto c(X)$は線形写像となる。ここで、$c(X)$の一部が$u(X)$になっており、組織的であるという。
+
+$\{X^ig(X) \mid 0 \leq i < k\}$は基底を成すから、このとき生成行列は
+    \[G = \begin{bmatrix}
+        g_0 & g_1 & \dots & g_{n-k} & 0 & \dots & \dots & 0\\
+        0 & g_0 & g_1 & \dots & g_{n-k} & 0 & \dots & 0\\
+        \vdots\\
+        0 & \dots & \dots & 0 & g_0 & g_1 & \dots & g_{n-k}
+    \end{bmatrix}\]
+となる。また
+\begin{align*}
+    g(X)h(X)
+    &= \sum_{i=0}^{n-k} g_iX^i \sum_{j=0}^k h_jX^j\\
+    &= \sum_{l=0}^n \(\sum_{i+j=l} g_ih_j\) X^l = 0
+\end{align*}
+だから、パリティ検査行列は
+    \[H = \begin{bmatrix}
+        h_k & h_{k-1} & \dots & h_0 & 0 & \dots & \dots & 0\\
+        0 & h_k & h_{k-1} & \dots & h_0 & 0 & \dots & 0\\
+        \vdots\\
+        0 & \dots & \dots & 0 & h_k & h_{k-1} & \dots & h_0
+    \end{bmatrix}\]
+となる。
+
+双対符号$C^\perp$の生成行列とパリティ検査行列は$H, G$なので、生成多項式とパリティ検査多項式は
+\begin{align*}
+    g^\perp(X) &= \frac{1}{h_0}(h_k + h_{k-1}X + \dots + h_0X^k)\\
+    h^\perp(X) &= \frac{1}{g_0}(g_{n-k} + g_{n-k-1}X + \dots + g_0X^{n-k})
+\end{align*}
+となる。
+
+\subsection{BCH符号}
+
+\begin{dfn}[BCH符号]
+    $q = p^m$として、$\F_q$の原始元$\alpha$と$d \leq q - 1$に対して
+        \[\alpha, \alpha^2, \dots, \alpha^{d-1}\]
+    を根とする最小次数のモニック多項式を生成多項式とする符号長$q - 1$の巡回符号を設計距離$d$のBCH符号という。
+\end{dfn}
+
+BCH符号の最小多項式は$\alpha^i$の最小多項式$m_i(X)$\footnote{$M(\alpha) = 0$となる次数最小のモニック多項式を$\alpha$の最小多項式という。$\alpha$が原始元である場合、特に原始多項式という。}を用いて
+    \[g(X) = \lcm(m_1(X), m_2(X), \dots, m_{d-1}(X))\]
+と書ける。
+
+\begin{thm}
+        \[d_{min} \geq d\]
+    が成り立つ。
+\end{thm}
+\begin{proof}
+    符号語$c \in C$の重みを$w < d$とすると
+        \[c(X) = c_{k_1}X^{k_1} + \dots + c_{k_w}X^{k_w}\ (k_i \neq 0)\]
+    と表せる。$\alpha, \alpha^2, \dots, \alpha^{w}$は$g(X)$及び$c(X)$の根だから
+    \begin{align*}
+        c(\alpha^i) = c_{k_1}\alpha^{ik_1} + \dots + c_{k_w}\alpha^{ik_w} = 0\\
+        \begin{bmatrix}
+            \alpha^{1k_1} & \alpha^{1k_2} & \dots & \alpha^{1k_w}\\
+            \alpha^{2k_1} & \alpha^{2k_2} & \dots & \alpha^{2k_w}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \alpha^{wk_1} & \alpha^{wk_2} & \dots & \alpha^{wk_w}
+        \end{bmatrix}
+        \begin{bmatrix}
+            c_{k_1}\\
+            c_{k_2}\\
+            \vdots\\
+            c_{k_w}
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0\\
+            0\\
+            \vdots\\
+            0
+        \end{bmatrix}
+    \end{align*}
+    左辺の係数行列はヴァンデルモンド行列なので$c_{k_i} = 0$つまり$c = 0$となる。
+\end{proof}
+
+\end{document}
