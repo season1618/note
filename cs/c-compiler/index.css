@@ -1,0 +1,92 @@
+html {
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow-y: hidden;
+
+    font-family: 'Meiryo';
+    font-size: 15px;
+}
+
+#wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+#sidebar {
+    flex: 1;
+    overflow-y: scroll;
+    background-color: rgb(200, 210, 220);
+}
+
+#sidebar a {
+    color: black;
+    text-decoration: none;
+}
+
+#sidebar a:hover {
+    color: rgb(96, 96, 228);
+}
+
+#content {
+    flex: 3;
+    overflow-y: scroll;
+    padding: 30px;
+}
+
+blockquote { 
+    margin-left: 0em;
+    padding-left: 2em;
+    color: rgb(85, 85, 85);
+
+    border-left-width: 5px;
+    border-left-style: solid;
+    border-left-color: rgb(200, 200, 200);
+}
+
+pre {
+    padding: 1.5em;
+    background-color: #f6f8fa;
+    overflow-x: scroll;
+
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+}
+
+code {
+    border-radius: 0.3em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    background-color: #ebebeb;
+
+    font-family: 'Consolas', 'Courier New', Courier, monospace;
+}
+
+table {
+    margin: 1.5em;
+
+    border-style: solid;
+    border-width: 1px;
+    border-spacing: 0;
+}
+
+thead {
+    font-weight: 600;
+}
+
+td {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+
+    border-color:rgb(170, 170, 170);
+    border-style: solid;
+    border-width: 1px;
+}
