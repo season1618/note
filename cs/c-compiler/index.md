@@ -633,7 +633,7 @@ UNIXシステムにおけるオブジェクトファイルと実行ファイル�
 | 64bitレジスタ | 32bitレジスタ | 16bitレジスタ |
 | RFLAGS | EFLAGS | FLAGS |
 
-| bit | ニーモニック | 説明 | 用途 | 1となる条件 |
+| bit | ニーモニック | 説明 | 1となる条件 |
 |--|--|--|--|--|
 | 11 | OF |        Overflow Flag | 符号付き整数演算の結果の最上位bitが本来と異なる |
 | 10 | DF |       Direction Flag | 文字列操作のデータポインタが減る向き |
@@ -658,10 +658,7 @@ AMD64はリトルエンディアン(低ビットが低アドレス)なので、�
 64bitモードでは、デフォルトのオペランドサイズは基本的に4byteであり、REXプリフィックスの付与された命令では8byteである。ただし、暗黙にスタックポインタを参照する命令についてはデフォルトで8byteオペランドサイズを採用する。
 
 [AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.2.3.1 Default Operand Size
-> There are several exceptions to the 32-bit operand-size default in 64-bit mode, including near branches
-and instructions that implicitly reference the RSP stack pointer. For example, the near CALL, near
-JMP, Jcc, LOOPcc, POP, and PUSH instructions all default to a 64-bit operand size in 64-bit mode.
-Such instructions do not need a REX prefix for the 64-bit operand size. For details, see “GeneralPurpose Instructions in 64-Bit Mode” in Volume 3. 
+> There are several exceptions to the 32-bit operand-size default in 64-bit mode, including near branches and instructions that implicitly reference the RSP stack pointer. For example, the near CALL, near JMP, Jcc, LOOPcc, POP, and PUSH instructions all default to a 64-bit operand size in 64-bit mode. Such instructions do not need a REX prefix for the 64-bit operand size. For details, see “GeneralPurpose Instructions in 64-Bit Mode” in Volume 3. 
 
 ### アドレッシング
 メモリにアクセスする方法をアドレシングという。実効アドレスの生成には以下の5つの方法がある。
@@ -719,24 +716,12 @@ Such instructions do not need a REX prefix for the 64-bit operand size. For deta
 制御転送命令はスタックアラインメントが適切でない場合、著しくパフォーマンスが落ちる。
 
 [AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.7.3.1 Stack Alignment
-> Control-transfer performance can degrade significantly when the stack pointer is not aligned properly.
-Stack pointers should be word aligned in 16-bit segments, doubleword aligned in 32-bit segments, and
-quadword aligned in 64-bit mode. 
+> Control-transfer performance can degrade significantly when the stack pointer is not aligned properly. Stack pointers should be word aligned in 16-bit segments, doubleword aligned in 32-bit segments, and quadword aligned in 64-bit mode. 
 
 [Intel® 64 and IA-32 Architectures Software Developer’s Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) Volume1: Basic Architecture 6.2.2 Stack Alignment
-> The stack pointer for a stack segment should be aligned on 16-bit (word) or 32-bit (double-word) boundaries,
-depending on the width of the stack segment. The D flag in the segment descriptor for the current code segment
-sets the stack-segment width (see “Segment Descriptors” in Chapter 3, “Protected-Mode Memory Management,” of
-the Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 3A). The PUSH and POP instructions
-use the D flag to determine how much to decrement or increment the stack pointer on a push or pop operation,
-respectively. When the stack width is 16 bits, the stack pointer is incremented or decremented in 16-bit increments;
-when the width is 32 bits, the stack pointer is incremented or decremented in 32-bit increments. Pushing a 16-bit
-value onto a 32-bit wide stack can result in stack misaligned (that is, the stack pointer is not aligned on a double word boundary). One exception to this rule is when the contents of a segment register (a 16-bit segment selector)
-are pushed onto a 32-bit wide stack. Here, the processor automatically aligns the stack pointer to the next 32-bit
-boundary
-> The processor does not check stack pointer alignment. It is the responsibility of the programs, tasks, and system
-procedures running on the processor to maintain proper alignment of stack pointers. Misaligning a stack pointer
-can cause serious performance degradation and in some instances program failures.
+> The stack pointer for a stack segment should be aligned on 16-bit (word) or 32-bit (double-word) boundaries, depending on the width of the stack segment. The D flag in the segment descriptor for the current code segment sets the stack-segment width (see “Segment Descriptors” in Chapter 3, “Protected-Mode Memory Management,” of the Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 3A). The PUSH and POP instructions use the D flag to determine how much to decrement or increment the stack pointer on a push or pop operation, respectively. When the stack width is 16 bits, the stack pointer is incremented or decremented in 16-bit increments; when the width is 32 bits, the stack pointer is incremented or decremented in 32-bit increments. Pushing a 16-bit value onto a 32-bit wide stack can result in stack misaligned (that is, the stack pointer is not aligned on a double word boundary). One exception to this rule is when the contents of a segment register (a 16-bit segment selector) are pushed onto a 32-bit wide stack. Here, the processor automatically aligns the stack pointer to the next 32-bit boundary
+
+> The processor does not check stack pointer alignment. It is the responsibility of the programs, tasks, and system procedures running on the processor to maintain proper alignment of stack pointers. Misaligning a stack pointer can cause serious performance degradation and in some instances program failures.
 
 #### システムコール
 - syscall
@@ -855,15 +840,10 @@ System V ABIでは汎用レジスタに以下の用途が指定されている�
 x86-64アーキテクチャでは基本的にデータ型のアラインメントを揃える必要はないが、パフォーマンスの観点から揃えることを推奨している。
 
 [AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.2.5 Data Alignment
-> The AMD64 architecture does not impose data-alignment requirements for accessing data in memory.
-However, depending on the location of the misaligned operand with respect to the width of the data bus and other aspects of the hardware implementation (such as store-to-load forwarding mechanisms),
-a misaligned memory access can require more bus cycles than an aligned access. For maximum
-performance, avoid misaligned memory accesses. 
+> The AMD64 architecture does not impose data-alignment requirements for accessing data in memory. However, depending on the location of the misaligned operand with respect to the width of the data bus and other aspects of the hardware implementation (such as store-to-load forwarding mechanisms), a misaligned memory access can require more bus cycles than an aligned access. For maximum performance, avoid misaligned memory accesses. 
 
 [Intel® 64 and IA-32 Architectures Software Developer’s Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) Volume1: Basic Architecture 4.1.1 Alignment of Words, Doublewords, Quadwords, and Double Quadwords
-> Words, doublewords, and quadwords do not need to be aligned in memory on natural boundaries. The natural
-boundaries for words, double words, and quadwords are even-numbered addresses, addresses evenly divisible by
-four, and addresses evenly divisible by eight, respectively. However, to improve the performance of programs, data structures (especially stacks) should be aligned on natural boundaries whenever possible.
+> Words, doublewords, and quadwords do not need to be aligned in memory on natural boundaries. The natural boundaries for words, double words, and quadwords are even-numbered addresses, addresses evenly divisible by four, and addresses evenly divisible by eight, respectively. However, to improve the performance of programs, data structures (especially stacks) should be aligned on natural boundaries whenever possible.
 
 [データ型のアラインメントとは何か，なぜ必要なのか？](http://www5d.biglobe.ne.jp/~noocyte/Programming/Alignment.html)
 １．CPU に関する基礎知識
@@ -1141,6 +1121,7 @@ if(var->len == 17 && memcmp(var->name, "__uint64_identity", 17) == 0){ stmt(); r
 gccでコンパイルした自作コンパイラをstage1という。そして、stage1で自分自身をコンパイルしたものをstage2、stage2で自分自身をコンパイルしたものをstage3と呼ぶ。stage2とstage3はコンパイラとソースコードが同じなので出力は完全に等しくなる。
 
 しかしgccでリンクした場合、アセンブリが同一でも実効ファイルが同じとは限らない。
+
 [Linuxのコンパイル結果が同等であることの確認方法](http://seigaji.info/wordpress/2015/02/15/linux_elf_binary_diff/)
 > まず差分が発生する理由として考えられるのがコンパイラがビルドする際にリンカが使うためのシンボル情報を付加しているというのは常識。ということでstripコマンドを使ってみることにしました。
 
@@ -1193,7 +1174,7 @@ idiv rdi
 
 ### グローバル変数名にレジスタ名を使うとアセンブラに怒られる
 gcc + intel syntaxだとグローバル変数名にレジスタ名を使うと`rax[rip]`が出力されて不可となる。
-![](./images/global_register.png)
+![](./global_register.png)
 
 ### NULLをmemcmpに渡すとSegmentation fault
 文字列の一致判定を自作コンパイラでコンパイルするときに以下のようなコードで発生。
@@ -1222,7 +1203,6 @@ if(a->len == b-len && memcmp(a->name, b->name, b->len) == 0)
 - [System V ABI - OSDeV Wiki](https://wiki.osdev.org/System_V_ABI)
 - [System V Application Binary Interface AMD64 Architecture Processor Supplement](https://www.uclibc.org/docs/psABI-x86_64.pdf): 3.1 Machine Interface, 3.2 Function Calling Sequence, 3.5.7 Variable Argument List
 - [SYSTEM V APPLICATION BINARY INTERFACE Intel386 Architecture Processor Supplement Fourth Edition](http://www.sco.com/developers/devspecs/abi386-4.pdf)
-<!-- (https://refspecs.linuxbase.org/elf/x86_64-abi-0.99.pdf) -->
 - [N1570](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf): C11言語仕様の最終草稿
 - [The Python Language Reference](https://docs.python.org/3/reference/compound_stmts.html): Python3のリファレンス
 
