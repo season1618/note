@@ -2,6 +2,21 @@
 
 Linux上で動作するx86-64用のCコンパイラを作ったときのメモ。自分が実装するときに考えたことをまとめました。間違っている部分も多くあると思います。特にセルフホストの前処理の部分は自信がありません。
 
+## プログラムの実行
+
+人間が書いたソースコードはプリプロセスを経た後、コンパイラによってアセンブリコードに変換され、更にアセンブラによってオブジェクトコードに変換される。複数のオブジェクトファイルはリンカによって結合され、最終的な実行ファイルが生成される。
+
+プログラムを実行する際、OSのプログラムローダが実行ファイルの内容をメモリ上にコピーする。メモリは以下の4つの領域に分かれている。
+
+- テキスト領域: 命令
+- 静的領域: 静的変数
+- ヒープ領域: 動的確保される領域
+- スタック領域: 静的確保される領域
+
+プログラムを実行するCPUは、レジスタやメモリからデータを読み込み、演算結果を再びレジスタやメモリに書き込む。レジスタはCPU内部に存在するので、メモリに比べてアクセスが速い。CPUはプログラムカウンタというレジスタに現在実行中の命令のアドレスを保持しており、そのアドレスから順次命令を読みだして実行する。
+
+UNIXシステムにおけるオブジェクトファイルと実行ファイルには同じフォーマットが用いられる。過去にはa.outやCOFF(Common Object File Format)などのファイル形式が使われていたが、現在ではELF(Executable and Linkable Format)が広く採用されている。
+
 ## C言語
 
 ### 歴史
@@ -20,6 +35,328 @@ Linux上で動作するx86-64用のCコンパイラを作ったときのメモ�
 - 2000 ISO/IEC 9899:1999(C99)
 - 2011 ISO/IEC 9899:2011(C11)
 - 2018 ISO/IEC 9899:2018(C17, C18)
+
+## x86アセンブリ言語
+gccなどの処理系では、アセンブラとして主にGNUアセンブラ(GNU assembler, gas)が用いられており、GNUアセンブラが出力するアセンブリ言語もGNUアセンブラの仕様書で定義されている。アセンブリ言語の文法には一部アーキテクチャに依存する部分がある。
+
+アセンブリ言語は以下の4つからなる。
+- 機械語命令(machine instruction): CPUが実行時に実行。
+- アセンブラ命令(assembler directive): アセンブラがアセンブル時に実行。実行ファイルに残らない。
+- ラベル: ジャンプ先の指定など。
+- コメント
+
+GNUアセンブラの場合、アセンブラ命令は全て`.`から始まる。
+
+### AT&T記法とIntel記法
+x86系のアセンブリ言語には大きくAT&T記法とIntel記法という二つの文法がある。
+- sigil
+    - AT&T記法: 即値に$を付け、レジスタ名に%を付ける。
+    - Intel記法: 何も付けない。
+- オペランドの順番
+    - AT&T記法: mnemonic source, destination
+    - Intel記法: mnemonic destination, source
+- メモリオペランドのサイズ
+    - AT&T記法: ニーモニックの末尾に`b`, `w`, `l`, `q`などを付ける。
+    - Intel記法: メモリオペランドの前に`byte ptr`, `word ptr`, `dword ptr`, `qword ptr`などの接頭辞を付ける。
+- メモリ参照
+
+GNUアセンブラではデフォルトでAT&T記法を用いるが、2.10からは`.intel_syntax`ディレクティブを付けることでIntel記法が使えるようになった。ここではIntel記法を使う。
+
+### メモリ参照
+- 間接メモリ参照: [base + index * scale + disp]
+    - base, index: レジスタ。
+    - scale: 1,2,4,8のいずれか。指定しない場合1。
+- RIPアドレッシング: [rip + offset]
+    - offset: 数値かシンボル。
+
+QWORD PTR [reg]はregのアドレスから8バイト
+
+### アセンブラ命令
+#### セクション指定
+- `.text`: テキスト領域
+- `.data`: データ領域
+- `.rdata`
+- `.bss`
+
+#### シンボル情報
+- `.global`, `.globl`: シンボルをリンカldに認識させる。
+
+#### パディング
+- `.space`: n byteごとに値を格納する。デフォルトは0。`.skip`と同じ。
+- `.skip`: n byteごとに値を格納する。デフォルトは0。`.space`と同じ。
+- `.zero`: n byteに0を格納。`.skip`のエイリアス。
+- `.align`: システムによってn byte境界または2^n byte境界に合わせる。
+- `.p2align`: ロケーションカウンタを2^nの倍数になるまで進める。
+
+#### データ配置
+- `.byte`: 0個以上の式を1byteごとに配置。
+- `.short`: 0個以上の式を2byteごとに配置。
+- `.word`: 0個以上の式を配置。サイズはターゲットに依存する。
+- `.value`: `.short`と同じ。x86専用([9.16.2 x86 specific Directives (Using as)](https://sourceware.org/binutils/docs/as/i386_002dDirectives.html))。
+- `.int`: 0個以上の式を配置。バイトオーダーとサイズはターゲットに依存する。
+- `.long`: `.int`と同じ。
+- `.quad`: 0個以上の式を8byteごとに配置。
+
+#### 文字列リテラル
+- `.string`: 文字列に終端文字を付けて配置。
+- `.ascii`: 0個以上の文字列リテラルを連続して配置する。
+- `.asciz`: 0個以上の文字列リテラルに終端文字を付けて連続して配置する。
+
+### ラベル
+`.L`から始まるラベルはファイルスコープとなり、別ファイルからできない。
+[5.3 Symbol Names (Using as)](https://sourceware.org/binutils/docs/as/Symbol-Names.html) Local Symbol Names
+> A local symbol is any symbol beginning with certain local label prefixes. By default, the local label prefix is ‘.L’ for ELF systems or ‘L’ for traditional a.out systems, but each target may have its own set of local label prefixes. On the HPPA local symbols begin with ‘L$’.
+
+## System V ABI
+
+分割コンパイルをする際はファイル間で引数の受け渡しの形式やデータの配置の仕方などを合わせる必要がある。アセンブリの書き方はOSごとに規約が定められており、これをABI(Application Binary Interface)という。Linux上でx86-64を実行するときはSystem V ABIが使われる。System V ABIには、レジスタの用途、関数の呼び出し規約、オブジェクトファイルおよび実行ファイルのフォーマットなどが定められている。ベースとなるドキュメントとプラットフォーム依存の補遺からなる。
+
+### レジスタ
+System V ABIでは汎用レジスタに以下の役割が指定されている。
+
+64bit汎用レジスタ
+| 64bitレジスタ | 32bitレジスタ | 16bitレジスタ | 8bitレジスタ | 用途 | 保存 |
+|--|--|--|--|--|--|
+| RSP | ESP |  SP | SPL | スタックポインタ | callee |
+| RBP | EBP |  BP | BPL | ベースポインタ | callee |
+| RAX | EAX |  AX |  AL | 返り値 | caller |
+| RBX | EBX |  BX |  BL | callee |
+| RDI | EDI |  DI | DIL | 第一引数 | caller |
+| RSI | ESI |  SI | SIL | 第二引数 | caller |
+| RDX | EDX |  DX |  DL | 第三引数 | caller |
+| RCX | ECX |  CX |  CL | 第四引数 | caller |
+| R8  | R8D | R8W | R8B | 第五引数 | caller |
+| R9  | R9D | R9W | R9B | 第六引数 | caller |
+| R10 | R10D | R10W | R10B | 一時 | caller |
+| R11 | R11D | R11W | R11B | 一時 | caller |
+| R12 | R12D | R12W | R12B || callee |
+| R13 | R13D | R13W | R13B || callee |
+| R14 | R14D | R14W | R14B || callee |
+| R15 | R15D | R15W | R15B || callee |
+
+### データアラインメント
+多くのCPUではメモリに格納するデータのサイズによって境界が定まっており、アラインメントと呼ばれる。例えば4バイト境界なら4の倍数のアドレスから順にデータを読み出す必要がある。
+
+| 型 | size | alignment |
+|--|--|--|
+| char | 1 | 1 |
+| short | 2 | 2 |
+| int | 4 | 4 |
+| long | 8 | 8 |
+| type* | 8 | 8 |
+| type (*)() | 8 | 8 |
+
+アーキテクチャによってアラインメントを揃えることを強制するものとそうでないものがある。x86-64アーキテクチャでは基本的にデータ型のアラインメントを揃える必要はないが、パフォーマンスの観点から揃えることを推奨している。
+
+[AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.2.5 Data Alignment
+> The AMD64 architecture does not impose data-alignment requirements for accessing data in memory. However, depending on the location of the misaligned operand with respect to the width of the data bus and other aspects of the hardware implementation (such as store-to-load forwarding mechanisms), a misaligned memory access can require more bus cycles than an aligned access. For maximum performance, avoid misaligned memory accesses. 
+
+[Intel® 64 and IA-32 Architectures Software Developer’s Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) Volume1: Basic Architecture 4.1.1 Alignment of Words, Doublewords, Quadwords, and Double Quadwords
+> Words, doublewords, and quadwords do not need to be aligned in memory on natural boundaries. The natural boundaries for words, double words, and quadwords are even-numbered addresses, addresses evenly divisible by four, and addresses evenly divisible by eight, respectively. However, to improve the performance of programs, data structures (especially stacks) should be aligned on natural boundaries whenever possible.
+
+ABIでは構造体のデータアラインメントが定義されている。
+構造体のアラインメントはメンバのアラインメントの最小公倍数となる。データ型は全て2の累乗なので、結果それらの最大値となる。
+
+[System V Application Binary Interface AMD64 Architecture Processor Supplement](https://www.uclibc.org/docs/psABI-x86_64.pdf) 3.1.2 Data Representation
+> Structures and unions assume the alignment of their most strictly aligned component. Each member is assigned to the lowest available offset with the appropriate alignment. The size of any object is always a multiple of the object‘s alignment.
+> An array uses the same alignment as its elements, except that a local or global array variable of length at least 16 bytes or a C99 variable-length array variable always has alignment of at least 16 bytes.4
+> Structure and union objects can require padding to meet size and alignment constraints. The contents of any padding is undefined.
+
+### 関数呼び出し規約
+分割コンパイルする際、別のコンパイラでコンパイルしたファイルの関数を用いるためには、関数呼び出し時の引数や返り値を格納するレジスタ/メモリ位置を揃えておく必要がある。最も単純なやり方は引数を全てスタックに格納する方法だが、アクセスの高速なレジスタを用いるために複雑な規約が定められている。
+
+レジスタ
+- 関数呼び出しの前後で値を保存しなくてはならない場合、呼び出し側と呼び出し先のどちらで保存するか合わせる必要がある。前者をcaller-saved、後者をcallee-savedという。
+- caller-saved: rax, rdi, rsi, rdx, rcx, r8, r9, r10, r11
+- callee-saved: rsp, rbp, rbx, r12, r13, r14, r15
+-  DFは関数の開始と終了時に順方向にリセットする。
+
+スタックフレーム(引数が整数の場合)
+| アドレス | 値 |
+|--|--|
+| rsp + 32 | 引数8 |
+| rsp + 16 | 引数7 |
+| rsp + 8  | リターンアドレス |
+| rsp      | rbpの値 |
+
+スタック
+- スタックアラインメント: callの直前、rspは16の倍数になっている必要がある。
+
+引数渡し
+- 整数はrdi, rsi, rdx, rcx, r8, r9に左から順に格納し、それ以外はスタックに積む。
+
+### ELFファイル
+ELFは少なくとも三つのセグメントに分かれており、text, data, bssの順に並んでいる。bssセグメントには0に初期化されるデータが格納されている。
+
+## x86-64アーキテクチャ
+
+### レジスタ
+64bit汎用レジスタ
+| 64bitレジスタ | 32bitレジスタ | 16bitレジスタ | 8bitレジスタ |
+|--|--|--|--|
+| RSP | ESP |  SP | SPL |
+| RBP | EBP |  BP | BPL |
+| RAX | EAX |  AX |  AL |
+| RBX | EBX |  BX |  BL |
+| RDI | EDI |  DI | DIL |
+| RSI | ESI |  SI | SIL |
+| RDX | EDX |  DX |  DL |
+| RCX | ECX |  CX |  CL |
+| R8  | R8D | R8W | R8B |
+| R9  | R9D | R9W | R9B |
+| R10 | R10D | R10W | R10B |
+| R11 | R11D | R11W | R11B |
+| R12 | R12D | R12W | R12B |
+| R13 | R13D | R13W | R13B |
+| R14 | R14D | R14W | R14B |
+| R15 | R15D | R15W | R15B |
+
+フラグレジスタ
+| 64bitレジスタ | 32bitレジスタ | 16bitレジスタ |
+| RFLAGS | EFLAGS | FLAGS |
+
+| bit | ニーモニック | 説明 | 条件 |
+|--|--|--|--|
+| 11 | OF |        Overflow Flag | 符号付き整数演算でオーバーフロー |
+| 10 | DF |       Direction Flag | 文字列操作のデータポインタが減る向き |
+|  7 | SF |            Sign Flag | 算術演算の結果が負 |
+|  6 | ZF |            Zero Flag | 算術演算の結果が0 |
+|  4 | AF | Auxiliary Carry Flag |  |
+|  2 | PF |          Parity Flag | 演算結果の最下位byteの1が偶数個 |
+|  0 | CF |           Carry Flag | 算術演算で最上位bitで繰り上がり/繰り下がりが発生 |
+
+DFはcontrol flag、他の6個はstatus flagと呼ばれている。
+
+128bitSSE(Streaming SIMD Extended)レジスタ
+80bit x87浮動小数点レジスタ
+
+SSEレジスタはvector registerとも呼ばれる。
+
+### メモリモデル
+メモリは1byteごとに並んでいる。メモリには大きく四つの領域がある。プログラムそのものとプログラムが扱うデータはどちらもメモリに入っている。
+
+AMD64はリトルエンディアン(低ビットが低アドレス)なので、例えば32bit以下の64bit整数を`DWORD PTR [rax]`で読んでも`QWORD PTR [rax]`で読んでも全く問題ない。
+
+64bitモードでは、デフォルトのオペランドサイズは基本的に4byteであり、REXプリフィックスの付与された命令では8byteである。ただし、暗黙にスタックポインタを参照する命令についてはデフォルトで8byteオペランドサイズを採用する。
+
+[AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.2.3.1 Default Operand Size
+> There are several exceptions to the 32-bit operand-size default in 64-bit mode, including near branches and instructions that implicitly reference the RSP stack pointer. For example, the near CALL, near JMP, Jcc, LOOPcc, POP, and PUSH instructions all default to a 64-bit operand size in 64-bit mode. Such instructions do not need a REX prefix for the 64-bit operand size. For details, see “GeneralPurpose Instructions in 64-Bit Mode” in Volume 3. 
+
+### アドレッシング
+メモリにアクセスする方法をアドレシングという。実効アドレスの生成には以下の5つの方法がある。
+
+- 完全なアドレス: Base + Displacement(Offset)
+- RIP相対アドレシング: IP(PC) + Displacement
+- インデックス付きレジスタ間接: base + index * scale + disp, scale = 1, 2, 4, 8
+- スタックアドレス
+- string address
+
+### 命令セット
+64bitモードではデフォルトのアドレスサイズは64bitである。
+
+#### データ転送命令
+レジスタ/メモリからレジスタ/メモリへデータを移動する。ただしメモリからメモリへの移動はできない。第二オペランドとして即時定数(immediate constant)を用いることができる。
+- MOV: 第二オペランドから第一オペランドにデータを移動する。オペランドは同じ大きさ。
+- MOVZX: ゼロ拡張(zero extention)。ソースより大きいレジスタに転送する際、上位bitをゼロ埋めする。
+- MOVSX: 符号拡張(sign extention)。ソースより大きいレジスタに転送する際、符号を考慮して上位bitに拡張する。
+- CQO: RAXを符号拡張してRDX:RAXに格納。
+
+#### スタック操作
+- push: スタックポインタをデータサイズ分減らし、スタックトップにデータをコピーする。
+- pop: スタックトップからデータをコピーし、スタックポインタをデータサイズ分増やす。
+
+#### 有効アドレス
+- lea: load effective addressの略。
+
+#### 算術演算
+- ADD a b: a += b
+- SUB a b: a -= b
+- IMUL a b: a *= bの符号あり乗算。
+- IDIV a: RDX:RAX / aの符号あり除算。商と剰余をそれぞれRAX, RDXに格納する。
+- NEG: 2の補数を求める。
+- INC: インクリメント。CFは影響しない。
+- DEC: デクリメント。CFは影響しない。
+
+#### 比較演算
+- CMP a b: a - bを計算しフラグレジスタを更新。
+
+#### 条件
+条件にしたがって8bitオペランドに0, 1を設定。
+- SETE r/m8: ZF == 1
+- SETNE r/m8: ZF == 0
+- SETL r/m8: SF != OF
+- SETLE r/m8: SF != OF or ZF == 1
+- SETG r/m8: SF == OF and ZF == 0
+- SETGE r/m8: SF == OF
+
+#### 制御転送
+条件ジャンプ
+- JE rel8: ZF = 1
+- JNE rel8: ZF = 0
+- JL rel8: SF $\neq$ OF
+- JLE rel8: SF $\neq$ OF or ZF = 1
+- JG rel8: SF = OF and ZF = 0
+- JGE rel8: SF = OF
+
+無条件ジャンプ
+- JMP
+
+関数呼び出し
+- CALL: プログラムカウンタをスタックにpushしてジャンプ。
+- RET: スタックをpopしてそのアドレスにジャンプ。
+
+制御転送命令はスタックアラインメントが適切でない場合、著しくパフォーマンスが落ちる。
+
+[AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.7.3.1 Stack Alignment
+> Control-transfer performance can degrade significantly when the stack pointer is not aligned properly. Stack pointers should be word aligned in 16-bit segments, doubleword aligned in 32-bit segments, and quadword aligned in 64-bit mode. 
+
+[Intel® 64 and IA-32 Architectures Software Developer’s Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) Volume1: Basic Architecture 6.2.2 Stack Alignment
+> The stack pointer for a stack segment should be aligned on 16-bit (word) or 32-bit (double-word) boundaries, depending on the width of the stack segment. The D flag in the segment descriptor for the current code segment sets the stack-segment width (see “Segment Descriptors” in Chapter 3, “Protected-Mode Memory Management,” of the Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 3A). The PUSH and POP instructions use the D flag to determine how much to decrement or increment the stack pointer on a push or pop operation, respectively. When the stack width is 16 bits, the stack pointer is incremented or decremented in 16-bit increments; when the width is 32 bits, the stack pointer is incremented or decremented in 32-bit increments. Pushing a 16-bit value onto a 32-bit wide stack can result in stack misaligned (that is, the stack pointer is not aligned on a double word boundary). One exception to this rule is when the contents of a segment register (a 16-bit segment selector) are pushed onto a 32-bit wide stack. Here, the processor automatically aligns the stack pointer to the next 32-bit boundary
+
+> The processor does not check stack pointer alignment. It is the responsibility of the programs, tasks, and system procedures running on the processor to maintain proper alignment of stack pointers. Misaligning a stack pointer can cause serious performance degradation and in some instances program failures.
+
+#### システムコール
+- syscall
+- sysret
+エラーメッセージ
+
+### 浮動小数点命令
+
+#### ロード
+スタックトップにロード
+- fld: Floating-Point Load
+- fldz: +0.0
+- fld1: +1.0
+- fldpi: 円周率$\pi$
+- fldl2e: $\log_2 e$
+- fldl2t: $\log_2 10$
+- fldlg2: $\log_{10}2$
+- fldln2: $\log_e 2$
+
+#### 算術演算
+四則演算
+- fadd: 加算
+- fsub: 減算
+- fmul: 乗算
+- fdiv: 除算
+
+- frndint: 整数に丸める
+
+平方根
+- fsqrt: 平方根
+
+超越関数
+- fsin: 正弦
+- fcos: 余弦
+- fsincos: スタックトップの値をsinで置換し、cosをプッシュする。sinとcosは同時に計算される。
+- fptan: スタックトップをtanで置換し、1.0をプッシュする。
+- fpatan: arctan(ST(1)/ST(0))をST(1)にコピーし、スタックをポップする。
+
+対数関数
+- f2xm1: $ST(0) = 2^{ST(0)} - 1 (-1 \leq ST(0) \leq 1)$
+- fscale: $ST(0) = ST(0) \times 2^{\left[ST(1)\right]}$
+- fyl2x: $ST(1) = ST(1) \times \log_2{ST(0)} (ST(0) > 0)$とした後、スタックをポップする。
+- fyl2xp1: $ST(1) = ST(1) \times \log_2{ST(0) + 1} (0 < |ST(0)| < 1 - \sqrt{2}/2)$とした後、スタックをポップする。
 
 ## コンパイラの構成
 
@@ -60,12 +397,21 @@ int main(int argc, char **argv){
 
 ## 字句解析
 
-文字列をいくつかのトークンに分割する。
-まず空白('\t', '\n', '\v', '\f', '\r', ' ')とコメント文を除き、トークンの判定を行う。
+ソースコードをトークン列に分解する。トークンとはプログラムにおいて意味のある最小単位のこと。トークンは通常正規表現として定義され、決定性有限オートマトンで受理できる。一般に正規表現にマッチする部分文字列は複数あるが、通常は最長一致の原則が適用される。例えば`--`は`--`と判定され、`- -`は`-`, `-`と分割される。
 
-### トークン
+C言語のソースコードは
 
-トークンの分類。トークンを前方一致した時点で判断できるものとそうでないものに分ける。括弧や演算子は一致した時点で確定するので前者、keywordsは文字列が一致してかつ、その直後にアルファベット、数字、'_'以外の文字が来る必要があるので後者。punctsとkeywordsはTK_RESERVEDにまとめた。
+- キーワード(keyword): 型名、制御構造など
+- 識別子(identifier): 変数名、関数名など
+- 定数(constant)
+- 文字列リテラル(string-literal)
+- 区切り文字(punctuator)
+
+に加えて、空白('\t', '\n', '\v', '\f', '\r', ' ')とコメント文から成る。
+
+### トークナイザ
+
+トークンを前方一致した時点で決定できるものとそうでないものに分ける。括弧や演算子は一致した時点で確定するので前者、keywordsは文字列が一致してかつ、直後にアルファベット、数字、'_'以外の文字が来る必要があるので後者。
 
 ```c tokenize.c
 char *types[17] = {"extern", "const", "volatile", "static", "signed", "unsigned", "void", "_Bool", "char", "short", "int", "long", "float", "double", "struct", "union", "enum"};
@@ -74,18 +420,6 @@ char *puncts[41] = {
     "+=", "-=", "*=", "/=", "%=", "||", "&&", "==", "!=", "<=", ">=", "<<", ">>", "++", "--", "->", 
     "#", "=", "?", ":", "|", "^", "&", "<", ">", "+", "-", "*", "/", "%", "&", "!", ".", ",", ";", "(", ")", "{", "}", "[", "]"
 };
-```
-
-```c dcl.h
-typedef enum {
-    TK_RESERVED,
-    TK_TYPE,
-    TK_ID,
-    TK_NUM,
-    TK_CHAR,
-    TK_STRING,
-    TK_EOF,
-} token_kind;
 ```
 
 トークン列を連結リストとして定義。トークンの文字列の情報はまだ必要なので持っておく。
@@ -100,58 +434,28 @@ struct token {
 };
 ```
 
-トークン列の判定は次のように行われる。
-- 最長一致: 候補が複数ある場合、長いトークンから順に判定する。
-    - `--`は`--`と判定。`- -`は`-`, `-`と分割される。
-<!-- - 代替トークン: [], {}, #, ##の代わりに<::>, <%%>, %:, %:%:が使える。
+punctsとkeywordsの違いは字句解析後必要ないためTK_RESERVEDにまとめる。
 
-```c
-int a<:3:>;
-a<:0:> = 12;
-printf("%d\n", a[0]);
+```c dcl.h
+typedef enum {
+    TK_RESERVED,
+    TK_TYPE,
+    TK_ID,
+    TK_NUM,
+    TK_CHAR,
+    TK_STRING,
+    TK_EOF,
+} token_kind;
 ```
-
-```
-12
-``` -->
-
-### 識別子
-変数名や関数名などの識別子
-
-[N1570](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf) 6.4.2.1 General
-```
-identifier:
-    identifier-nondigit
-    identifier identifier-nondigit
-    identifier digit
-identifier-nondigit:
-    nondigit
-    universal-character-name
-    other implementation-defined characters
-nondigit: one of 
-    _abcdefghijklm
-    nopqrstuvwxyz
-    ABCDEFGHIJKLM
-    NOPQRSTUVWXYZ
-digit: one of
-    0123456789
-```
-
-- 先頭はnondigit
-- ハイフンはマイナスと被るので区切り文字として不可(Lispだと使える)。
-
-N1570 6.4.2.1 General
-> There is no specific limit on the maximum length of an identifier.
-
-- 現在の関数名を格納する`__func__`が暗黙に定義されている。
 
 ## 構文解析
 
-トークン列を読み込み、抽象構文木(AST)を構築する。
+トークン列から抽象構文木(Abstract Syntax Tree)を構築する。構文は通常文脈自由文法として定義される。一般の文脈自由文法の構文解析には$O(N^3)$かかるので、普通のプログラミング言語は構文解析が$O(N)$で済むLL(1)文法かそれに近い文法で定義されている。
+
+文脈自由文法は普通BNF(Bakcus-Naur Form)やその拡張であるEBNF(Extended BNF)で定義される。
 
 ### 構文
-
-今回実装するCのサブセットのEBNF記法。
+実装するC言語のサブセットのEBNF。
 
 ```
 program = ext*
@@ -206,23 +510,10 @@ primary = ("(" expr ")" | ident | num | char | string)
         ("[" assign "]" | "(" (assign ("," assign)*)? | "." ident | "->" ident | "++" | "--")*
 ```
 
-- 単独の statement として変数を宣言しても使用されないので不可。
-
-```c
-int main(){
-    if(1) int a = 1;
-}
-```
-
-```
-error: expected expression before 'int'
-    5 |     if(1) int a = 1;
-      |           ^~~
-```
+パーサは再帰下降構文解析で行う。再帰下降構文解析では非終端記号と解析関数が一致するので、人間が書くのに適している。ここでは構文解析と意味解析を同時に行う。
 
 ### ノード
-
-ノードの種類を細かく分類し、子要素を持つ。変数名や関数名以外のトークンの文字列は消去する。型のノードは作らず、修飾子ノードの属性として付与する。
+構文木のノードを分類し、子要素を持つ。変数名や関数名以外のトークンの文字列は消去する。型のノードは作らず、修飾子ノードの属性として付与する。
 
 ```c dcl.h
 typedef enum {
@@ -296,8 +587,16 @@ struct node {
 };
 ```
 
-### 型
+### シンボルテーブル
+ソースコードを前から読み込む際、現在定義されている識別子を管理するシンボルテーブルを作る。シンボルテーブルをスタックで実装するとき、識別子が登場する度に未宣言であることを確認してpushし、ブロックを抜ける際にpopすると、静的スコープが実現できる。
 
+シンボルテーブルは、ローカル変数、グローバル変数、タグ名の3つを作る。ローカル変数で名前解決できなかった場合にグローバル変数で名前解決を試みる。識別子と加える表は以下のようになる。
+
+- ローカル変数表: ローカル変数名
+- グローバル変数表: グローバル変数名、関数名、typedefで定義された型名、列挙型のメンバ
+- タグ表: 構造体と列挙型のタグ名
+
+### 型
 型の種類を以下のように分類する。
 
 ```c dcl.h
@@ -344,8 +643,7 @@ Cの型はネストする部分が不完全になっているので、不完全�
 - ? -> ARRAY -> VOID -> ?
 - ? -> FUNC -> ARRAY -> ?
 
-#### 構造体と列挙型
-
+### 構造体と列挙型
 構造体や列挙型にタグがある場合はタグを格納するシンボルテーブルに登録される。つまりグローバル変数やローカル変数と重複して構わない。
 相互参照するような型を作る場合、一方の型が未定義とならないようにタグ名だけの宣言が可能。つまり`struct a;`や`enum a;`と書くとき`a`は未宣言でも良い。構造体は自分自身を含むことはないが、自分自身へのポインタは含むことができる。
 
@@ -366,13 +664,8 @@ while(!expect("}")){
 }
 ```
 
-### 関数定義とグローバル変数
-
-関数名とグローバル変数名はラベルとしてアセンブリ上に残り、それらのアドレスはリンク時に決定される。一方、関数の引数はその場で宣言してローカル変数表に登録すればローカル変数と同じように扱える。従って、関数定義ノードは関数名、型、処理内容、関数全体で定義されるローカル変数全体のオフセットを持っておく必要がある。またグローバル変数ノードは名前と型、そして初期値を持っておく。
-
-- グローバル変数は宣言が重複しても構わない(標準ライブラリで重複した宣言が存在)
-
-関数定義とグローバル変数はトップレベルに線形に並ぶので、それらのノードのキューを作り、パーサはその先頭要素を返す。
+### プログラム
+トップレベルには関数定義とグローバル変数の宣言が並ぶ。パーサは外部宣言のキューを作りその先頭要素を返す。
 
 ```c parse.c
 node *program(token *token_head){
@@ -387,16 +680,57 @@ node *program(token *token_head){
 }
 ```
 
-### シンボルテーブル
-識別子のスタックを作り、変数が登場する度に宣言済かどうか確認してpushする。
+### 関数定義
+関数名はラベルとしてアセンブリ上に残るが、関数の引数はローカル変数として扱える。したがって、関数定義ノードは関数名、型、処理内容、関数全体で定義されるローカル変数全体のオフセットを持っておく必要がある。
 
-- ローカル変数、グローバル変数、タグ名の3つの表を作る。ローカル変数で名前解決できなかった場合にグローバル変数で名前解決を試みる。
-- 関数定義とグローバル変数はアセンブリとして展開されるので、関数名はグローバル変数表に加える。
-- 構造体と列挙型のタグは同じタグ表に加える。
-- typedefで定義された型名は変数表に加える。
-- 列挙型のメンバは変数表に加える。
+1. 関数名をグローバル変数表に登録。
+2. ローカル変数表を初期化。ローカル変数の個数と全体のオフセットを0で初期化。
+3. 引数をローカル変数として登録。
+4. 処理内容をパース。
 
-ブロックを抜ける際にローカル変数表のスタックをpopすれば静的スコープとなる。
+### グローバル変数宣言
+グローバル変数ノードは変数名と型、そして初期値を持っておく。
+
+グローバル変数は宣言が重複しても構わない(標準ライブラリで重複した宣言が存在)。
+```c
+void push_global(symb_kind kind, symb *sy){
+    for(symb *var = global_head; var; var = var->next){
+        if(sy->len == var->len && memcmp(sy->name, var->name, var->len) == 0){
+            return;
+        }
+    }
+
+    // 省略
+}
+```
+
+### ローカル変数宣言
+ローカル変数がスコープ内で使用されるためには、ブロック文の中で宣言される必要がある。C言語の場合、ブロック文の中にないローカル変数宣言は構文エラーとなる。
+
+1. ローカル変数表に同じ変数名がないことを確認。
+2. 型のサイズとアラインメントからオフセットを計算。
+3. 現在の関数のローカル変数の個数とオフセットを更新。
+
+```c
+void push_local(symb *sy){
+    for(symb *var = local_head; var; var = var->next){
+        if(sy->len == var->len && memcmp(sy->name, var->name, var->len) == 0){
+            error(cur, "this variable is already declared");
+        }
+    }
+    symb *var = calloc(1, sizeof(symb));
+    var->next = local_head;
+    var->ty = sy->ty;
+    var->name = sy->name;
+    var->len = sy->len;
+    var->offset = local_head->offset + size_of(sy->ty);
+    var->offset = (var->offset + align_of(sy->ty) - 1) / align_of(sy->ty) * align_of(sy->ty);
+
+    local_head = var;
+    local_num++;
+    if(max_offset < var->offset) max_offset = var->offset;
+}
+```
 
 ### 文(Statement)
 文とは手続きであり、式に`;`を付けたものや`return`文、制御文、ブロック構文がある。
@@ -426,44 +760,31 @@ stmt    = ";"
         | "{" (dcl | stmt)* "}"
 ```
 
-#### 制御文
-
-`"else if"`というキーワードはなく、`"else" stmt`は`"else" "{" stmt "}"`と同じ意味となる。C言語の場合`else`の前に`if`を書く必要はあるが、`else`の後に`if`を書く必要はない。
+#### ブロック文
+1. 現在のローカル変数のカウント
+2. ブロック内の処理をパース
+3. ローカル変数表を元に戻す。
 
 ```c
-int a = 0;
-if(a != 0){
-    printf("%d\n", a);
-}else while(a < 5){
-    printf("%d\n", a);
-    a++;
+else if(expect("{")){
+    nd->kind = ND_BLOCK;
+    nd->head = calloc(1, sizeof(node));
+    node *item = nd->head;
+    int num = local_num;
+    while(!expect("}")){
+        if(find_type()) item->next = dcl();
+        else item->next = stmt();
+        item = item->next;
+    }
+    nd->head = nd->head->next;
+    pop_local(num);
 }
 ```
 
-```
-0
-1
-2
-3
-4
-```
+#### 制御文
+`"else if"`というキーワードはなく、`"else" stmt`は`"else" "{" stmt "}"`と同じ意味となる。
 
-- Pythonでは`while`や`for`の後にも`else`を書くことができる。
-
-[Python documentation 8.1. The if statement](https://docs.python.org/3/reference/compound_stmts.html#the-if-statement)
-```
-if_stmt ::=  "if" assignment_expression ":" suite
-             ("elif" assignment_expression ":" suite)*
-             ["else" ":" suite]
-while_stmt ::=  "while" assignment_expression ":" suite
-                ["else" ":" suite]
-for_stmt ::=  "for" target_list "in" expression_list ":" suite
-              ["else" ":" suite]
-```
-
-- 宙ぶらりんelse問題(dangling else)
-
-最も近くにある対応していない`if`と結合する。
+ぶら下がりelse(dangling else)とは、`else`と対応する`if`が判定できず、文が曖昧になる問題。解決策として、最も近くにある対応していない`if`と結合することにすれば良い。
 
 ```c
 if(a) if(b) s1; else s2;
@@ -480,7 +801,7 @@ if(a){
 
 と解釈される。
 
-制御文のパースは各要素を読んで代入するだけ。
+`if`文を読んだ後に`else`が来る場合、`if else`として解釈すれば自然に実装できる。
 
 ```c parse.c
 else if(expect("if")){
@@ -497,11 +818,8 @@ else if(expect("if")){
 }
 ```
 
-`switch`, `while`, `for`文についても基本的に同様。
-
-- `switch`文のスタックを持っておき、それにpushする。
-- `case`文はルート方向に最も近い`switch`文を持っておく。
-- `for`文の括弧内で宣言された変数を表から削除し、スコープから除く。
+- `switch-case`文: 現在そのブロック内にいる`switch`文のリストをスタックで管理する。`switch`文は対応する`case`の式を持っておき、`case`文はルート方向に最も近い`switch`文とその`switch`文で何番目の`case`文であるかを持っておく。
+- `for`文: 抜けるとき、括弧内で宣言された変数をシンボルテーブルから削除する。
 
 ### 式(Expression)
 
@@ -532,13 +850,12 @@ primary = ("(" expr ")" | ident | num | char | string)
         ("[" assign "]" | "(" (assign ("," assign)*)? | "." ident | "->" ident | "++" | "--")*
 ```
 
-#### 二項演算
-
+#### 演算
 演算は基本的に演算子ごとにノードを用意する。
 
-足し算は実際には次のように再帰的に定義されている。
+加算は次のように再帰的に定義されている。
 
-[N1570](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf)6.5.6 Additive operators
+[N1570](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf) 6.5.6 Additive operators
 ```
 additive-expression:
     multiplicative-expression
@@ -546,8 +863,7 @@ additive-expression:
     additive-expression - multiplicative-expression
 ```
 
-再帰的な書き方は演算子の結合性を表現するのに都合が良いが、プログラムで左から構文解析すると、この場合左再帰なので無限ループとなる。
-そこで以下のように等価な文法に書き換える。
+再帰的な定義は演算子の結合性を表現するのに都合が良い。しかし左結合の演算を左再帰的に定義する場合、プログラムで左から構文解析すると無限ループとなる。そこで次のような左再帰を除去した等価な文法に書き換える。
 
 ```
 add = mul ("+" mul | "-" mul)*
@@ -555,7 +871,7 @@ add = mul ("+" mul | "-" mul)*
 
 これを実装すると次のようになる。
 
-```c:parse.c
+```c: parse.c
 node *add(){
     node *nd = mul();
     while(true){
@@ -572,11 +888,10 @@ node *add(){
 }
 ```
 
-#### sizeof
+#### `sizeof`演算子
+`sizeof`演算はコンパイル時に計算され、定数ノードとして解析される。
 
-`sizeof`演算はコンパイル時に計算できるのでノードは用意しなくても良い。
-
-```c parse.c
+```c: parse.c
 node *unary(){
     // 略
     if(expect("sizeof")){
@@ -595,305 +910,21 @@ node *unary(){
 ```
 
 #### 識別子
+シンボルテーブルにアクセスして名前解決を試みる。ローカル変数なら型とオフセット、グローバル変数なら型と名前をコピーしてノードを作る。
 
-識別子を読み込んだらシンボルテーブルにアクセスして名前解決を試みる。ローカル変数なら型とオフセット、グローバル変数なら型と名前をコピーする。
 
-## プログラム実行の流れ
 
-人間が書いたソースコードはプリプロセスを経た後、コンパイラによってアセンブリコードへと変換され、更にアセンブラによってオブジェクトコードに変換される。複数のオブジェクトファイルはリンカによって結合され、最終的な実行ファイルが生成される。
 
-プログラムを実行する際、OSのプログラムローダが実行ファイルの内容をメモリ上にコピーする。CPUはプログラムカウンタという領域に現在実行中の命令のアドレスを保持しており、そのアドレスから順次命令を読みだして実行する。CPUはレジスタと呼ばれる記憶領域を持っており、メモリから読んだデータをレジスタにコピーして処理を行う。レジスタはCPU内部に存在するので、メモリに比べてアクセスが速い。
 
-UNIXシステムにおけるオブジェクトファイルと実行ファイルには同じフォーマットが用いられる。過去にはa.outやCOFF(Common Object File Format)などのファイル形式が使われていたが、現在ではELF(Executable and Linkable Format)が広く採用されている。
-
-## x86-64アーキテクチャ
-
-### レジスタ
-64bit汎用レジスタ
-| 64bitレジスタ | 32bitレジスタ | 16bitレジスタ | 8bitレジスタ |
-|--|--|--|--|
-| RSP | ESP |  SP | SPL |
-| RBP | EBP |  BP | BPL |
-| RAX | EAX |  AX |  AL |
-| RBX | EBX |  BX |  BL |
-| RDI | EDI |  DI | DIL |
-| RSI | ESI |  SI | SIL |
-| RDX | EDX |  DX |  DL |
-| RCX | ECX |  CX |  CL |
-| R8  | R8D | R8W | R8B |
-| R9  | R9D | R9W | R9B |
-| R10 | R10D | R10W | R10B |
-| R11 | R11D | R11W | R11B |
-| R12 | R12D | R12W | R12B |
-| R13 | R13D | R13W | R13B |
-| R14 | R14D | R14W | R14B |
-| R15 | R15D | R15W | R15B |
-
-フラグレジスタ
-| 64bitレジスタ | 32bitレジスタ | 16bitレジスタ |
-| RFLAGS | EFLAGS | FLAGS |
-
-| bit | ニーモニック | 説明 | 1となる条件 |
-|--|--|--|--|--|
-| 11 | OF |        Overflow Flag | 符号付き整数演算の結果の最上位bitが本来と異なる |
-| 10 | DF |       Direction Flag | 文字列操作のデータポインタが減る向き |
-|  7 | SF |            Sign Flag | 算術演算の結果が負 |
-|  6 | ZF |            Zero Flag | 算術演算の結果が0 |
-|  4 | AF | Auxiliary Carry Flag |  |
-|  2 | PF |          Parity Flag | 演算の結果の最下位byte |
-|  0 | CF |           Carry Flag | 加算/減算命令で最上位bitで繰り上がり/繰り下がりが発生 |
-
-DFはcontrol flag、他の6個はstatus flagと呼ばれている。
-
-128bitSSE(Streaming SIMD Extended)レジスタ
-80bit x87浮動小数点レジスタ
-
-SSEレジスタはvector registerとも呼ばれる。
-
-### メモリモデル
-メモリは1byteごとに並んでいる。メモリには大きく四つの領域がある。プログラムそのものとプログラムが扱うデータはどちらもメモリに入っている。
-
-AMD64はリトルエンディアン(低ビットが低アドレス)なので、例えば32bit以下の64bit整数を`DWORD PTR [rax]`で読んでも`QWORD PTR [rax]`で読んでも全く問題ない。
-
-64bitモードでは、デフォルトのオペランドサイズは基本的に4byteであり、REXプリフィックスの付与された命令では8byteである。ただし、暗黙にスタックポインタを参照する命令についてはデフォルトで8byteオペランドサイズを採用する。
-
-[AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.2.3.1 Default Operand Size
-> There are several exceptions to the 32-bit operand-size default in 64-bit mode, including near branches and instructions that implicitly reference the RSP stack pointer. For example, the near CALL, near JMP, Jcc, LOOPcc, POP, and PUSH instructions all default to a 64-bit operand size in 64-bit mode. Such instructions do not need a REX prefix for the 64-bit operand size. For details, see “GeneralPurpose Instructions in 64-Bit Mode” in Volume 3. 
-
-### アドレッシング
-メモリにアクセスする方法をアドレシングという。実効アドレスの生成には以下の5つの方法がある。
-
-- 完全なアドレス: Base + Displacement(Offset)
-- RIP相対アドレシング: IP(PC) + Displacement
-- インデックス付きレジスタ間接: Base + Scale * Index + Displacement, Scale = 1, 2, 4, 8
-- スタックアドレス
-- string address
-
-### 命令セット
-命令は一般に<mnemonic> <source or destination> <source>の形で書かれる。
-64bitモードではデフォルトのアドレスサイズは64bitである。
-
-#### データ転送命令
-レジスタ/メモリからレジスタ/メモリへデータを移動する。ただしメモリからメモリへの移動はできない。第二オペランドとして即時定数(immediate constant)を用いることができる。
-- mov
-- movzx: ゼロ拡張(zero extention)。ソースより大きいレジスタに転送する際、上位bitをゼロ埋めする。
-- movsx: 符号拡張(sign extention)。ソースより大きいレジスタに転送する際、符号を考慮して上位bitに拡張する。
-
-#### スタック操作
-- push: スタックポインタをデータサイズ分減らし、スタックトップにデータをコピーする。
-- pop: スタックトップからデータをコピーし、スタックポインタをデータサイズ分増やす。
-
-#### 有効アドレス
-- lea: load effective addressの略。
-
-#### 算術演算
-- add a b: a += b
-- sub a b: a -= b
-- imul a b: a *= bの符号あり乗算。
-- idiv a: rax / aの符号あり除算。商と剰余をそれぞれrax, rdxに格納する。
-- neg: 2の補数を求める。
-- dec: デクリメント。CFは影響しない。
-- inc: インクリメント。CFは影響しない。
-
-#### 比較演算
-- cmp a b: a - bを計算し、結果に従ってフラグレジスタを変化させる。
-
-直前のcmp命令の結果を8bitレジスタに格納。
-
-#### 条件命令
-条件に従い、byteオペランドに0, 1を格納。
-- sete c: a == b ならcに1を格納。
-- setne c: a != b ならcに1を格納。
-- setl c: a < b ならcに1を格納。
-- setle c: a <= b ならcに1を格納。
-- \>, >=はない。
-
-#### 制御転送
-- je: 条件ジャンプ
-- call: スタックにリターンアドレスを積み、関数アドレスへジャンプ。
-- ret: スタックからアドレスを一つポップしてジャンプ。
-
-制御転送命令はスタックアラインメントが適切でない場合、著しくパフォーマンスが落ちる。
-
-[AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.7.3.1 Stack Alignment
-> Control-transfer performance can degrade significantly when the stack pointer is not aligned properly. Stack pointers should be word aligned in 16-bit segments, doubleword aligned in 32-bit segments, and quadword aligned in 64-bit mode. 
-
-[Intel® 64 and IA-32 Architectures Software Developer’s Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) Volume1: Basic Architecture 6.2.2 Stack Alignment
-> The stack pointer for a stack segment should be aligned on 16-bit (word) or 32-bit (double-word) boundaries, depending on the width of the stack segment. The D flag in the segment descriptor for the current code segment sets the stack-segment width (see “Segment Descriptors” in Chapter 3, “Protected-Mode Memory Management,” of the Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 3A). The PUSH and POP instructions use the D flag to determine how much to decrement or increment the stack pointer on a push or pop operation, respectively. When the stack width is 16 bits, the stack pointer is incremented or decremented in 16-bit increments; when the width is 32 bits, the stack pointer is incremented or decremented in 32-bit increments. Pushing a 16-bit value onto a 32-bit wide stack can result in stack misaligned (that is, the stack pointer is not aligned on a double word boundary). One exception to this rule is when the contents of a segment register (a 16-bit segment selector) are pushed onto a 32-bit wide stack. Here, the processor automatically aligns the stack pointer to the next 32-bit boundary
-
-> The processor does not check stack pointer alignment. It is the responsibility of the programs, tasks, and system procedures running on the processor to maintain proper alignment of stack pointers. Misaligning a stack pointer can cause serious performance degradation and in some instances program failures.
-
-#### システムコール
-- syscall
-- sysret
-エラーメッセージ
-
-### 浮動小数点命令
-
-#### ロード
-スタックトップにロード
-- fld: Floating-Point Load
-- fldz: +0.0
-- fld1: +1.0
-- fldpi: 円周率$\pi$
-- fldl2e: $\log_2 e$
-- fldl2t: $\log_2 10$
-- fldlg2: $\log_{10}2$
-- fldln2: $\log_e 2$
-
-#### 算術演算
-四則演算
-- fadd: 加算
-- fsub: 減算
-- fmul: 乗算
-- fdiv: 除算
-
-- frndint: 整数に丸める
-
-平方根
-- fsqrt: 平方根
-
-超越関数
-- fsin: 正弦
-- fcos: 余弦
-- fsincos: スタックトップの値をsinで置換し、cosをプッシュする。sinとcosは同時に計算される。
-- fptan: スタックトップをtanで置換し、1.0をプッシュする。
-- fpatan: arctan(ST(1)/ST(0))をST(1)にコピーし、スタックをポップする。
-
-対数関数
-- f2xm1: $ST(0) = 2^{ST(0)} - 1 (-1 \leq ST(0) \leq 1)$
-- fscale: $ST(0) = ST(0) \times 2^{\left[ST(1)\right]}$
-- fyl2x: $ST(1) = ST(1) \times \log_2{ST(0)} (ST(0) > 0)$とした後、スタックをポップする。
-- fyl2xp1: $ST(1) = ST(1) \times \log_2{ST(0) + 1} (0 < |ST(0)| < 1 - \sqrt{2}/2)$とした後、スタックをポップする。
-
-## X86アセンブリ言語
-gccなどの処理系では、アセンブラとして主にGNUアセンブラ(GNU assembler, gas)が用いられており、GNUアセンブラが出力するアセンブリ言語もGNUアセンブラの仕様書で定義されている。アセンブリ言語の文法には一部アーキテクチャに依存する部分がある。
-
-`.text`, `.data`, `.bss`ディレクティブを付けることで、実行ファイル上でのセクションを指定することができる。
-
-### AT&T記法とIntel記法
-x86系のアセンブリ言語には大きくAT&T記法とIntel記法という二つの文法がある。
-- sigil
-    - AT&T記法: 即値に$を付け、レジスタ名に%を付ける。
-    - Intel記法: 何も付けない。
-- オペランドの順番
-    - AT&T記法: mnemonic source, destination
-    - Intel記法: mnemonic destination, source
-- メモリオペランドのサイズ
-    - AT&T記法: ニーモニックの末尾に`b`, `w`, `l`, `q`などを付ける。
-    - Intel記法: メモリオペランドの前に`byte ptr`, `word ptr`, `dword ptr`, `qword ptr`などの接頭辞を付ける。
-- メモリ参照
-
-GNUアセンブラではデフォルトではAT&T記法を用いるが、2.10からは`.intel_syntax`ディレクティブを付けることでIntel記法が使えるようになった。ここではIntel記法で説明する。
-
-### メモリ参照
-- 間接メモリ参照: size [base + index * scale + displacement]
-- RIPアドレッシング: [rip + offset]
-
-## System V ABI(Application Binary Interface)
-
-アセンブリの書き方はOSによって規約が定められており、これをABIという。それによってコンパイラの挙動も合わせる必要がある。Linux上でx86-64を実行するときはSystem V ABIというものが使われる。System V ABIには、レジスタの用途、関数の呼び出し規約、オブジェクトファイルおよび実行ファイルのフォーマットなどが定めらている。ベースとなるドキュメントとプラットフォーム依存の補遺からなる。
-
-<!-- x86
-- cdecl
-- stdcall
-
-x86-64
-- System V ABI: Unix, macOS
-- Microsoft ABI: Windows -->
-
-<!-- データモデル
-- LP64(System V ABI)
-    - 32bit: int
-    - 64bit: long, pointer
-- LLP(Microsoft)
-    - 32bit: int, long
-    - 64bit: long long, pointer -->
-
-### レジスタ
-System V ABIでは汎用レジスタに以下の用途が指定されている。
-
-64bit汎用レジスタ
-| 64bitレジスタ | 32bitレジスタ | 16bitレジスタ | 8bitレジスタ | 用途 |
-|--|--|--|--|--|
-| RSP | ESP |  SP | SPL | スタックポインタ |
-| RBP | EBP |  BP | BPL | ベースポインタ |
-| RAX | EAX |  AX |  AL | 返り値 |
-| RBX | EBX |  BX |  BL ||
-| RDI | EDI |  DI | DIL | 第一引数 |
-| RSI | ESI |  SI | SIL | 第二引数 |
-| RDX | EDX |  DX |  DL | 第三引数 |
-| RCX | ECX |  CX |  CL | 第四引数 |
-| R8  | R8D | R8W | R8B | 第五引数 |
-| R9  | R9D | R9W | R9B | 第六引数 |
-| R10 | R10D | R10W | R10B ||
-| R11 | R11D | R11W | R11B ||
-| R12 | R12D | R12W | R12B ||
-| R13 | R13D | R13W | R13B ||
-| R14 | R14D | R14W | R14B ||
-| R15 | R15D | R15W | R15B ||
-
-### 構造体のデータアラインメント
-
-多くのCPUではメモリに格納するデータのサイズによって境界が定まっており、アラインメントと呼ばれる。例えば4バイト境界なら4の倍数のアドレスから順にデータを読み出す必要がある。
-
-x86-64アーキテクチャでは基本的にデータ型のアラインメントを揃える必要はないが、パフォーマンスの観点から揃えることを推奨している。
-
-[AMD64 Architecture Programmer's Manual Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf) 3.2.5 Data Alignment
-> The AMD64 architecture does not impose data-alignment requirements for accessing data in memory. However, depending on the location of the misaligned operand with respect to the width of the data bus and other aspects of the hardware implementation (such as store-to-load forwarding mechanisms), a misaligned memory access can require more bus cycles than an aligned access. For maximum performance, avoid misaligned memory accesses. 
-
-[Intel® 64 and IA-32 Architectures Software Developer’s Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html) Volume1: Basic Architecture 4.1.1 Alignment of Words, Doublewords, Quadwords, and Double Quadwords
-> Words, doublewords, and quadwords do not need to be aligned in memory on natural boundaries. The natural boundaries for words, double words, and quadwords are even-numbered addresses, addresses evenly divisible by four, and addresses evenly divisible by eight, respectively. However, to improve the performance of programs, data structures (especially stacks) should be aligned on natural boundaries whenever possible.
-
-[データ型のアラインメントとは何か，なぜ必要なのか？](http://www5d.biglobe.ne.jp/~noocyte/Programming/Alignment.html)
-１．CPU に関する基礎知識
-> アラインメントは CPU のハードウェアに起因する問題であり， データのメモリアドレスに関する制約である．
-
-３.２ アラインメントに厳格な CPU の場合 (alignment-strict processors)
-> x86 以外の多くの CPU (特に RISC) は上記のようには動作せず，エラーとして処理する．
-
-４．アラインメントの基礎知識のまとめ
-> アラインメントに寛容な CPU (x86 など) では， アラインメントを守らなくても正常に動作するが， そのデータのメモリアクセスが遅くなる．
-
-ABIでは構造体のデータアラインメントが定義されている。
-構造体のアラインメントはメンバのアラインメントの最小公倍数となる。データ型は全て2の累乗なので、結果それらの最大値となる。
-
-[System V Application Binary Interface AMD64 Architecture Processor Supplement](https://www.uclibc.org/docs/psABI-x86_64.pdf) 3.1.2 Data Representation
-> Structures and unions assume the alignment of their most strictly aligned component. Each member is assigned to the lowest available offset with the appropriate alignment. The size of any object is always a multiple of the object‘s alignment.
-> An array uses the same alignment as its elements, except that a local or global array variable of length at least 16 bytes or a C99 variable-length array variable always has alignment of at least 16 bytes.4
-> Structure and union objects can require padding to meet size and alignment constraints. The contents of any padding is undefined.
-
-### 関数呼び出し
-分割コンパイルする際、別のコンパイラでコンパイルしたファイルの関数を用いるためには、関数呼び出し時の引数や返り値を格納するレジスタ/スタックを揃えておく必要がある。最も単純なやり方は引数を全てスタックに格納する方法だが、アクセスの高速なレジスタを用いるために複雑な規約が定められている。
-
-レジスタ
-- rbp, rbx, r12-r15は関数呼び出しの前後で値が保存される必要がある。
--  DFは関数の開始と終了時に順方向にリセットする。
-
-スタックフレーム
-| アドレス | 値 |
-|--|--|
-| rsp + 32 | 引数 |
-| rsp + 16 | 引数 |
-| rsp + 8  | リターンアドレス |
-| rsp      | rbpの値 |
-
-- スタックアラインメント: callの直前、rspは16の倍数になっている必要がある。
-
-引数渡し
-- 整数はrdi, rsi, rdx, rcx, r8, r9に左から順に格納し、それ以外はスタックに積む(今回は整数しか使っていないので)。
-
-### ELFファイル
-ELFは少なくとも三つのセグメントに分かれており、text, data, bssの順に並んでいる。bssセグメントには0に初期化されるデータが格納されている。
-<!-- > The advantage in using the bss segment for storage that starts off empty is that the initialization information need not be stored in the output file. -->
 
 ## コード生成
 
-構文解析によって得たASTを深さ優先探索する。式(expression)や`return`はオペランドをスタックからpopし、返り値をpushするようにしておく(連続する操作でpop, push命令が連続することになるが、そういった最適化は後回しにする)。それ以外の結果を返さないノードではスタックを空にして収支を合わせるようにする。
+構文解析によって得たASTを深さ優先探索する。
+
+<!-- 式(expression)や`return`はオペランドをスタックからpopし、返り値をpushするようにしておく(連続する操作でpop, push命令が連続することになるが、そういった最適化は後回しにする)。それ以外の結果を返さないノードではスタックを空にして収支を合わせるようにする。 -->
 基本的にスタック操作は8byte単位で行い、レジスタとメモリ間でデータを移動するときのみデータサイズを考慮する。
 
 ### 型
-
 データ型によってメモリから読むサイズ及びレジスタのサイズを変える。
 
 ```c codegen.c
@@ -936,7 +967,23 @@ mov_memory_from_register(rax_, int_arg_reg[num_param_int], param->ty);
 ```
 
 ### 関数定義
-次の関数呼び出しに備えて、引数の値をレジスタまたはスタックからrbp直下のスタック領域に書き出す。第一引数、第二引数を[rbp-8], [rbp-16],...に格納する。
+`rbp`レジスタはcallee-savedであり、ベースポインタはcalleeが保存する。
+
+1. 関数プロローグ: ベースポインタを更新。関数内の局所変数の分のメモリを確保。
+2. 次の関数呼び出しに備えて、引数をレジスタまたはスタックからrbp直下のスタック領域に移動。
+3. 処理内容をコード生成。
+4. 関数エピローグ: ベースポインタを戻す。返り値を設定。
+
+第一引数、第二引数を`[rbp-8]`, `[rbp-16]`,...に格納する。
+
+| アドレス | 値 | 命令 |
+|--|--|--|
+| rbp + 32 | 引数8 ||
+| rbp + 16 | 引数7 ||
+| rbp +  8 | リターンアドレス | call func |
+| rbp      | callerのrbp | push rbp |
+| rbp -  8 | ローカル変数1 ||
+| rbp - 16 | ローカル変数2 ||
 
 ```c codegen.c
 // 略
@@ -944,15 +991,11 @@ mov_memory_from_register(rax_, int_arg_reg[num_param_int], param->ty);
 int num_param_int = 0;
 for(symb *param = nd->ty->head; param; param = param->next){
     if(num_param_int < 6){
-        printf("    mov rax, rbp\n");
-        printf("    sub rax, %d\n", param->offset);
+        printf("    lea rax, [rbp-%d]\n", param->offset);
         mov_memory_from_register(rax_, int_arg_reg[num_param_int], param->ty);
     }else{
-        printf("    mov rax, rbp\n");
-        printf("    sub rax, %d\n", param->offset);
-        printf("    mov rbx, rbp\n");
-        printf("    add rbx, %d\n", 8 * (num_param_int - 4));
-        printf("    mov rbx, [rbx]\n");
+        printf("    lea rax, [rbp-%d]\n", param->offset);
+        printf("    mov rbx, [rbp+%d]\n", 8 * (num_param_int - 4));
         mov_memory_from_register(rax_, rbx_, param->ty);
     }
     num_param_int++;
@@ -964,8 +1007,8 @@ gen_stmt(fn->stmt);
 ```
 
 ### 文(Statement)
-
-ラベルを貼ってジャンプ命令で遷移する。
+#### 制御文
+制御文はラベルを貼ってジャンプ命令で遷移する。
 
 ```c codegen.c
 case ND_WHILE:
@@ -989,17 +1032,22 @@ case ND_WHILE:
     return;
 ```
 
-他の制御文も同様。
+#### `return`文
+`ret`の直前に返り値を設定し、ベースポインタを元に戻す。返り値がない場合は0を設定する。
 
 ### 式(Expression)
-#### 左辺値と右辺値
+#### スタックマシン
+式はスタックマシンで計算する。つまり演算を実行する直前で、オペランドがスタックに積まれているようにし、スタックからレジスタに値をpop、演算の後再び結果をスタックにpushする。例えば加算は以下のようになる。
 
+#### 左辺値と右辺値
 - 配列要素は順番に格納され、大きさの情報は実行時に失われる。
 - 配列はその先頭要素のポインタに暗黙にキャストされるが、ポインタの実体があるわけではない。
 - 配列のアドレスは先頭要素のアドレスと等しい。
 
 - 構造体メンバは順番に格納され、それぞれのアドレスを保持する。
 - 構造体のアドレスは先頭要素のアドレスと等しい。
+
+`lea`命令は一命令でbase + scale * index + dispを計算するので、算術命令でアドレスを計算するより速い。
 
 #### 代入
 左辺は左辺値として展開し、右辺は右辺値として展開する。
@@ -1017,20 +1065,24 @@ case ND_ASSIGN:
 ```
 
 #### 論理演算
-ラベルを貼って短絡評価する。
+論理演算は短絡評価されるので、左オペランドを計算した時点で結果が定まる場合、右オペランドは計算せずにジャンプする。C言語では0以外はtrueの扱いなので比較の度に`setne`で0, 1を格納し直す。
 
 ```c codegen.c
 case ND_LOG_OR:{
-    int label_end = label_num;
-    label_num++;
+    int label_end = label_num++;
 
     gen_expr(nd->op1);
     printf("    pop rax\n");
     printf("    cmp rax, 0\n");
+    printf("    setne al\n");
+    printf("    movzb rax, al\n");
     printf("    jne .L%d\n", label_end);
 
     gen_expr(nd->op2);
     printf("    pop rax\n");
+    printf("    cmp rax, 0\n");
+    printf("    setne al\n");
+    printf("    movzb rax, al\n");
 
     printf(".L%d:\n", label_end);
     printf("    push rax\n");
@@ -1038,8 +1090,22 @@ case ND_LOG_OR:{
 }
 ```
 
+#### 算術演算
+`idiv`命令は`rdx:rax`を被除数として計算するので、その前に`cqo`命令で`rax`を符号拡張する。
+
+```
+    cqo
+    idiv rdi
+    push rax
+```
+
 #### 関数呼び出し
-スタックのアラインメントを調整した上で、引数をレジスタまたはスタックに格納して`call`命令を行う。
+1. スタックアラインメントを調整。
+2. 引数を後ろから計算。
+3. 6個までの引数はレジスタにpop。
+4. `al`を使用するベクトルレジスタの数以上に設定。
+5. `call`命令。
+6. スタックアラインメントを戻す。
 
 ## セルフホスト
 ### 方針
@@ -1120,91 +1186,35 @@ if(var->len == 17 && memcmp(var->name, "__uint64_identity", 17) == 0){ stmt(); r
 ### セルフホストの確認
 gccでコンパイルした自作コンパイラをstage1という。そして、stage1で自分自身をコンパイルしたものをstage2、stage2で自分自身をコンパイルしたものをstage3と呼ぶ。stage2とstage3はコンパイラとソースコードが同じなので出力は完全に等しくなる。
 
-しかしgccでリンクした場合、アセンブリが同一でも実効ファイルが同じとは限らない。
+しかしgccでリンクした場合、アセンブリが同一でも実行ファイルが同じとは限らない。
 
 [Linuxのコンパイル結果が同等であることの確認方法](http://seigaji.info/wordpress/2015/02/15/linux_elf_binary_diff/)
 > まず差分が発生する理由として考えられるのがコンパイラがビルドする際にリンカが使うためのシンボル情報を付加しているというのは常識。ということでstripコマンドを使ってみることにしました。
 
 リンカによって付加されるシンボル情報が異なるらしい。つまり、
 ```
-> strip -s stage2
-> strip -s stage3
-> diff stage2 stage3
+$ strip -s stage2
+$ strip -s stage3
+$ diff stage2 stage3
 ```
 で何も出なければセルフホスト成功ということになる。
-
-## 嵌った点
-コンパイラを作っていると普段は出会えないエラーに遭遇することになります。
-
-### 構造体と変数名に同じ名前を使うとキャストできない
-`(my_struct*)`を外すと通る。
-```c
-my_struct *new_my_struct(int val){
-    my_struct *my_struct = (my_struct*)calloc(1, sizeof(my_struct));
-    my_struct->val = val;
-    return my_struct;
-}
-```
-
-```
-error: expected expression before ')' token
-my_struct *my_struct = (my_struct*)calloc(1, sizeof(my_struct));
-```
-
-あとメンバのアクセスでバグるぽい。(良く分からない)
-
-```
-sysmalloc: Assertion `(old_top == initial_top (av) && old_size == 0) || ((unsigned long) (old_size) >= MINSIZE && prev_inuse (old_top) && ((unsigned long) old_end & (pagesize - 1)) == 0)' failed. Aborted
-```
-
-### `node *nd = calloc(1, sizeof(node*))`が暗黙キャストされてメモリが確保されなかった
-気を付けましょう。
-
-### 関数呼び出しの引数内で計算があるとバグる
-関数呼び出しの引数内で割り算の式があった。
-割り算は以下のように行う。
-```
-cqo
-idiv rdi
-```
-`cqo`は`rax`を`rdx:rax`に拡張する命令。`idiv rdi`は`rdx:rax`と`rdi`の割り算を計算する。後ろの引数から評価する際、`cqo`命令が既に第三引数を格納していた`rdx`レジスタを上書きしてしまったため正常に動作しなかった。
-解決策としては、引数を右から評価する際に一旦全てをスタックに積んでから、最初の引数をレジスタに移動させる。
-
-各ノードの生成されたコードで、最初にスタックからpopして最後にpushするが、収支が合わず余計にpopされてしまっていた。elseなしのif文では文があるかないかなので、ジャンプした先で余計にpopされていた。
-
-### グローバル変数名にレジスタ名を使うとアセンブラに怒られる
-gcc + intel syntaxだとグローバル変数名にレジスタ名を使うと`rax[rip]`が出力されて不可となる。
-![](./global_register.png)
-
-### NULLをmemcmpに渡すとSegmentation fault
-文字列の一致判定を自作コンパイラでコンパイルするときに以下のようなコードで発生。
-```c
-if(a->len == b-len && memcmp(a->name, b->name, b->len) == 0)
-```
-
-自作コンパイラでは論理演算の短絡評価をしていなかったので、`a->name`が`NULL`の時に第二オペランドが評価されてSegmentation faultした。
 
 ## 参考資料/引用文献
 
 ツール
-- [Wandbox](https://wandbox.org/)
 - [Compiler Explorer](https://godbolt.org/)
 
 規格書
-- [AMD64 Architecture Programmer's Manual](https://developer.amd.com/resources/developer-guides-manuals/): AMD64 Architectureの箇所。特に[Volume 1: Application Programming](https://www.amd.com/system/files/TechDocs/24592.pdf)の1 Overview of the AMD64 Architecture, 2 Memory Model, 3 General Purpose Programming, 6 x87 Floating-Point Programming
-- [Intel 64 and IA-32 Architectures Software Developer's Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html): Volume1 4.1.1 Alignment of Words, Doublewords, Quadwords, and Double Quadwords
+- [Intel 64 and IA-32 Architectures Software Developer's Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
+- [AMD64 Architecture Programmer's Manual](https://developer.amd.com/resources/developer-guides-manuals/): AMD64 Architectureの箇所。
 - [Introduction to x64 Assembly](https://www.intel.com/content/dam/develop/external/us/en/documents/introduction-to-x64-assembly-181178.pdf)
 - [Documentation for binutils 2.38](https://sourceware.org/binutils/docs-2.38/)
-    - [Using as](https://sourceware.org/binutils/docs-2.38/as/index.html): GNUアセンブラのリファレンス。7 Assembler Directives。
-        - [9.16.3.1 AT&T Syntax versus Intel Syntax](https://sourceware.org/binutils/docs-2.38/as/i386_002dVariations.html#i386_002dVariations)
-        - [9.16.7 Memory References](https://sourceware.org/binutils/docs-2.38/as/i386_002dMemory.html)
-- [UNIX Assembler Reference Manual](https://www.tom-yam.or.jp/2238/ref/as.pdf)
+    - [Using as](https://sourceware.org/binutils/docs-2.38/as/index.html): GNUアセンブラのリファレンス。
 - [Assembler Directives](https://developer.apple.com/library/archive/documentation/DeveloperTools/Reference/Assembler/040-Assembler_Directives/asm_directives.html#//apple_ref/doc/uid/TP30000823-SW1)
 - [System V ABI - OSDeV Wiki](https://wiki.osdev.org/System_V_ABI)
-- [System V Application Binary Interface AMD64 Architecture Processor Supplement](https://www.uclibc.org/docs/psABI-x86_64.pdf): 3.1 Machine Interface, 3.2 Function Calling Sequence, 3.5.7 Variable Argument List
+- [System V Application Binary Interface AMD64 Architecture Processor Supplement](https://www.uclibc.org/docs/psABI-x86_64.pdf)
 - [SYSTEM V APPLICATION BINARY INTERFACE Intel386 Architecture Processor Supplement Fourth Edition](http://www.sco.com/developers/devspecs/abi386-4.pdf)
 - [N1570](http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf): C11言語仕様の最終草稿
-- [The Python Language Reference](https://docs.python.org/3/reference/compound_stmts.html): Python3のリファレンス
 
 記事
 - [低レイヤを知りたい人のためのCコンパイラ作成入門](https://www.sigbus.info/compilerbook): インクリメンタルなCコンパイラ開発の記事
