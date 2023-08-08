@@ -87,7 +87,7 @@
               <a href="#命令セット">命令セット</a>
               <ol>
                 <li>
-                  <a href="#データ転送命令">データ転送命令</a>
+                  <a href="#データ転送">データ転送</a>
                 </li>
                 <li>
                   <a href="#スタック操作">スタック操作</a>
@@ -486,7 +486,7 @@
         </li>
       </ul>
       <h3 id="ラベル">ラベル</h3>
-      <p><code>.L</code>から始まるラベルはファイルスコープとなり、別ファイルからできない。</p>
+      <p><code>.L</code>から始まるラベルはファイルスコープとなり、別ファイルから参照できない。</p>
       <p><a href="https://sourceware.org/binutils/docs/as/Symbol-Names.html">5.3 Symbol Names (Using as)</a> Local Symbol Names</p>
       <blockquote>A local symbol is any symbol beginning with certain local label prefixes. By default, the local label prefix is ‘.L’ for ELF systems or ‘L’ for traditional a.out systems, but each target may have its own set of local label prefixes. On the HPPA local symbols begin with ‘L$’.</blockquote>
       <h2 id="System V ABI">System V ABI</h2>
@@ -957,7 +957,7 @@
       </ul>
       <h3 id="命令セット">命令セット</h3>
       <p>64bitモードではデフォルトのアドレスサイズは64bitである。</p>
-      <h4 id="データ転送命令">データ転送命令</h4>
+      <h4 id="データ転送">データ転送</h4>
       <p>レジスタ/メモリからレジスタ/メモリへデータを移動する。ただしメモリからメモリへの移動はできない。第二オペランドとして即時定数(immediate constant)を用いることができる。</p>
       <ul>
         <li>

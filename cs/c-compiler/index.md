@@ -103,7 +103,7 @@ QWORD PTR [reg]はregのアドレスから8バイト
 - `.asciz`: 0個以上の文字列リテラルに終端文字を付けて連続して配置する。
 
 ### ラベル
-`.L`から始まるラベルはファイルスコープとなり、別ファイルからできない。
+`.L`から始まるラベルはファイルスコープとなり、別ファイルから参照できない。
 [5.3 Symbol Names (Using as)](https://sourceware.org/binutils/docs/as/Symbol-Names.html) Local Symbol Names
 > A local symbol is any symbol beginning with certain local label prefixes. By default, the local label prefix is ‘.L’ for ELF systems or ‘L’ for traditional a.out systems, but each target may have its own set of local label prefixes. On the HPPA local symbols begin with ‘L$’.
 
@@ -254,7 +254,7 @@ AMD64はリトルエンディアン(低ビットが低アドレス)なので、�
 ### 命令セット
 64bitモードではデフォルトのアドレスサイズは64bitである。
 
-#### データ転送命令
+#### データ転送
 レジスタ/メモリからレジスタ/メモリへデータを移動する。ただしメモリからメモリへの移動はできない。第二オペランドとして即時定数(immediate constant)を用いることができる。
 - MOV: 第二オペランドから第一オペランドにデータを移動する。オペランドは同じ大きさ。
 - MOVZX: ゼロ拡張(zero extention)。ソースより大きいレジスタに転送する際、上位bitをゼロ埋めする。
