@@ -1041,22 +1041,22 @@
       <p>条件ジャンプ</p>
       <ul>
         <li>
-          JE rel8: ZF = 1
+          JE rel8: ZF == 1
         </li>
         <li>
-          JNE rel8: ZF = 0
+          JNE rel8: ZF == 0
         </li>
         <li>
-          JL rel8: SF $\neq$ OF
+          JL rel8: SF != OF
         </li>
         <li>
-          JLE rel8: SF $\neq$ OF or ZF = 1
+          JLE rel8: SF != OF or ZF == 1
         </li>
         <li>
-          JG rel8: SF = OF and ZF = 0
+          JG rel8: SF == OF and ZF == 0
         </li>
         <li>
-          JGE rel8: SF = OF
+          JGE rel8: SF == OF
         </li>
       </ul>
       <p>無条件ジャンプ</p>

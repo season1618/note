@@ -291,12 +291,12 @@ AMD64はリトルエンディアン(低ビットが低アドレス)なので、�
 
 #### 制御転送
 条件ジャンプ
-- JE rel8: ZF = 1
-- JNE rel8: ZF = 0
-- JL rel8: SF $\neq$ OF
-- JLE rel8: SF $\neq$ OF or ZF = 1
-- JG rel8: SF = OF and ZF = 0
-- JGE rel8: SF = OF
+- JE rel8: ZF == 1
+- JNE rel8: ZF == 0
+- JL rel8: SF != OF
+- JLE rel8: SF != OF or ZF == 1
+- JG rel8: SF == OF and ZF == 0
+- JGE rel8: SF == OF
 
 無条件ジャンプ
 - JMP
