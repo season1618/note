@@ -24,6 +24,10 @@ body {
     background-color: rgb(200, 210, 220);
 }
 
+#sidebar h4 {
+    margin-left: 1em;
+}
+
 #sidebar a {
     color: black;
     text-decoration: none;
