@@ -354,7 +354,7 @@ AMD64はリトルエンディアン(低ビットが低アドレス)なので、�
 
 対数関数
 - f2xm1: $ST(0) = 2^{ST(0)} - 1 (-1 \leq ST(0) \leq 1)$
-- fscale: $ST(0) = ST(0) \times 2^{\left[ST(1)\right]}$
+- fscale: $ST(0) = ST(0) \times 2^{[ST(1)]}$
 - fyl2x: $ST(1) = ST(1) \times \log_2{ST(0)} (ST(0) > 0)$とした後、スタックをポップする。
 - fyl2xp1: $ST(1) = ST(1) \times \log_2{ST(0) + 1} (0 < |ST(0)| < 1 - \sqrt{2}/2)$とした後、スタックをポップする。
 
@@ -424,7 +424,7 @@ char *puncts[41] = {
 
 トークン列を連結リストとして定義。トークンの文字列の情報はまだ必要なので持っておく。
 
-```dcl.h
+```c dcl.h
 struct token {
     token_kind kind;
     token *next;
