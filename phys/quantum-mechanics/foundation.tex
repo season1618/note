@@ -1,0 +1,238 @@
+\section{数学的基礎}
+
+\subsection{量子系}
+    \begin{ax}[純粋状態]
+        状態空間は可分な無限次元複素ヒルベルト空間$\H$として表される。状態空間の単位ベクトルを状態ベクトルまたは(純粋)状態と呼ぶ。状態$u$と絶対値1の複素数$c$に対して、$u$と$cu$は同じ状態と見なす。
+    \end{ax}
+    純粋状態の線形結合を重ね合わせ、純粋状態の古典確率混合を混合状態と呼ぶ。純粋状態と混合状態を合わせて量子状態と呼ぶ。
+
+    状態を$\ket{u} \in \H$のように書くときケットベクトルと呼ぶ。$\ket{u}$に対して、$\ket{u}$との内積$f: \H \to C; \ket{v} \mapsto \inner{\ket{u}}{\ket{v}}$を$\bra{u}$と書き、ブラベクトルと呼ぶ。またこの内積$\bra{u} \cdot \ket{v}$を$\braket{u}{v}$と書く。
+
+    \begin{ax}[可観測量]
+        可観測量(observable)または物理量は$\H$上の自己共役演算子として表される。
+    \end{ax}
+
+    \begin{dfn}[固有状態]
+        可観測量の固有ベクトルによって表される状態を固有状態という。
+    \end{dfn}
+
+    \begin{dfn}[同時固有状態]
+        可観測量$A, B$に対して、$u$が両方の固有状態であるとき、同時固有状態という。
+    \end{dfn}
+    ある物理量の固有状態が同時に定常状態にもなっている(ハミルトニアンとの同時固有状態である)とき、その物理量の固有値を良い量子数と呼ぶ。
+
+    \begin{ax}[射影仮説]
+        状態$u$において可観測量$A$を観測すると、$A$のある固有値$\lambda$が観測され、系の状態は$\lambda$に属する固有空間への射影演算子を$P_\lambda$として$P_\lambda u$に遷移する。遷移する確率は$|P_\lambda u|^2$である(ボルンの規則)。
+    \end{ax}
+    可観測量が自己共役演算子なので観測される物理量は常に実数となる。
+
+    % \begin{ax}
+    %     状態$u$において、どの二つも強可換な可観測量$A_1, \dots, A_n$を観測する。
+    % \end{ax}
+    強可換でない可観測量について観測は定義されない。
+
+\subsection{系の時間発展}
+    \subsubsection{シュレーディンガー描像}
+        観測されていない系の時刻$t$における状態ベクトル$u(t)$に対して
+            \[u(t) = \U(t, t_0)u(t_0)\]
+        なる$\U(t, t_0)$を時間発展演算子という。$\U$は状態ベクトルの長さを保つ演算子なのでユニタリ演算子である。
+        \begin{ax}
+            量子系のハミルトニアンを$H$とすると、観測がなされない場合の状態$u$の無限小の時間発展は
+                \[u(t + dt) = \left(1 - \frac{iH}{\hbar}dt\right)u(t)\]
+            で与えられる。
+        \end{ax}
+        系の時間発展を状態ベクトルの時間発展とする見方をシュレーディンガー描像という。この時間発展演算子は$\H \rightarrow \H$ではないため可観測量ではない。
+
+    \subsubsection{ハイゼンベルク描像}
+        可観測量を$A$に対して
+        \begin{align*}
+            \inner{u(t)}{Au(t)}
+            &= \inner{\U(t, t_0)u(t_0)}{A\U(t, t_0)u(t_0)}\\
+            &= \inner{u(t_0)}{\U(t, t_0)^{-1}A\U(t, t_0)u(t_0)}
+        \end{align*}
+        である。ここで
+            \[A(t) = \U(t)^{-1}AU(t)\]
+        として、状態ベクトルの代わりに可観測量の演算子が時間発展すると見ると
+        \begin{align*}
+            \dv{A}{t}
+            &= \pdv{U^{-1}}{t}AU + U^{-1}A\pdv{U}{t}\\
+            &= \(\pdv{U}{t}\)^{-1}AU + U^{-1}A\pdv{U}{t}\\
+            &= -\frac{1}{i\hbar}(HU)^{-1}AU + \frac{1}{i\hbar}U^{-1}A(HU)\\
+            &= \frac{1}{i\hbar}(U^{-1}A(HU) - (HU)^{-1}AU)\\
+            &= \frac{1}{i\hbar}(U^{-1}AHU - U^{-1}H^{-1}AU)\\
+            &= \frac{1}{i\hbar}[A, U^{-1}AU]\\
+            &= \frac{1}{i\hbar}[A, H]
+        \end{align*}
+        これをハイゼンベルク方程式という。系の時間発展を可観測量の時間発展とする見方をハイゼンベルク描像という。
+
+    以上を整理すると、量子力学の基本原理は次のようになる。
+    \begin{enumerate}
+        \item 状態は複素ヒルベルト空間$\H$の単位ベクトルである。
+        \item 可観測量は$\H$上の自己共役演算子である。
+        \item 状態$u$の可観測量$A$を観測すると、$A$のある固有値$\lambda$が得られ、系の状態は$P_\lambda u$に遷移する。
+        \item 状態$u$で$A$を観測した際$\lambda$が得られる確率は$|P_\lambda u|^2$である。
+        \item 系の無限小時間発展演算子は$1 - \frac{iH}{\hbar}dt$で与えられる。
+    \end{enumerate}
+
+\subsection{二重スリット実験}
+    スリットが一つのとき、電子の分布はスリットを中心とした山形となる。スリットが二つのとき、電子の分布は二か所のスリットの位置でピークとなる形ではなく、干渉縞ができる。すなわち、電子は片方のスリットを取ってスクリーンに到達しているのではなく、二重スリットによって干渉した確率分布に従って現れる。一つの電子は観測する度に異なる位置に表れるため、観測していない時は複数の固有状態の重ね合わせであると考えられる。そして観測された瞬間に一つの固有状態に遷移する波束の収縮が起こる。これをコペンハーゲン解釈という。
+
+    一方多世界解釈では波束の収縮は起こらず、デコヒーレンスによって干渉が喪失し、複数の世界に分岐する。
+
+\subsection{不確定性原理}
+    状態$u$が与えられたとき、可観測量$A$の不確定性$\Delta A$を標準偏差によって
+    \begin{align*}
+        \Delta A^2
+            &= \ev{(A - \ev{A})^2}\\
+            &= \ev{A^2} - 2\ev{A\ev{A}} + \ev*{\ev{A}^2}\\
+            &= \ev{A^2} - \ev{A}^2
+    \end{align*}
+    と定義する。二つの可観測量の不確定性の積を考える。シュワルツの不等式より
+    \begin{align*}
+        \Delta A^2 \cdot \Delta B^2
+            &= |(A - \ev{A})u| \cdot |(B - \ev{B})u|\\
+            &\geq |\inner{(A - \ev{A})u}{(B - \ev{B})u}|^2 = |\inner{Au}{Bu}|^2\\
+            &\geq |\Im\inner{Au}{Bu}|^2 = |\Im\inner{u}{ABu}|^2\\
+            &= \left|\ev{\frac{AB - BA}{2}}\right|^2\\
+            &= \frac{|\ev{[A, B]}|^2}{4}
+    \end{align*}
+    となる。つまり二つの可観測量が非可換のとき不確定性が同時に0にならないことがある。これを不確定性原理という。
+
+    一方、二つの可観測量が交換するとき、それらを同時に決定することが可能である。
+    \begin{thm}
+        $[A, B] = 0$のとき、$A, B$の同時固有状態からなる完全直交系が存在する。つまり$A, B$の同時対角化が可能である。
+    \end{thm}
+    \begin{proof}
+        $\psi$を$A$の固有値$\lambda$に属する固有状態とする。
+            \[AB\psi = BA\psi = B(\lambda\psi) = \lambda B\psi\]
+        よって$B\psi$も$\lambda$に属する固有状態となる。つまり$B$は$A$の固有空間$W$をそれ自身に移すので、$B$の固有状態による$W$の完全直交系が取れる。
+    \end{proof}
+
+\subsection{波動力学}
+    \begin{dfn}[$L^2$空間]
+        二乗可積分関数の集合
+            \[L^2(X) = \{\psi: X \rightarrow \C \mid \int |\psi(x)|^2 \dd{x} < \infty\}\]
+        を$L^2$空間と呼び、内積
+            \[\inner{\psi_1}{\psi_2} = \int \psi_1^*\psi_2 \dd{x}\]
+        を導入する。このとき$L^2$空間はヒルベルト空間である。
+    \end{dfn}
+    状態空間を$L^2$空間として定式化したものを波動力学という。このときの状態ベクトルを波動関数と呼ぶ。波動関数が$n$粒子の位置$r_1, r_2, \dots, r_n$の関数$\psi(r_1, r_2, \dots, r_n) \in L^2(\R^{3n})$であるとき、位置表示の波動関数という。多粒子系の波動関数を多体波動関数と呼ぶこともある。
+
+    ただしデルタ関数は$L^2$に属していないため注意が必要である。
+
+    波動関数は二乗可積分であり、二乗可積分な関数は無限遠において0に収束する。
+
+    $L^2$空間上の可観測量は微分演算子として定義できる。
+    \begin{dfn}[位置演算子・運動量演算子・軌道角運動量演算子]
+        3次元直交座標$(x, y, z)$によって位置表示された一粒子の波動関数に対する位置演算子、運動量演算子、軌道角運動量演算子を次のように定義する。
+        \begin{align*}
+            \hat{r} &= (\hat{x}, \hat{y}, \hat{z}) = (x, y, z)\\
+            \hat{p} &= (\hat{p_x}, \hat{p_y}, \hat{p_z}) = \(-i\hbar\pdv{x}, -i\hbar\pdv{y}, -i\hbar\pdv{z}\)\\
+            \hat{L} &= \hat{r} \times \hat{p} = -i\hbar \(y\pdv{z} - z\pdv{y}, z\pdv{x} - x\pdv{z}, x\pdv{y} - y\pdv{x}\)
+        \end{align*}
+    \end{dfn}
+    \begin{proof}
+    \end{proof}
+
+    % 軌道角運動量の二乗演算子は
+    % \begin{align*}
+    %     \hat{L_x}^2
+    %     &= -\hbar^2 \(y\pdv{z} - z\pdv{y}\)^2\\
+    %     &= -\hbar^2 \(y^2\pdv[2]{z} - y\pdv{y} - yz\pdv{y}\pdv{z} - z\pdv{z} - yz\pdv{y}\pdv{z} + z^2\pdv[2]{y}\)\\
+    % \end{align*}
+    % \begin{align*}
+    %     \hat{L^2}
+    %     &= \hat{L_x}^2 + \hat{L_y}^2 + \hat{L_z}^2\\
+    %     &= 
+    % \end{align*}
+
+    % 軌道角運動量を極座標で書き換える。
+    % \begin{align*}
+    %     x &= r\sin\theta\cos\phi\\
+    %     y &= r\sin\theta\sin\phi\\
+    %     z &= r\cos\theta\\
+    %     \pdv{x} &= \sin\theta\cos\phi\pdv{r} + r\cos\theta\cos\phi\pdv{\theta} - r\sin\theta\sin\phi\pdv{\phi}\\
+    %     \pdv{y} &= \sin\theta\sin\phi\pdv{r} + r\cos\theta\sin\phi\pdv{\theta} + r\sin\theta\cos\phi\pdv{\phi}\\
+    %     \pdv{z} &= \cos\theta\pdv{r} - r\sin\theta\pdv{\theta}
+    % \end{align*}
+    % より
+    % \begin{align*}
+    %     L_x &= -i\hbar \(r\cos\theta\sin\theta\sin\phi\pdv{r} - r^2\sin^2\theta\sin\phi\pdv{\theta} - r\cos\theta\sin\theta\sin\phi\pdv{r} - r^2\cos^2\theta\sin\phi\pdv{\theta} - r^2\cos\theta\sin\theta\pdv{\phi}\)\\
+    %         &= i\hbar \(r^2\sin\phi\pdv{\theta} + r^2\cos\theta\sin\theta\pdv{\phi}\)\\
+    %     L_y &= i\hbar \(r^2\cos\phi\pdv{\theta} + r^2\cos\theta\sin\theta\pdv{\phi}\)\\
+    %     L_z &= -i\hbar \(
+    %         r\sin^2\theta\cos\phi\sin\phi\pdv{r} + r^2\cos\theta\sin\theta\cos\phi\sin\phi\pdv{\theta} + r^2\sin^2\theta\cos^2\phi\pdv{\phi}
+    %         - r\sin^2\theta\cos\phi\sin\phi\pdv{r} - r^2\cos\theta\sin\theta\cos\phi\sin\phi\pdv{\theta} + r^2\sin^2\theta\sin^2\phi\pdv{\phi}
+    %         \)\\
+    %         &= -i\hbar r^2\sin^2\theta\pdv{\phi}
+    % \end{align*}
+    である。軌道角運動量の大きさは
+    \begin{align*}
+        % \hat{L^2} &= \hat{L_x}^2 + \hat{L_y}^2 + \hat{L_z}^2\\
+        %           &= -\hbar^2 \(r^2\pdv[2]{\theta}
+        \hat{L^2} = -\hbar^2 \left[\frac{1}{\sin\theta}\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \frac{1}{\sin^2\theta}\pdv[2]{\phi}\right]
+    \end{align*}
+    となる。
+
+    各演算子の交換関係は次のようになっている。
+    \begin{align*}
+        &[x, y] = [y, z] = [z, x] = 0\\
+        &[p_x, p_y] = [p_y, p_z] = [p_z, p_x] = 0\\
+        &[x, p_x] = [y, p_y] = [z, p_z] = i\hbar\\
+        &[L_x, L_y] = i\hbar L_z\\
+        &[L^2, L_x] = [L^2, L_y] = [L^2, L_z] = 0
+    \end{align*}
+    軌道角運動量は各成分を同時に決めることができないので、特定の向きを持ったベクトルを想定するのは正しくない。
+
+    波動関数$\psi(t)$の時間発展は
+    \begin{align*}
+        \psi(t + dt) &= \left(1 - \frac{iH}{\hbar}\right)\psi(t)\\
+        i\hbar\pdv{\psi}{t} = H\psi(t)
+    \end{align*}
+    となる。これをシュレーディンガー方程式という。
+
+    \begin{dfn}[シュレーディンガー演算子]
+    \end{dfn}
+
+    \begin{thm}[エーレンフェストの定理]
+            \[\dv{\ev{p}}{t} = -\ev{\nabla V}\]
+    \end{thm}
+    \begin{proof}
+        \begin{align*}
+            \dv{\ev{p}}{t}
+            &= \dv{t}(\int \psi^* \cdot -i\hbar\nabla \psi \dd[3]{r})\\
+            &= \int \(i\hbar\pdv{\psi}{t}\)^* \cdot \nabla\psi - \psi^* \cdot \nabla\(i\hbar\pdv{\psi}{t}\) \dd[3]{r}\\
+        \end{align*}
+        シュレーディンガー方程式
+            \[i\hbar\pdv{\psi}{t} = \(-\frac{\hbar^2}{2m}\Delta + V\)\psi\]
+        より
+        \begin{align*}
+            \dv{\ev{p}}{t}
+            &= \int \(-\frac{\hbar^2}{2m}\Delta + V\)\psi^* \cdot \nabla\psi - \psi^* \cdot \nabla\left[\(-\frac{\hbar^2}{2m}\Delta + V\)\psi\right] \dd[3]{r}\\
+            &= \int \psi^* \cdot - \nabla V \psi \dd[3]{r}\\
+            &= -\ev{\nabla V}
+        \end{align*}
+        となる。
+    \end{proof}
+    つまり量子力学において物理量の期待値を考えると、古典力学におけるニュートンの運動方程式が導かれる。
+
+\subsection{行列力学}
+    \begin{dfn}[$l^2$空間]
+        ノルムが有限な無限次元の列ベクトルの集合
+            \[l^2 = \{a \in \C^\infty \mid a_1^2 + a_2^2 + \dots < \infty\}\]
+        を$l^2$空間と呼び、内積
+            \[\inner{a}{b} = a_1^*b_1 + a_2^*b_2 + \cdots\]
+        を導入する。このとき$l^2$空間はヒルベルト空間である。
+    \end{dfn}
+    $N$粒子の系に対して、状態空間を$l^2$として定式化したものを行列力学という。$l^2$空間におけるケットベクトル$\ket{\psi} = (\psi_1, \psi_2, \dots)^\top \in l^2$に対してブラベクトルは$\bra{\psi} = (\psi_1^*, \psi_2^*, \dots)$となる。可観測量は無限次元の行列である。
+
+% \subsection{経路積分}
+
+% 光の粒子性 黒体放射、光電効果、コンプトン効果
+% 電子の波動性 二重スリット実験、電子線回折、デイヴィソン＝ガーマーの実験
+% 物理量は確率的に決まる 二重スリット実験
+% 物質は波のように振る舞う(確率混合ではなく重ね合わせ) 二重スリット実験
+% 物理量はしばしば離散的な値となる 線スペクトル
+% エネルギーの最小値が正であり得る(零点エネルギー) 線スペクトル
+% 観測によって状態が遷移する(波束の収縮) ?
+% 同時に観測できる物理量の組合せには制限がある(不確定性原理) 零点振動、シュテルン＝ゲルラッハの実験

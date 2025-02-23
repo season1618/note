@@ -1,0 +1,123 @@
+\section{多粒子系}
+
+\subsection{同種粒子系}
+    量子力学において同種粒子を区別することはできない(不可弁別性)。したがって同種粒子系の状態はある対称性を持ったものに限られる。
+    
+    $N$個の同種粒子からなる系の状態$\psi(r_1, \dots, r_N)$を考える。粒子$i$と粒子$j$を入れ替える演算子$P_{ij}$を
+        \[P_{ij}\psi(\dots, r_i, \dots, r_j, \dots) = \psi(\dots, r_j, \dots, r_i, \dots)\]
+    とする。系の状態は粒子の入れ替えによって観測可能な違いを生じない。したがって$P_{ij}\psi = e^{i\theta}\psi$である。$P_{ij}^2 = 1$より結局$P_{ij}\psi = \pm \psi$である。つまり同種粒子系の状態は任意の$i, j$について$P_{ij}$の固有状態つまり同時固有状態である。同時固有状態に縮退がないなら、$P_{ij}P_{jk}P_{ki} = P_{jk}$より$P_{ij}$の固有値は等しい。つまり固有値が全て$1$(完全対称)か固有値がすべて$-1$(完全反対称)となる。前者をボース粒子(ボソン)、後者をフェルミ粒子(フェルミオン)と呼ぶ。ボース粒子とフェルミ粒子は超選択則により混合しない。
+    
+    ここで以下の定理が成り立つ。
+    \begin{thm}[スピンと統計の定理]
+        整数スピンの粒子は完全対称、半整数スピンの粒子は完全反対称である。
+    \end{thm}
+
+    多粒子系の状態を一粒子状態のテンソル積を対称化または反対称化した状態で表されることがある。固有値$\lambda$に属する一粒子の固有状態を$\ket{\lambda}$とし、$\ket{\lambda}$にある粒子が$n_\lambda$ ($\sum_\lambda n_\lambda = N$)個あるときの固有状態を$\ket{\{n_\lambda\}}$と書くことにする。ボース粒子系の固有状態は、
+        \[\ket{\{n_\lambda\}_\lambda} = \frac{1}{\sqrt{N! \prod_i n_i!}} \sum_{\sigma \in S_N} \ket{\lambda_{\sigma(1)}} \otimes \dots \otimes \ket{\lambda_{\sigma(N)}}\]
+    フェルミ粒子系の固有状態は、
+        \[\ket{\{n_\lambda\}_\lambda} = \frac{1}{\sqrt{N!}} \sum_{\sigma \in S_N} (-1)^\sigma \ket{\lambda_{\sigma(1)}} \otimes \dots \otimes \ket{\lambda_{\sigma(N)}}\]
+    となる。フェルミ粒子の場合、ある$\lambda$で$n_\lambda > 1$のとき0になる。つまり二つの粒子が同じ固有状態となることはない(パウリの排他原理)。
+
+\subsection{フォック空間}
+    通常、多粒子系の状態空間は一粒子状態空間のテンソル積の真部分空間となる。したがって多粒子系の問題を解くときは次のような二段階の手順を踏むことになる。
+    \begin{enumerate}
+        \item 一粒子系の状態を解く。
+        \item 一粒子状態のテンソル積を対称化/反対称化して多粒子系の状態を作る。
+    \end{enumerate}
+    しかし初めから多粒子系の状態空間として対称/反対称なものを想定すればこのような手続きは不要である。このような空間をフォック空間という。また、同種粒子は区別できないので、一粒子固有状態にいくつの粒子があるかを示す占有数表示を用いるのが自然である。
+
+    一粒子状態空間$V$に対し、$N$粒子の対称/反対称な状態空間は
+        \[F_\pm^N = S_\pm \H^{\otimes N}\]
+    となる。
+
+    一粒子状態を$\ket{i}$ ($i = 1, 2, \dots$)で表現する。一粒子状態$\ket{i}$にある粒子が$n_i$個あるような$N$個の同種粒子系の状態を$\ket{n_1, n_2, \dots}$と書くことにする。$N$個の粒子に番号を付け、粒子$\alpha$が一粒子状態$\ket{\phi_\alpha}$にあるとして、ボース粒子系の固有状態を
+        \[\ket{n_1, n_2, \dots} = \frac{1}{\sqrt{N! \prod_i n_i!}} \sum_{\sigma \in S^N} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\]
+    フェルミ粒子系の固有状態を
+        \[\ket{n_1, n_2, \dots} = \frac{1}{\sqrt{N!}} \sum_{\sigma \in S^N} (-1)^\sigma \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\]
+    と定義する。この定義が番号に付け方に依らないことは明らかである。$\ket{0, 0, \dots}$は真空を表す。
+
+    場の扱い。生成消滅を伴う現象。多粒子系の計算。物質と場の統一。
+
+\subsection{生成消滅演算子}
+    $i$番目の一粒子状態に対して、ボース粒子及びフェルミ粒子系の生成消滅演算子$d_i^\dagger: F_\pm^N \to F_\pm^{N+1}, d_i: F_\pm^N \to F_\pm^{N-1}$を
+    \begin{align*}
+        d_i^\dagger \ket{n_1, n_2, \dots, n_i, \dots} &= \sqrt{n_i + 1}\ket{n_1, n_2, \dots, n_i + 1, \dots}\\
+        d_i \ket{n_1, n_2, \dots, n_i, \dots} &= \sqrt{n_i}\ket{n_1, n_2, \dots, n_i - 1, \dots}
+    \end{align*}
+    と定義する。ボース粒子系には交換関係
+        \[[d_i^\dagger, d_i^\dagger] = 0, \quad [d_i, d_j] = 0, \quad [d_i, d_j^\dagger] = \delta_{ij}\]
+    が成り立ち、フェルミ粒子系では反交換関係
+        \[\{d_i^\dagger, d_i^\dagger\} = 0, \quad \{d_i, d_j\} = 0, \quad \{d_i, d_j^\dagger\} = \delta_{ij}\]
+    が成り立つ。また個数演算子$\hat{n_i}$を
+        \[\hat{n_i} = d_i^\dagger d_i\]
+    とする。
+
+    生成演算子を用いると同種粒子系の状態は
+        \[\ket{n_1, n_2, \dots} = \prod_{i = 1}^\infty \frac{1}{\sqrt{n_i!}} (d_i^\dagger)^{n_i} \ket{0, 0, \dots}\]
+    となる。
+
+\subsection{第二量子化}
+    系を占有数表示で議論するために演算子を生成消滅演算子を用いて書き直す。同種粒子系において、$n$粒子状態にのみ作用する演算子を$n$体演算子という。$A$を一粒子状態に作用する演算子として、一体演算子
+    \begin{align*}
+        A^1 &= \sum_{\alpha = 1}^N A_\alpha\\
+        A_\alpha &= I \otimes \dots \otimes A \otimes \dots \otimes I
+    \end{align*}
+    は
+    \begin{align*}
+        A^1\ket{n_1, n_2, \dots}
+            &= \sum_\alpha A_\alpha \frac{1}{\sqrt{N! \prod_k n_k!}} \sum_{\sigma \in S^N} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \ket{\phi_{\sigma(\alpha)}} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\\
+            &= \frac{1}{\sqrt{N! \prod_k n_k!}} \sum_\alpha \sum_{\sigma \in S^N} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes A\ket{\phi_{\sigma(\alpha)}} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\\
+            &= \frac{1}{\sqrt{N! \prod_k n_k!}} \sum_\alpha \sum_{\sigma \in S^N} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \left(\sum_i \mel{i}{A}{\phi_{\sigma(\alpha)}} \ket{i}\right) \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\\
+            &= \frac{1}{\sqrt{N! \prod_k n_k!}} \sum_i \sum_{\sigma \in S^N} \sum_\alpha \mel{i}{A}{\phi_{\sigma(\alpha)}} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \ket{i} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\\
+            &= \frac{1}{\sqrt{N! \prod_k n_k!}} \sum_{i, j} \mel{i}{A}{j} \sum_{\sigma \in S^N} \sum_{\alpha, \phi_{\sigma(\alpha)} = j} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \ket{i} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\\
+            &= \sum_i \mel{i}{A}{i} \frac{1}{\sqrt{N! \prod_k n_k!}} \sum_{\sigma \in S^N} \sum_{\alpha, \phi_{\sigma(\alpha)} = i} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \ket{i} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}\\
+            &\quad + \sum_{i \neq j} \mel{i}{A}{j} \frac{1}{\sqrt{N! \prod_k n_k!}} \sum_{\sigma \in S^N} \sum_{\alpha, \phi_{\sigma(\alpha)} = j} \ket{\phi_{\sigma(1)}} \otimes \dots \otimes \ket{i} \otimes \dots \otimes \ket{\phi_{\sigma(N)}}
+    \end{align*}
+    各$\sigma$で$\phi_{\sigma(\alpha)} = j$となる$\alpha$は$n_j$個あるので、
+    \begin{align*}
+        A^1\ket{n_1, n_2, \dots}
+            &= \sum_i \mel{i}{A}{i} n_i\ket{n_1, n_2, \dots} + \sum_{i \neq j} \mel{i}{A}{j} n_j\sqrt{\frac{n_i + 1}{n_j}}\ket{n_1, \dots, n_i + 1, \dots, n_j - 1, \dots}\\
+            &= \sum_i \mel{i}{A}{i} n_i\ket{n_1, n_2, \dots} + \sum_{i \neq j} \mel{i}{A}{j} \sqrt{(n_i + 1)n_j}\ket{n_1, \dots, n_i + 1, \dots, n_j - 1, \dots}
+    \end{align*}
+    より
+    \begin{align*}
+        A^1 &= \sum_{i, j} \mel{i}{A}{j} d_i^\dagger d_j
+    \end{align*}
+    となる。同様に$A_{\alpha\beta}$を粒子$\alpha, \beta$の組にのみ作用する演算子として、二体演算子
+    \begin{align*}
+        A^2 &= \sum_{\alpha < \beta} A_{\alpha\beta}\\
+        A_{\alpha\beta} &= I \otimes \dots \otimes A \otimes \dots \otimes B \otimes \dots \otimes I
+    \end{align*}
+    は
+    \begin{align*}
+        A^2 = \frac{1}{2}\sum_{i, j, k, l} \mel{i,j}{A}{k,l} d_i^\dagger d_j^\dagger d_k d_l
+    \end{align*}
+    となる。一般の$n$体演算子についても同様。
+    
+    ここで場の演算子$\psi(r) \colon F_\pm^N \to F_\pm^{N-1}, \psi^\dagger(r) \colon F_\pm^N \to F_\pm^{N+1}$
+    \begin{align*}
+        \psi^\dagger(r) &= \sum_i d_i^\dagger \phi_i^*(r)\\
+        \psi(r) &= \sum_i \phi_i(r)d_i
+    \end{align*}
+    を導入する。ボース粒子系の場合
+    \begin{align*}
+        [\psi^\dagger(r_1), \psi^\dagger(r_2)] &= \sum_{i, j} \phi_i^*(r_1)\phi_j^*(r_2) [d_i^\dagger, d_j^\dagger] = 0\\
+        [\psi(r_1), \psi(r_2)] &= \sum_{i, j} \phi_i(r_1)\phi_j(r_2) [d_i, d_j] = 0\\
+        [\psi(r_1), \psi^\dagger(r_2)] &= \sum_{i, j} \phi_i(r_1)\phi_j^*(r_2) [d_i, d_j^\dagger] = \delta(r_1 - r_2)
+    \end{align*}
+    フェルミ粒子系の場合
+    \begin{align*}
+        \{\psi^\dagger(r_1), \psi^\dagger(r_2)\} &= \sum_{i, j} \phi_i^*(r_1)\phi_j^*(r_2) \{d_i^\dagger, d_j^\dagger\} = 0\\
+        \{\psi(r_1), \psi(r_2)\} &= \sum_{i, j} \phi_i(r_1)\phi_j(r_2) \{d_i, d_j\} = 0\\
+        \{\psi(r_1), \psi^\dagger(r_2)\} &= \sum_{i, j} \phi_i(r_1)\phi_j^*(r_2) \{d_i, d_j^\dagger\} = \delta(r_1 - r_2)
+    \end{align*}
+    が成り立つ。最後の交換/反交換関係には
+        \[\int \left[\sum_i \phi_i(r_1)\phi_i^*(r_2)\right]f(r_2) dr_2 = \sum_i \phi_i(r_1) \int \phi_i^*(r_2)f(r_2) dr_2 = f(r_1)\]
+    より
+        \[\sum_i \phi_i(r_1)\phi_i^*(r_2) = \delta(r_1 - r_2)\]
+    を用いた。場の演算子を用いると
+    \begin{align*}
+        A^1 &= \psi^\dagger A \psi\\
+        A^2 &= {\psi^\dagger}^2 A \psi^2
+    \end{align*}
+    と書ける。このような演算子の表示を変換する手続きを第二量子化という。

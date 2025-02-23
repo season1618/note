@@ -1,0 +1,108 @@
+\section{量子化学}
+
+量子化学は、量子力学を用いて原子核と電子からなる多体系の問題を扱う学問である。任意の2粒子間のクーロンポテンシャルを考慮してシュレーディンガー方程式を解析的に解くのは困難であるため、様々な近似法が考案されている。
+\begin{description}
+    \item[原子価結合法(Valence Bond theory, VB)] 電子を特定の原子軌道に属するものとして化学結合を説明する。
+    \item[分子軌道法(Molecular Orbital method, MO)] 電子を分子軌道に属するものとして化学結合を説明する。
+    \begin{description}
+        \item[LCAO法(Linear Combination of Atomic Orbital)] 分子軌道を原子軌道の線形結合として近似。
+    \end{description}
+    % \item[分子力学法(Molecular Mechanics, MM)] 分子の安定性を原子間のポテンシャルエネルギーの総和によって計算する。
+    % \item[密度汎関数理論(Density Function Theory, DFT)] 電子密度から多体電子系の性質を計算する。
+\end{description}
+
+\subsection{多体問題}
+    $n$個の質点系を考える。それぞれの質量を$m_1, m_2, \dots, m_n$、座標を$r_1, r_2, \dots, r_n$とおく。ポテンシャルが相対座標のみに依存するとき、ハミルトニアンは
+        \[H = -\sum_i \frac{\hbar^2}{2m_i}\Delta_i + V(r_i - r_j)\]
+    である。重心及び相対座標を
+    \begin{align*}
+        r_G &= \frac{m_1r_1 + m_2r_2 + \dots + m_nr_n}{m_1 + m_2 + \dots + m_n}\\
+        r'_i &= r_i - r_G
+    \end{align*}
+    また全質量を$M = m_1 + m_2 + \dots + m_n$とすると
+    \begin{align*}
+        \pdv{x_i}
+            &= \pdv{x_G}{x_i}\pdv{x_G} + \sum_j \pdv{x'_j}{x_i}\pdv{x'_j}\\
+            &= \frac{m_i}{M}\pdv{x_G} + \pdv{x'_i} - \frac{m_i}{M} \sum_j \pdv{x'_j}\\
+        \pdv[2]{x_i}
+            &= \frac{m_i^2}{M^2}\pdv[2]{x_G} + \pdv[2]{{x'_i}} + \frac{m_i^2}{M^2}\(\sum_j \pdv{x'_j}\)^2\\
+            &\quad + 2\frac{m_i}{M}\pdv{x_G}\pdv{x'_i} - 2\frac{m_i^2}{M^2} \sum_j \pdv{x_G}\pdv{x'_j} - 2\frac{m_i}{M} \sum_j \pdv{x'_i}\pdv{x'_j}
+    \end{align*}
+    となる。$y, z$についても同様。$x, y, z$の和を取ると
+    \begin{align*}
+        \Delta_i &= \frac{m_i^2}{M^2}\Delta_G + \Delta'_i + \frac{m_i^2}{M^2}\(\sum_j \nabla'_j\)^2 + 2\frac{m_i}{M}\nabla_G \cdot \nabla'_i - 2\frac{m_i^2}{M^2} \sum_j \nabla_G \cdot \nabla'_j - 2\frac{m_i}{M} \sum_j \nabla'_i \cdot \nabla'_j\\
+        -\frac{\hbar^2}{2m_i}\Delta_i &= -\frac{m_i\hbar^2}{2M^2}\Delta_G - \frac{\hbar^2}{2m_i}\Delta'_i - \frac{m_i\hbar^2}{2M^2}\(\sum_j \nabla'_j\)^2 - \frac{\hbar^2}{M}\nabla_G \cdot \nabla'_i + \frac{m_i\hbar^2}{M^2} \sum_j \nabla_G \cdot \nabla'_j + \frac{\hbar^2}{M} \sum_j \nabla'_i \cdot \nabla'_j
+    \end{align*}
+    $i$について和を取ると
+    \begin{align*}
+        -\sum_i \frac{\hbar^2}{2m_i}\Delta_i
+            &= -\frac{\hbar^2}{2M}\Delta_G - \sum_i \frac{\hbar^2}{2m_i}\Delta'_i - \frac{\hbar^2}{2M}\(\sum_i \nabla'_i\)^2 - \frac{\hbar^2}{M}\nabla_G \cdot \sum_i \nabla'_i + \frac{\hbar^2}{M} \sum_j \nabla_G \cdot \nabla'_j + \frac{\hbar^2}{M} \sum_{i,j} \nabla'_i \cdot \nabla'_j\\
+            &= -\frac{\hbar^2}{2M}\Delta_G - \sum_i \frac{\hbar^2}{2m_i}\Delta'_i + \frac{\hbar^2}{2M}\(\sum_j \pdv{x'_j}\)^2
+    \end{align*}
+    従ってハミルトニアンは
+        \[H = -\frac{\hbar^2}{2M}\Delta_G - \sum_i \frac{\hbar^2}{2m_i}\Delta'_i + \frac{\hbar^2}{2M}\(\sum_i \nabla'_i\)^2 + V(r'_i - r'_j)\]
+    となる。重心のみに依存する項と相対座標のみに依存する項に分解できるので、波動関数を$\phi(r_G, r'_1, \dots, r'_n) = \phi_G(r_G)\phi_r(r'_1, \dots, r'_n)$と変数分離できる。重心成分は系全体を一つの自由粒子と見なしたときの波動関数と一致する。よって以降は相対座標のみに依存する部分を考える。
+
+\subsection{多電子原子}
+    中心の原子核と$n$個の電子からなる系を考える。原子核は質量$\mu_s$、電荷$Ze$の質点であり、電子は質量$\mu$、電荷$-e$の質点であるとする。原子核は電子に比べて十分重いので$M$に反比例する項は無視する。更に、重心からの相対座標を原子核からの相対座標で置き換え、それぞれ$r_1, \dots, r_n$とおく。系のハミルトニアンは
+        \[H = -\frac{\hbar^2}{2\mu_s}\Delta_0 - \sum_{i=1}^n \frac{\hbar^2}{2\mu}\Delta_i - \sum_{i=1}^n \frac{Ze^2}{4\pi\epsilon_0}\frac{1}{|r_i|} + \sum_{i,j=1}^n \frac{e^2}{4\pi\epsilon_0}\frac{1}{|r_i - r_j|}\]
+    ここで、ある電子が他の電子から受ける力が平均的に相殺され、原子核方向への成分のみが残ると考え、電子間相互作用を無視できるとする。核電荷の大きさを補正して$\bar{Z}e$とおくと
+        \[H = -\frac{\hbar^2}{2\mu_0}\Delta_0 - \sum_{i=1}^n \frac{\hbar^2}{2\mu}\Delta_i - \sum_{i=1}^n \frac{1}{4\pi\epsilon_0}\frac{\bar{Z}e^2}{|r_i|}\]
+    となる。これを一電子近似という。ハミルトニアンは$r_i\ (0 \leq i \leq n)$のみに依存する項に分解できるので、$\phi(r_0, r_1, \dots, r_n) = \phi_0(r_0)\phi_1(r_1) \dots \phi_n(r_n)$と変数分離できる。よってシュレーディンガー方程式は
+        \[-\frac{\hbar^2}{2m}\Delta_i\phi_i - \frac{\bar{Z}e^2}{4\pi\epsilon_0}\frac{1}{|r_i|}\phi_i = E_i\phi_i\]
+    このとき
+        \[E = \sum_i E_i\]
+    である。
+
+    それぞれの電子は原子核からのクーロンポテンシャルに従って運動するから、水素原子と同様に量子数$(n, l, m, s)$によって指定される固有状態を持つ。電子はフェルミ粒子だから反対称性より同じ固有状態には一個までしか入ることができない。これをパウリの排他原理という。特に安定した状態では、エネルギーの低い準位から順に入ることになる。
+
+\subsection{水素分子イオン}
+    LCAO法を用いて水素分子の波動関数を計算する。
+
+    陽子二個と電子一個からなる系を考える。陽子間の距離を$R$、陽子と電子の距離をそれぞれ$r_a, r_b$とすると、ハミルトニアンは
+        \[H = -\frac{\hbar^2}{2m}\Delta - \frac{e^2}{4\pi\epsilon_0}\frac{1}{r_a} - \frac{e^2}{4\pi\epsilon_0}\frac{1}{r_b} + \frac{e^2}{4\pi\epsilon_0}\frac{1}{R}\]
+    である。原子軌道として基底状態すなわち1s軌道$\phi^{1s} = \frac{1}{\sqrt{\pi a_0^3}}e^{-r/a_0}$を考える。それぞれの原子軌道を
+    \begin{align*}
+        \phi_a(r) = \phi^{1s}\(r + \frac{R}{2}\)\\
+        \phi_b(r) = \phi^{1s}\(r - \frac{R}{2}\)
+    \end{align*}
+    とする。つまり
+    \begin{align*}
+        \(-\frac{\hbar^2}{2m}\Delta - \frac{e^2}{4\pi\epsilon_0}\frac{1}{r_a}\)\phi_a(r) &= E^{1s}\phi_a(r)\\
+        \(-\frac{\hbar^2}{2m}\Delta - \frac{e^2}{4\pi\epsilon_0}\frac{1}{r_b}\)\phi_b(r) &= E^{1s}\phi_b(r)
+    \end{align*}
+    分子軌道はそれらの線形結合として
+        \[\phi = c_a\phi_a + c_b\phi_b\]
+    と表せると仮定する。対称性よりそれぞれの軌道に属する確率は等しいので、$c_a = \pm c_b$である。規格化条件から
+    \begin{align*}
+        c_a^2 \int (\phi_a \pm \phi_b)^*(\phi_a \pm \phi_b) \dd{V} &= 1\\
+        c_a^2 \int ({\phi_a}^*\phi_a \pm {\phi_a}^*\phi_b \pm {\phi_b}^*\phi_a + {\phi_b}^*\phi_b) \dd{V} &= 1
+    \end{align*}
+    積分の第一項と第四項は共に1である。また、$\phi_a, \phi_b$は実関数なので、第二項と第三項の重なり積分は実数$S$と置く。
+    \begin{gather*}
+        c_a^2 (2 \pm 2S) = 1\\
+        \therefore c_a = c_b = \frac{1}{\sqrt{2(1 + S)}},\ c_a = -c_b = \frac{1}{\sqrt{2(1 - S)}}
+    \end{gather*}
+    つまり分子軌道は
+        \[\phi^+ = \frac{1}{\sqrt{2(1 + S)}}(\phi_a + \phi_b),\ \phi^- = \frac{1}{\sqrt{2(1 - S)}}(\phi_a - \phi_b)\]
+    となる。エネルギー固有値は求められないので、ハミルトニアンから期待値を計算する。ここで
+    \[
+        \begin{aligned}
+            J &= \frac{e^2}{4\pi\epsilon_0} \left[-\int \frac{\phi_a^*\phi_a}{r_b} \dd{r} + \frac{1}{R}\right] = \frac{e^2}{4\pi\epsilon_0}\left[-\int \frac{\phi_b^*\phi_b}{r_a} \dd{r} + \frac{1}{R}\right] & (クーロン積分)\\
+            K &= \frac{e^2}{4\pi\epsilon_0}\left[-\int \frac{\phi_b^*\phi_a}{r_b} \dd{r} + \frac{S}{R}\right] = \frac{e^2}{4\pi\epsilon_0}\left[-\int \frac{\phi_a^*\phi_b}{r_a} \dd{r} + \frac{S}{R}\right] & (共鳴積分)
+        \end{aligned}
+    \]
+    とおくと
+    \begin{align*}
+        &\int (\phi_a \pm \phi_b)^* H (\phi_a \pm \phi_b) \dd{r}\\
+        &= \int (\phi_a \pm \phi_b)^* \(-\frac{\hbar^2}{2m}\Delta - \frac{1}{4\pi\epsilon_0}\frac{e^2}{r_a} - \frac{1}{4\pi\epsilon_0}\frac{e^2}{r_b} + \frac{1}{4\pi\epsilon_0}\frac{e^2}{R}\) (\phi_a \pm \phi_b) \dd{r}\\
+        &= \int (\phi_a \pm \phi_b)^* \left\{\(E_{1s} - \frac{e^2}{4\pi\epsilon_0}\frac{1}{r_b} + \frac{e^2}{4\pi\epsilon_0}\frac{1}{R}\)\phi_a \pm \(E_{1s} - \frac{e^2}{4\pi\epsilon_0}\frac{e^2}{r_a} + \frac{e^2}{4\pi\epsilon_0}\frac{1}{R}\)\phi_b\right\} \dd{r}\\
+        &= E^{1s} + J \pm SE^{1s} \pm  K \pm SE^{1s} \pm K + E^{1s} + J\\
+        &= 2(1 \pm S)E^{1s} + 2(J \pm K)
+    \end{align*}
+    つまり
+    \begin{align*}
+        E^+ &= E^{1s} + \frac{J + K}{1 + S}\\
+        E^- &= E^{1s} + \frac{J - K}{1 - S}
+    \end{align*}
+    となる。どのような$R$に対しても$E^+ < E^{1s} < E^-$となるので、$H$と$H^+$が別々に存在するよりも水素分子イオンとして存在した方が安定である。$\phi^+$を結合性軌道、$\phi^-$を反結合性軌道と呼ぶ。$\phi^+$は二つの原子核の間に電子が存在するため、クーロン力により二つの原子核を結び付け安定化すると考えられる。

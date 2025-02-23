@@ -1,0 +1,116 @@
+\section{散乱理論}
+
+\subsection{量子系の散乱}
+    時刻$t$における状態$u(t)$に対して、
+        \[Su(-\infty) = u(\infty)\]
+    となるユニタリ演算子を散乱演算子という。散乱演算子を特定の基底について行列表示したものをS行列という。
+
+\subsection{リップマン=シュウィンガー方程式}
+    散乱する前の波動関数$\phi$は$H_0\phi = E\phi$を満たす。散乱後ハミルトニアンは$H = H_0 + V$となり、散乱の前後でエネルギーは保存するので波動関数$\psi$は
+        \[(H_0 + V)\psi = E\psi\]
+    を満たす。$V \to 0$で$\psi \to \phi$となるので解として
+    \begin{align*}
+        (E - H_0)\psi &= V\psi = (E - H_0)\phi + V\psi\\
+        \psi &= \phi + \frac{1}{E - H_0}V\psi
+    \end{align*}
+    が考えられる。正確には演算子$1 / (E - H_0)$の分母に$i\epsilon$を加え$\epsilon \to 0$とする。
+        \[\psi = \phi + \frac{1}{E - H_0 \pm i\epsilon}V\psi\]
+    となる。これはグリーン関数
+        \[(E - H_0)G(\bm{r}, \bm{r'}) = \delta(\bm{r} - \bm{r'})\]
+    を用いると
+        \[\psi(\bm{r}) = \phi(\bm{r}) + \int G(\bm{r}, \bm{r'})V(\bm{r'})\psi(\bm{r'}) d\bm{r'}\]
+    と書ける。第一項は入射波、第二項は散乱波を表している。グリーン関数は
+        \[G^\pm(\bm{r}, \bm{r'}) = -\frac{2m}{\hbar^2}\frac{1}{4\pi}\frac{e^{\pm ik|\bm{r} - \bm{r'}|}}{|\bm{r} - \bm{r'}|} \quad \left(k^2 = \frac{2mE}{\hbar^2}\right)\]
+    となる。ポテンシャルが無限遠で0に漸近するとして、$r \to \infty$の漸近形を考える。$r \gg r'$なので、
+    \begin{align*}
+        |\bm{r} - \bm{r'}|
+            &= \sqrt{r^2 - 2\bm{r} \cdot \bm{r'} + r'^2}\\
+            &= \sqrt{\left(r - \frac{\bm{r} \cdot \bm{r'}}{r}\right)^2 + r'^2 - \frac{(\bm{r} \cdot \bm{r'})^2}{r^2}}\\
+            &\simeq r - \bm{\hat{r}} \cdot \bm{r'}\\
+        G^\pm(\bm{r}, \bm{r'})
+            &\simeq -\frac{2m}{\hbar^2}\frac{1}{4\pi}\frac{e^{\pm ik(r - \bm{\hat{r}} \cdot \bm{r'})}}{r}
+    \end{align*}
+    となる。$G^+(\bm{r}, \bm{r'})$は外向きの散乱、$G^-(\bm{r}, \bm{r'})$は内向きの散乱を表す。実際には内向きの散乱が起こる系を準備するのは困難であるから、ここでは外向きの散乱のみを考える。入射波を$\phi(r) = e^{i\bm{k} \cdot \bm{r}}$とし、$\bm{k'} = k\bm{\hat{r}}$とおくと、リップマン=シュウィンガー方程式は
+    \begin{align*}
+        \psi(\bm{r}) &\simeq e^{i\bm{k} \cdot \bm{r}} + f(\bm{k}, \bm{k'})\frac{e^{ikr}}{r} \quad (r \to \infty)\\
+        f(\bm{k}, \bm{k'}) &= -\frac{2m}{\hbar^2}\frac{1}{4\pi} \int e^{-i\bm{k'} \cdot \bm{r'}}V(\bm{r'})\psi(\bm{r'}) d\bm{r'}
+    \end{align*}
+    となる。$f(\bm{k}, \bm{k'})$を散乱振幅という。
+
+\subsection{ボルン近似}
+    リップマン=シュウィンガー方程式において、$\psi(r)$をポテンシャルについて摂動展開する。つまり
+    \begin{gather*}
+        \psi = \sum_{n = 0}^\infty \psi_n\\
+        \psi_0(\bm{r}) = e^{i\bm{k} \cdot \bm{r}}, \quad \psi_{n + 1}(\bm{r}) = \int G^+(\bm{r}, \bm{r'})V(\bm{r'})\psi_n(\bm{r'}) d\bm{r'}
+    \end{gather*}
+    である。一次の項まで展開する。これを(第一)ボルン近似という。さらに無限遠で0に漸近するポテンシャルを考えると
+    \begin{align*}
+        \psi(\bm{r})
+            &\simeq \psi_0(\bm{r}) + \psi_1(\bm{r})\\
+            &= e^{i\bm{k} \cdot \bm{r}} + \int G^+(\bm{r}, \bm{r'})V(\bm{r'})e^{i\bm{k} \cdot \bm{r'}} d\bm{r'}\\
+            &\simeq e^{i\bm{k} \cdot \bm{r}} - \frac{2m}{\hbar^2}\frac{1}{4\pi} \left[\int e^{i(\bm{k} - k\bm{k'}) \cdot \bm{r'}}V(\bm{r'}) d\bm{r'}\right] \frac{e^{ikr}}{r}
+    \end{align*}
+    つまり散乱振幅はポテンシャルのフーリエ変換で与えられる。
+        \[f(\bm{k}, \bm{k'}) \simeq -\frac{m}{2\pi\hbar^2}\hat{V}(\bm{k'} - k\bm{k'})\]
+
+\subsection{球対称ポテンシャル}
+    無限遠で0に漸近する球対称ポテンシャル$V(r)$による散乱を考える。ここでは定常波を想定する。入射波を$z$軸方向に進行する平面波$\psi_i(r) = e^{ikz}$、散乱波を$\psi_s(r)$とすると、全体の波動関数は$\psi(r) = \psi_i(r) + \psi_s(r)$である。入射波、散乱波、波動関数はいずれも軸対称なのでルジャンドル多項式で展開できる。これを部分波展開という。波動関数を
+        \[\psi(r) = \sum_{l = 0}^\infty R_l(r)P_l(\cos\theta)\]
+    とすると動径波動関数は
+    \begin{align*}
+        \left[\dv[2]{r} + \frac{2}{r}\dv{r} - \frac{l(l + 1)}{r^2} - \frac{2m}{\hbar^2}V(r) + k^2\right]R_l(r) = 0\\
+        E = \frac{\hbar^2k^2}{2m}
+    \end{align*}
+    を満たす。無限遠での漸近形を考えるとポテンシャルは無視できる。また$\rho = kr$とおくと
+        \[\left[\dv[2]{\rho} + \frac{2}{\rho}\dv{\rho} - \frac{l(l + 1)}{\rho^2} + 1\right]R_l(\rho/k) = 0\]
+    となる。これは球面波と同じ方程式であり、解は第一種及び第二種球ハンケル関数の線形結合となる。前者が外向きの球面波、後者が内向きの球面波を表す。
+    \begin{align*}
+        h_l^1(\rho) &= j_l(\rho) + in_l(\rho) \to (-i)^{l+1}\frac{e^{i\rho}}{\rho} \quad (\rho \to \infty)\\
+        h_l^2(\rho) &= j_l(\rho) - in_l(\rho) \to i^{l+1}\frac{e^{-i\rho}}{\rho} \quad (\rho \to \infty)
+    \end{align*}
+    したがって波動関数の漸近形は
+        \[\psi(r, \theta) \to \sum_{l = 0}^\infty \left[a_l(\theta)\frac{e^{ikr}}{r} + b_l(\theta)\frac{e^{-ikr}}{r}\right]P_l(\cos\theta)\]
+    という形で書くことができる。
+    
+    また入射波$\psi_i(r) = e^{ikz} = e^{ikr\cos\theta}$は
+        \[\psi_i(r, \theta) \to \sum_{l = 0}^\infty \frac{2l + 1}{2ik}\left[\frac{e^{ikr}}{r} - (-1)^l\frac{e^{-ikr}}{r}\right]P_l(\cos\theta) \quad (r \to \infty)\]
+    したがって散乱波の漸近形は
+        \[\psi_s(r, \theta) \to f(\theta)\frac{e^{ikr}}{r} \quad (r \to \infty)\]
+    となる。
+
+    散乱振幅を
+        \[f(\theta) = \sum_{l = 0}^\infty \frac{2l + 1}{k}f_lP_l(\cos\theta)\]
+    と展開すると、全体の波動関数は
+        \[\psi(r) \to \sum_{l = 0}^\infty \frac{2l + 1}{2ik}\left[(1 + 2if_l)\frac{e^{ikr}}{r} - (-1)^l\frac{e^{-ikr}}{r}\right]P_l(\cos\theta) \quad (r \to \infty)\]
+    となる。ここでS行列を$S_l = 1 + 2if_l$と定める。
+
+    粒子流は
+        \[J = -\frac{i\hbar}{2m}(\psi^*\nabla\psi - (\nabla\psi^*)\psi)\]
+    である。入射波は
+    \begin{align*}
+        J_i &= -\frac{i\hbar}{2m}(\psi_i^*\nabla\psi_i - (\nabla\psi_i^*)\psi_i)\\
+            &= -\frac{i\hbar}{2m}(e^{-ikz}(0, 0, ike^{ikz}) - (0, 0, -ike^{-ikz})e^{ikz})\\
+            &= \frac{\hbar}{m}(0, 0, k)
+    \end{align*}
+    よって入射フラックスは$\hbar k / m$。散乱波は
+    \begin{align*}
+        J_s &= -\frac{i\hbar}{2m}(\psi_s^*\nabla\psi_s - (\nabla\psi_s^*)\psi_s)\\
+            &= -\frac{i\hbar}{2m}\left(f(\theta)^*\frac{e^{-ikr}}{r} \cdot f(\theta)ik\frac{e^{ikr}}{r}\hat{r} + f(\theta)^*ik\frac{e^{-ikr}}{r}\hat{r} \cdot f(\theta)\frac{e^{-ikr}}{r}\right) + O\left(\frac{1}{r^3}\right)\\
+            &= |f(\theta)|^2\frac{\hbar k}{m}\frac{\hat{r}}{r^2}
+    \end{align*}
+    よって散乱フラックスの漸近は$|f(\theta)|^2\hbar k / m$。つまり散乱断面積は$|f(\theta)|^2$であり散乱振幅の絶対値の二乗となる。部分波展開を用いると
+        \[\dv{\sigma}{\Omega} = |f(\theta)|^2
+            = \sum_{l, l' = 0}^\infty \frac{(2l + 1)(2l' + 1)}{k^2}f_lf_{l'}^*P_l(\cos\theta)P_{l'}(\cos\theta)\]
+    なので、全断面積は
+    \begin{align*}
+        \sigma_T
+            &= \int_{-1}^1 \sum_{l, l' = 0}^\infty \frac{(2l + 1)(2l' + 1)}{k^2}f_lf_{l'}P_l(\cos\theta)P_{l'}(\cos\theta) \cdot 2\pi d(\cos\theta)\\
+            &= \frac{2\pi}{k^2} \sum_{l = 0}^\infty 2(2l + 1)|f_l|^2\\
+            &= \frac{4\pi}{k^2} \sum_{l = 0}^\infty (2l + 1)|f_l|^2\\
+            &= \frac{4\pi}{k^2} \sum_{l = 0}^\infty (2l + 1)\sin^2\delta_l
+    \end{align*}
+    また
+        \[f(0) = \frac{1}{k}\sum_{l = 0}^\infty (2l + 1)e^{i\delta_l}\sin\delta_l\]
+    なので、
+        \[\sigma_T = \frac{4\pi}{k}\Im f(0)\]
+    となる。これを光学定理という。

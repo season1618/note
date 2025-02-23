@@ -1,0 +1,379 @@
+\section{一粒子系}
+
+\subsection{平面波}
+    ポテンシャルが存在しないとき、時間に依存しないシュレーディンガー方程式は
+        \[-\frac{\hbar^2}{2m}\Delta\phi(r) = E\phi(r)\]
+    である。波数ベクトル$k$、角振動数$\omega = E / \hbar$とおけば
+        \[\psi(r, t) = Ae^{i\(k \cdot r - \omega t\)}\]
+    であり平面波を表す。
+        \[\(-i\hbar\pdv{x}, -i\hbar\pdv{y}, -i\hbar\pdv{z}\)\psi(r, t) = \hbar k\psi(r, t)\]
+    となるので、平面波は運動量の固有状態である。つまりド・ブロイ波の式$p = \hbar k = h / \lambda,\ E = \hbar\omega = h\nu$を満たす。
+
+\subsection{ガウス波束}
+    波動関数
+    \begin{align*}
+        \psi(r, t) &= \int \rho(k)e^{i(k \cdot r - \omega t)} \dd{k}\\
+        \rho(k) &= \(\frac{\sigma^2}{2\pi^3}\)^{3/4}\exp\{-\sigma^2(k - k_0)^2 - i(k - k_0) \cdot r_0\}
+    \end{align*}
+    をガウス波束という。
+
+\subsection{一次元井戸型ポテンシャル}
+    $L > 0, V_0 > 0$に対して、一次元井戸型ポテンシャル
+        \[V(x) =
+            \begin{cases}
+                V_0 & (x < -L)\\
+                0 & (-L < x < L)\\
+                V_0 & (L < x)
+            \end{cases}
+        \]
+    を考える。時間に依存しないシュレーディンガー方程式は
+        \[
+            \begin{cases}
+                -\frac{\hbar^2}{2m}\dv[2]{\phi}{x} = E\phi & (|x| < L)\\
+                -\frac{\hbar^2}{2m}\dv[2]{\phi}{x} = (E - V_0)\phi & (|x| > L)
+            \end{cases}
+        \]
+    となる。ポテンシャルが偶関数だから固有関数は偶関数または奇関数として良く、境界条件も$x = L$でのみ考えれば良い。
+
+    (1)$E < 0$のとき
+
+    $2mE / \hbar^2 = - k_1^2, 2m(E - V_0) / \hbar^2 = - k_2^2 \ (k_1, k_2 > 0)$とおくと解は
+    \begin{align*}
+        \phi(x) = 
+        \begin{cases}
+            C_+ e^{k_2x} + C_- e^{- k_2x} & (x < -L)\\
+            A_+ e^{k_1x} + A_- e^{- k_1x} & (-L < x < L)\\
+            B_+ e^{k_2x} + B_- e^{- k_2x} & (L < x)
+        \end{cases}\\
+        k_2^2 - k_1^2 = \frac{2mV_0}{\hbar^2}
+    \end{align*}
+    となる。無限遠で0に収束するので$C_- = B_+ = 0$である。
+    \begin{align*}
+        \phi_\pm(x) =
+        \begin{cases}
+            \pm B e^{k_2x} & (x < -L)\\
+            A e^{k_1x} \pm A e^{- k_1x} & (-L < x < L)\\
+            B e^{- k_2x} & (L < x)
+        \end{cases}
+    \end{align*}
+    境界条件より
+    \begin{align*}
+        \phi_\pm(L) = A e^{k_1L} \pm A e^{-k_1L} = B e^{-k_2L}\\
+        \phi_\pm'(L) = k_1 A e^{k_1L} \mp k_1 A e^{-k_1L} = -k_2 B e^{-k_2L}\\
+    \end{align*}
+    第一式を$k_2$倍して辺々足すと
+    \begin{align*}
+        k_1 A (e^{k_1L} + e^{-k_1L})
+        \therefore B = A (e^{k_1L} \pm e^{- k_1L}) e^{k_2L}
+    \end{align*}
+    従って
+    \begin{align*}
+        \phi_+(x) =
+        \begin{cases}
+            A (e^{k_1L} + e^{- k_1L}) e^{k_2(L + x)}\\
+            A (e^{k_1x} + e^{k_1x})\\
+            A (e^{k_1L} + e^{- k_1L}) e^{k_2(L - x)}
+        \end{cases}\\
+        \phi_-(x) =
+        \begin{cases}
+            - A (e^{k_1L} - e^{- k_1L}) e^{k_2(L + x)}\\
+            A (e^{k_1x} - e^{k_1x})\\
+            A (e^{k_1L} - e^{- k_1L}) e^{k_2(L - x)}
+        \end{cases}
+    \end{align*}
+
+    (2)$0 < E < V_0$のとき
+
+    $2mE / \hbar^2 = k_1^2, 2m(E - V_0) / \hbar^2 = - k_2^2 \ (k_1, k_2 > 0)$とおくと解は
+    \begin{gather*}
+        \phi(x) = 
+        \begin{cases}
+            B_+ e^{k_2x} + B_- e^{- k_2x} & (x < -L)\\
+            A_+ e^{ik_1x} + A_- e^{- ik_1x} & (-L < x < L)\\
+            C_+ e^{k_2x} + C_- e^{- k_2x} & (L < x)
+        \end{cases}\\
+        k_1^2 + k_2^2 = \frac{2mV_0}{\hbar^2}
+    \end{gather*}
+    となる。無限遠で0に収束するので$B_- = C_+ = 0$である。
+
+    \begin{align*}
+        \phi_\pm(x) =
+        \begin{cases}
+            \pm B e^{k_2x} & (x < -L)\\
+            A (e^{ik_1x} \pm e^{-ik_1x}) / 2 & (-L < x < L)\\
+            B e^{- k_2x} & (L < x)
+        \end{cases}
+    \end{align*}
+    境界条件より
+    \begin{align*}
+        \phi_\pm(L) &= A (e^{ik_1L} \pm e^{-ik_1L}) / 2 = B e^{- k_2L}\\
+        \phi_\pm'(L) &= ik_1 A (e^{ik_1L} \mp e^{-ik_1L}) / 2 = - k_2 B e^{- k_2L}
+    \end{align*}
+    定数は
+        \[B = A \frac{(e^{ik_1L} \pm e^{-ik_1L})}{2} e^{k_2L}\]
+    また
+        \[k_1 \tan(k_1L) = k_2,\ k_1 / \tan(k_1L) = - k_2\]
+    が成り立つので$k_1^2 + k_2^2 = 2mV_0 / \hbar^2$と合わせて$k_1, k_2$及びエネルギー固有値$E$が求まる。
+
+    従って
+    \begin{align*}
+        \phi_+(x) =
+        \begin{cases}
+            A \cos(k_1L) e^{k_2(L + x)} & (x < -L)\\
+            A \cos(k_1x) & (-L < x < L)\\
+            A \cos(k_1L) e^{k_2(L - x)} & (L < x)
+        \end{cases}\\
+        \phi_-(x) =
+        \begin{cases}
+            - A \sin(k_1L) e^{k_2(L + x)} & (x < -L)\\
+            A \sin(k_1x) & (-L < x < L)\\
+            A \sin(k_1L) e^{k_2(L - x)} & (L < x)
+        \end{cases}
+    \end{align*}
+    このようにポテンシャルによって波動関数が無限遠で0に収束する状態を束縛状態と呼び、離散スペクトルを持つ。運動エネルギーが負の領域にも正の確率が分布している。
+
+    $V_0 \to \infty$のとき$k_2 \to \infty$なので、$|x| > L$において
+    % \begin{align*}
+    %     A \cos(k_1L) e^{k_2(L - x)} \to A \cos(k_1L)\\
+    %     - k_2 A \cos(k_1L) e^{k_2(L - x)} \to - k_2 A \cos(k_1L)
+    % \end{align*}
+    波動関数が恒等的に0となるものを除外すると、境界条件より
+    \begin{align*}
+        \phi_+(L) &= A \cos(k_1L) = 0\\
+        \therefore k_1L &= \frac{\pi}{2}n \ (n = 1, 3, 5, \dots)\\
+        \phi_-(L) &= A \sin(k_1L) = 0\\
+        \therefore k_1L &= \frac{\pi}{2}n \ (n = 2, 4, 6, \dots)
+    \end{align*}
+    となる。よってエネルギー固有値は
+        \[E_n = \frac{\hbar^2}{2m}\(\frac{n\pi}{2L}\)^2 \ (n = 1, 2, 3, \dots)\]
+    である。エネルギーが最小の状態を基底状態、それ以外を励起状態という。量子力学では、基底状態においてもエネルギーが0とならず、零点エネルギーと呼ばれる。
+
+    (3)$V_0 < E$のとき
+
+    $2mE / \hbar^2 = k_1^2, 2m(E - V_0) / \hbar^2 = k_2^2 \ (k_1, k_2 > 0)$とおくと解は
+    \begin{gather*}
+        \phi(x) = 
+        \begin{cases}
+            C_+ e^{ik_2x} + C_- e^{- ik_2x} & (x < -L)\\
+            A_+ e^{ik_1x} + A_- e^{- ik_1x} & (-L < x < L)\\
+            B_+ e^{ik_2x} + B_- e^{- ik_2x} & (L < x)
+        \end{cases}\\
+        k_1^2 - k_2^2 = \frac{2mV_0}{\hbar^2}
+    \end{gather*}
+    となる。$\phi(x)$は偶関数または奇関数なので
+    \begin{gather*}
+        \phi_\pm(x) = 
+        \begin{cases}
+            \pm B_- e^{ik_2x} \pm B_+ e^{- ik_2x} & (x < -L)\\
+            A e^{ik_1x} \pm A e^{- ik_1x} & (-L < x < L)\\
+            B_+ e^{ik_2x} + B_- e^{- ik_2x} & (L < x)
+        \end{cases}
+    \end{gather*}
+    となる。境界条件より
+    \begin{align*}
+        \phi_\pm(x) &= A (e^{ik_1L} \pm e^{-ik_1L}) = B_+ e^{ik_2L} + B_- e^{-ik_2L}\\
+        \phi_\pm'(x) &= ik_1 A (e^{ik_1L} \mp e^{-ik_1L}) = ik_2 B_+ e^{ik_2L} - ik_2 B_- e^{-il_2+}
+    \end{align*}
+    第一式$ik_2$倍して足し引きすると
+    \begin{align*}
+        2 ik_1 A e^{ik_1L} = 2 ik_2 B_+ e^{ik_2L}\\
+        B_+ = \frac{k_1}{k_2} A e^{i(k_1 - k_2)L}\\
+        \pm 2 ik_1 A e^{-ik_1L} = 2 ik_2 B_- e^{-ik_2L}\\
+        B_- = \frac{k_1}{k_2} A e^{-i(k_1 - k_2)L}
+    \end{align*}
+    このように波動関数が無限遠で平面波に漸近する状態を散乱状態と呼び、連続スペクトルを持つ。
+    % \begin{align*}
+    %     - \frac{\hbar^2}{2m}\dv[2]{\phi}{x} &= E\phi & (0 < x < L)\\
+    %     \de[^2\phi]{x^2} &= - \frac{2mE}{\hbar}\phi\\
+    %     \phi(x) = A\cos\frac{\sqrt{2mE}}{\hbar}x + B\sin\frac{\sqrt{2mE}}{\hbar}x
+    % \end{align*}
+    % 境界条件より
+    % \begin{align*}
+    %     \phi(0) &= A = 0\\
+    %     \phi(L) &= B\sin\frac{\sqrt{2mE}L}{\hbar} = 0
+    % \end{align*}
+    % $B = 0$のとき波動関数が恒等的に0になるので不適。つまり
+    %     \[\frac{\sqrt{2mE}L}{\hbar} = n\pi (n = 1, 2, \ldots)\]
+    % 規格化条件から係数$B$が求まる。
+    % \begin{align*}
+    %     \int_0^L \sin^2\frac{\sqrt{2mE}}{\hbar} dx
+    %     &= \int_0^L \sin\frac{n\pi}{L} dx\\
+    %     &= \int_0^L \frac{1 - \cos\frac{2n\pi}{L}}{2} dx\\
+    %     &= \frac{L}{2}
+    % \end{align*}
+    % より$B = \sqrt{\frac{2}{L}}$となる。よって固有関数とエネルギー固有値は
+    % \begin{gather*}
+    %     \phi_n(x) &= \sqrt{\frac{2}{L}}\sin\frac{\sqrt{2mE}}{\hbar}x\\
+    %     E_n &= \frac{\pi^2\hbar^2}{2mL^2}n^2
+    % \end{gather*}
+
+\subsection{一次元調和振動子}
+    ポテンシャルエネルギーを
+        \[V(x) = \frac{m\omega^2}{2}x^2\]
+    とする。時間に依存しないシュレーディンガー方程式は
+        \[\(-\frac{\hbar^2}{2m}\dv[2]{x} + \frac{m\omega^2}{2}x^2\)\phi(x) = E\phi\]
+    となる。ここで
+    \begin{align*}
+        \xi &= \sqrt{\frac{m\omega}{\hbar}}x\\
+        \epsilon &= \frac{2}{\hbar\omega}E\\
+        H(\xi) &= \phi(\xi)e^{\xi^2 / 2}
+    \end{align*}
+    とおくと、$\dv*[2]{x} = (m\omega / \hbar)\dv*{\xi}$より
+    \begin{align*}
+        \dv[2]{\xi}(H(\xi)e^{-\xi^2 / 2}) + (\epsilon - \xi^2)(H(\xi)e^{-\xi^2 / 2}) &= 0\\
+        \dv[2]{H}{\xi}e^{-\xi^2 / 2} + 2\dv{H}{\xi} \cdot -\xi e^{-\xi^2 / 2} + H(\xi) \cdot (-e^{-\xi^2 / 2} + \xi^2e^{-\xi^2 / 2}) + (\epsilon - \xi^2)H(\xi)e^{-\xi^2 / 2}&= 0\\
+        \dv[2]{H}{\xi} - 2\xi\dv{H}{\xi} + (-1 + \xi^2)H(\xi) + (\epsilon - \xi^2)H(\xi) &= 0\\
+        \dv[2]{H}{\xi} - 2\xi\dv{H}{\xi} + (\epsilon - 1)H(\xi) &= 0
+    \end{align*}
+    この微分方程式は$\epsilon = 2n + 1\ (n = 0, 1, 2, \dots)$のときに限り解が存在し、エルミート多項式$H_n(\xi)$と呼ばれる。従って固有関数とエネルギー固有値は
+    \begin{align*}
+        \phi_n(x) &= H_n(x)e^{\frac{m\omega}{2\hbar}x^2}\\
+        E_n &= \hbar\omega\(n + \frac{1}{2}\)
+    \end{align*}
+    となる。
+
+\subsection{球対称ポテンシャル}
+    球面極座標$(r, \theta, \phi)$において、動径のみに依存するポテンシャル$V(r)$を考える。三次元極座標ラプラシアンは
+        \[\Delta = \frac{1}{r^2}\pdv{r}\(r^2\pdv{r}\) + \frac{1}{r^2\sin\theta}\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \frac{1}{r^2\sin^2\theta}\pdv[2]{\phi}\]
+    なので、波動関数を$\psi(r, \theta, \phi)$とすればシュレーディンガー方程式は
+    \begin{align*}
+        -\frac{\hbar^2}{2\mu}\left[\frac{1}{r^2}\pdv{r}\(r^2\pdv{r}\) + \frac{1}{r^2\sin\theta}\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \frac{1}{r^2\sin^2\theta}\pdv[2]{\phi}\right]\psi + V(r)\psi &= E\psi\\
+        \left[\pdv{r}\(r^2\pdv{r}\) + \frac{1}{\sin\theta}\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \frac{1}{\sin^2\theta}\pdv[2]{\phi}\right]\psi + \frac{2\mu r^2(E - V(r))}{\hbar^2}\psi &= 0
+    \end{align*}
+    $\psi$に作用する演算子が$r$のみに依存する部分と$\theta, \phi$のみに依存する部分の和なので、それぞれの固有値$\lambda, -\lambda$と固有関数$R(r), Y(\theta, \phi)$を用いて
+    \begin{align*}
+        &\left[\pdv{r}\(r^2\pdv{r}\) + \frac{2\mu r^2(E - V(r))}{\hbar^2}\right]R(r) = \lambda R(r)\\
+        &\left[\frac{1}{\sin\theta}\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \frac{1}{\sin^2\theta}\pdv[2]{\phi}\right]Y(\theta, \phi) = -\lambda Y(\theta, \phi)\\
+        &\psi(r, \theta, \phi) = R(r)Y(\theta, \phi)
+    \end{align*}
+    と書ける。
+    
+    第二式に更に$\sin^2\theta$を掛ける。
+        \[\left[\sin\theta\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \pdv[2]{\phi}\right]Y(\theta, \phi) + \lambda \sin^2\theta Y(\theta, \phi) = 0\]
+    $Y(\theta, \phi)$に作用する演算子が$\theta$のみに依存する部分と$\phi$のみに依存する部分の和なので、それぞれの固有値$m^2, -m^2$と固有関数$\Theta(\theta), \Phi(\phi)$を用いて
+    \begin{align*}
+        &\left[\sin\theta\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \lambda \sin^2\theta\right]\Theta(\theta) = m^2 \Theta(\theta)\\
+        &\pdv[2]{\Phi(\phi)}{\phi} = -m^2 \Phi(\phi)\\
+        &Y(\theta, \phi) = \Theta(\theta)\Phi(\phi)
+    \end{align*}
+    と書ける。
+
+    結局シュレーディンガー方程式は以下の三つの式に還元される。
+    \begin{align*}
+        &\left[\pdv{r}\(r^2\pdv{r}\) + \frac{2\mu r^2(E - V(r))}{\hbar^2}\right]R(r) = \lambda R(r)\\
+        &\left[\sin\theta\pdv{\theta}\(\sin\theta\pdv{\theta}\) + \lambda \sin^2\theta\right]\Theta(\theta) = m^2 \Theta(\theta)\\
+        &\pdv[2]{\Phi(\phi)}{\phi} = -m^2 \Phi(\phi)\\
+        &\psi(r, \theta, \phi) = R(r)\Theta(\theta)\Phi(\phi)
+    \end{align*}
+    
+    $\Phi(\phi)$の一般解は
+        \[
+            \Phi(\phi) =
+            \begin{cases}
+                Ae^{im\phi} + Be^{-im\phi} & (m^2 > 0)\\
+                C\phi + D & (m^2 = 0)\\
+                Ee^{\sqrt{-m^2}\phi} + Fe^{-\sqrt{-m^2}\phi} & (m^2 < 0)
+            \end{cases}
+        \]
+    で与えられる。波動関数は連続なので$\Phi(0) = \Phi(2\pi)$より、$m^2 > 0$のとき$m = 1, 2, \dots$、$m^2 = 0$のとき$C = 0$である。第一式は$m = 0$とすれば第二式も含んでいる。また二項はそれぞれ単独でも解を成している。規格化すると結局
+    \[
+        \begin{aligned}
+            \Phi(\phi) &= \frac{1}{2\pi}e^{im\phi} & (m = \dots, -2, -1, 0, 1, 2, \dots)
+        \end{aligned}
+    \]
+    となる。
+
+    二番目の方程式は、$l$を$l \geq |m|$を満たす整数として$\lambda = l(l + 1)$のときに限り解が存在し、ルジャンドル陪関数及びルジャンドル多項式を用いて
+    \begin{align*}
+        \Theta_{lm}(\theta) &= (-1)^{\frac{m + |m|}{2}} \sqrt{l + \frac{1}{2}} \sqrt{\frac{(l - |m|)!}{(l + |m|)!}} P_l^{|m|}(\cos\theta)\\
+        P_l^{|m|}(x) &= (1 - x^2)^{\frac{|m|}{2}} \frac{\dd{}^{|m|}P_l(x)}{\dd{x}^{|m|}}\\
+        P_l(x) &= \frac{1}{2^l} \frac{\dd{}^l}{\dd{x}^l} (x^2 - 1)^l
+    \end{align*}
+    と表せる。
+    $Y_l^m(\theta, \phi) = \Theta(\theta)\Phi(\phi)$は球面調和関数となる。
+
+    つまり動径成分の方程式は
+        \[\left[\pdv{r}\(r^2\pdv{r}\) + \frac{2\mu r^2(E - V(r))}{\hbar^2}\right]R(r) = l(l + 1)R(r)\]
+    となる。これを分解する前の形に合わせて表示すると
+        \[-\frac{\hbar^2}{2\mu}\frac{1}{r^2}\pdv{r}\(r^2\pdv{R}{r}\) + \left[V(r) + \frac{l(l + 1)\hbar^2}{2\mu r^2}\right]R(r) = ER(r)\]
+    となる。元々のポテンシャルに加えらえた$l(l + 1)\hbar^2 / 2\mu r^2$は遠心力ポテンシャルを表している。
+
+    上で求めた$\psi(r, \theta, \phi) = R(r)\Theta(\theta)\Phi(\phi)$は$L^2$と$L_z$の同時固有状態となっている。$Y(\theta, \phi)$の固有方程式に登場した演算子が$-L^2 / \hbar^2$に一致することを用いれば簡単に計算することができる。
+    \begin{align*}
+        L^2 (R(r)Y(\theta, \phi)) &= l(l + 1)\hbar^2 R(r)Y(\theta, \phi)\\
+        L_z (R(r)\Theta(\theta)\Phi(\phi)) &= m\hbar R(r)\Theta(\theta)\Phi(\phi)
+    \end{align*}
+    つまり、軌道角運動量の二乗は$l(l + 1)\hbar^2$、$z$成分は$m\hbar$である。
+
+\subsection{球面波}
+    ポテンシャルが存在しないとき、波動関数の動径成分が満たす方程式は
+        \[\left[\dv{r}\(r^2\dv{r}\) + \frac{2\mu r^2E}{\hbar^2}\right]R(r) = l(l + 1) R(r)\]
+    である。$k^2 = 2\mu r^2E / \hbar^2, \xi = kr$を用いると$\dv*{r} = k\dv*{\xi}$より
+    \begin{align*}
+        k\dv{\xi}\(\frac{\xi^2}{k^2}\dv{R}{r}\) + \xi^2R(r) &= l(l + 1)R(r)\\
+        \dv[2]{R}{r} + \frac{2}{\xi}\dv{R}{r} + \left[1 - \frac{l(l + 1)}{\xi^2}\right]R(r) &= 0
+    \end{align*}
+    これは球ベッセル微分方程式と呼ばれており、一般解は球ベッセル関数$j_l(\xi)$と球ノイマン関数$n_l(\xi)$を用いて
+        \[R_l(r) = Aj_l(kr) + Bn_l(kr)\]
+    と表される。球ベッセル関数は原点で正則だが、球ノイマン関数は原点で発散する。また、第一種球ハンケル関数と第二種球ハンケル関数
+    \begin{align*}
+        h^1_l(\xi) &= j_l(\xi) + in_l(\xi)\\
+        h^2_l(\xi) &= j_l(\xi) - in_l(\xi)
+    \end{align*}
+    を用いて表すこともできる。これは球面波を意味し、前者は外向きの進行波、後者は内向きの進行波を表す。球面波は($z$方向の)軌道角運動量の固有状態である。
+
+\subsection{水素原子}
+    二つの点電荷$e_1, e_2$がクーロン力を及ぼし合っているときの波動関数を求める。それぞれの位置が$\bm{r}_1, \bm{r}_2$のときハミルトニアンは
+    \begin{align*}
+        H &= -\frac{\hbar^2}{2m_1}\Delta_1 - \frac{\hbar^2}{2m_2}\Delta_2 + \frac{k}{|\bm{r}_2 - \bm{r}_1|}\\
+        \Delta_1 &= \pdv[2]{x_1} + \pdv[2]{y_1} + \pdv[2]{z_1}\\
+        \Delta_2 &= \pdv[2]{x_2} + \pdv[2]{y_2} + \pdv[2]{z_2}\\
+        k &= \frac{e_1e_2}{4\pi\epsilon_0}
+    \end{align*}
+    となる。
+    \begin{align*}
+        \bm{r_G} &= \frac{m_1\bm{r}_1 + m_2\bm{r}_2}{m_1 + m_2}\\
+        \bm{r} &= \bm{r}_2 - \bm{r}_1\\
+        \mu &= \frac{m_1m_2}{m_1 + m_2}
+    \end{align*}
+    とおくと
+    \begin{align*}
+        \bm{r}_1 &= \bm{r}_G - \frac{m_2}{m_1 + m_2}\bm{r}\\
+        \bm{r}_2 &= \bm{r}_G + \frac{m_1}{m_1 + m_2}\bm{r}
+    \end{align*}
+    である。
+    \begin{align*}
+        \pdv{x_1}
+        &= \pdv{x_G}{x_1}\pdv{x_G} + \pdv{x}{x_1}\pdv{x}\\
+        &= \frac{m_1}{m_1 + m_2}\pdv{x_G} - \pdv{x}\\
+        \pdv[2]{x_1}
+        &= \frac{m_1^2}{(m_1 + m_2)^2}
+        \pdv[2]{x_G} - \frac{2m_1}{m_1 + m_2} \pdv[2]{x_G}{x} + \pdv[2]{x}\\
+        -\frac{\hbar^2}{2m_1}\Delta_1
+        &= -\frac{m_1\hbar^2}{2(m_1 + m_2)^2}\Delta_G + \frac{\hbar^2}{m_1 + m_2}\nabla_G \cdot \nabla_r - \frac{\hbar^2}{2m_1}\Delta_r
+    \end{align*}
+    同様に
+        \[-\frac{\hbar^2}{2m_2}\Delta_2 = -\frac{m_2\hbar^2}{2(m_1 + m_2)^2}\Delta_G - \frac{\hbar^2}{m_1 + m_2}\nabla_G \cdot \nabla_r - \frac{\hbar^2}{2m_2}\Delta_r\]
+    なのでハミルトニアンは
+        \[H = -\frac{\hbar^2}{2(m_1 + m_2)}\Delta_G - \frac{\hbar^2}{2\mu}\Delta_r + \frac{k}{|r|}\]
+    となる。ハミルトニアンが重心のみに依存する項と相対座標のみに依存する項に分解できるので、波動関数を$\psi(R, r) = \psi_G(R)\psi_r(r)$と変数分離できる。つまり、古典力学と同様、二体問題は一体問題に帰着される。重心成分は系全体を一つの自由粒子と見なしたときの波動関数と一致する。よって以降は相対座標のみに依存する部分を考える。
+
+    水素原子において中心電荷が固定されている場合のハミルトニアンは
+        \[H = -\frac{\hbar^2}{2\mu}\Delta + \frac{k}{r}\]
+    である。つまり波動関数の動径成分が満たす方程式は
+        \[\left[\pdv{r}\(r^2\pdv{r}\) + \frac{2\mu r^2(E - k / r)}{\hbar^2}\right]R(r) = l(l + 1) R(r)\]
+    動径方向の解はラゲールの陪多項式を用いて
+    \begin{align*}
+        R_{nl}(r) &= -\(\frac{2\mu k}{n\hbar^2}\)^{3/2} \sqrt{\frac{(n-l-1)!}{2\mu [(n+l)!]^3}} \exp(-\frac{\mu k}{n\hbar^2}r) \(\frac{2\mu k}{n\hbar^2}r\)^l L^{2l+1}_{n+l}\(\frac{\mu k}{n\hbar^2}r\)\\
+        L^s_t(x) &= \\
+        n &= l + 1, l + 2, \dots
+    \end{align*}
+    $n, l, m$をそれぞれ主量子数、方位量子数、磁気量子数という。エネルギー固有値は主量子数によって決まり
+        \[E_n = -\frac{\mu k^2}{2\hbar^2}\frac{1}{n^2} = -\frac{\mu e^4}{32\pi^2\epsilon_0^2\hbar^2}\frac{1}{n^2}\]
+    である。従って水素原子のエネルギー準位は縮退を起こしている。主量子数はK殻、L殻、M殻、N殻...に対応し、方位量子数はs軌道、p軌道、d軌道、f軌道...に対応する。エネルギー準位の差は
+    \begin{align*}
+        \frac{E_n - E_m}{hc}
+        &= \frac{m}{2\hbar^2}\(\frac{e^2}{4\pi\epsilon_0}\)^2\\
+        &= \frac{\mu e^4}{8\pi\epsilon_0^2h^3c}
+    \end{align*}
+    となりリュードベリの公式に一致した。

@@ -1,0 +1,99 @@
+\section{固有値問題}
+
+\subsection{時間に依存しないシュレーディンガー方程式}
+    ハミルトニアン$H$が時間に依存しないとき、$H$と$i\hbar\pdv{t}$は交換するので、同時固有状態$\psi_1, \psi_2, \dots, \psi_n$を持つ。それぞれの固有値を$E_1, E_2, \dots, E_n$とすれば
+        \[H(r)\psi_i(r, t) = i\hbar\pdv{t}\psi_i(r, t) = E_i\psi_i(r, t)\]
+    となる。右側の方程式を解くと
+        \[\psi(r, t) = \phi_i(r)e^{-i\frac{E_i}{\hbar}t}\]
+    であり、第一式に代入すると
+        \[H\phi_i(r) = E_i\phi_i(r)\]
+    となる。これを時間に依存しないシュレーディンガー方程式という。$\phi_i(r)$も波動関数と呼ぶ。
+    
+    一般解は、定数$c_n$を用いて
+        \[\psi(r, t) = \sum_n c_n\psi_n(r, t) = \sum_n c_n\phi_n(r)e^{-i\frac{E_n}{\hbar}t}\]
+    となる。$\psi(x, t)$の規格化条件は
+        \[\int \psi^*\psi \dd[3]{r} = \sum_m\sum_n c_mc_n\phi_m^*\phi_n e^{i\frac{E_m - E_n}{\hbar}t} = 1\]
+    エルミート演算子の異なる固有値に属する固有関数の内積は0になるので
+        \[\sum_n c_n^2 = 1\]
+    となる。初期条件から係数が決定し、確率分布は一定である。
+
+% \subsection{演算子の交換関係}
+% アーベル群の全ての元の同時固有状態からなる完全直交系が存在する。
+
+\subsection{対称性と固有値問題}
+    ハミルトニアンと$G_i$が交換する、つまり
+        \[[H, G_i] = 0\]
+    のとき
+        \[HG_i\phi = G_iH\phi = G_iE\phi = EG_i\phi\]
+    より、ハミルトニアンの固有値$E$に属する任意の固有関数$\phi$に対して$G_i\phi$もまた$E$に属する固有関数である。
+
+    同時固有状態を利用すると、波動関数の形を制限することで、シュレーディンガー方程式を解く際の計算量を減らしたり、縮退の解消を対称群によって記述したりすることができる。
+
+\subsection{空間反転対称性}
+    % ハミルトニアン$H(x)$が時間に依存しない偶関数であるとき、固有値$E$と固有関数$\phi(x)$に対して
+    % \begin{align*}
+    %     H(x)\phi(x) &= E\phi(x)\\
+    %     H(x)\phi(-x) &= E\phi(-x)
+    % \end{align*}
+    % より$\phi(-x)$も同じ固有値$E$に属する固有関数である。$\phi(x), \phi(-x)$が線形従属なら定数$s$を用いて$\phi(-x) = s\phi(x)$だから
+    % \begin{gather*}
+    %     \phi(x) = s\phi(-x) = s^2\phi(x)\\
+    %     s = \pm 1
+    % \end{gather*}
+    % より$\phi(x)$は偶関数または奇関数である。$\phi(x), \phi(-x)$が線形独立なら
+    %     \[\phi_+(x) = \frac{\phi(x) + \phi(-x)}{2},\ \phi_-(x) = \frac{\phi(x) - \phi(-x)}{2}\]
+    % とすれば、線形独立な固有関数として偶関数と奇関数を選ぶことができる。従って固有関数を偶関数または奇関数と仮定して良い。
+
+    一次元ハミルトニアン$H(x)$が空間反転に対して対称、つまり偶関数であるとき
+    \begin{align*}
+        G &= \{R_+, R_-\}\\
+        R_+&: \phi(x) \mapsto \phi(x)\\
+        R_-&: \phi(x) \mapsto \phi(-x)
+    \end{align*}
+    とすると、$G$の元はいずれも$H$と交換する。$R_-$の固有値を$s$とおくと
+        \[R_-^2\phi(x) = s^2\phi(x)\]
+    より$s = \pm 1$。$s = 1$のとき偶関数であり、$s = -1$のとき奇関数である。つまり、偶関数と奇関数からなる完全系が存在する。
+
+\subsection{波動関数の分解}
+    \begin{thm}
+        ハミルトニアンが$H(p_1, \dots, p_m, q_1, \dots, q_n) = H_1(p_1, \dots, p_m) + H_2(q_1, \dots, q_n)$のように分解できるとき、$H$の固有関数として、$H_1, H_2$の固有値と固有関数を用いて$\phi(p_1, \dots, p_m, q_1, \dots, q_n) = \phi_1(p_1, \dots, p_m)\phi_2(q_1, \dots, q_n)$という形のものからなる完全系が存在する。
+    \end{thm}
+    \begin{proof}
+        $H$はエルミート演算子なので
+        \begin{align*}
+            H_1(p_i) + H_2(q_j) &= H_1^\dagger(p_i) + H_2^\dagger(q_j)\\
+            H_1(p_i) - H_1^\dagger(p_i) &= -(H_2(q_j) - H_2^\dagger(q_j))
+        \end{align*}
+        左辺は$p_i$のみに依存し、右辺は$q_j$のみに依存するので、両辺を定数$k$とおくことができる。
+        \begin{align*}
+            \phi^*(H_1 - H_1^\dagger)\phi &= \phi^* k \phi\\
+            \phi^*(H_1^\dagger - H_1)\phi &= \phi^* k^* \phi\\
+            \frac{k + k^*}{2} &= 0
+        \end{align*}
+        つまり
+            \[k = \frac{k + k^*}{2} + \frac{k - k^*}{2} = \frac{k - k^*}{2}\]
+        と表せる。このとき
+            \[H = \(H_1 - \frac{k}{2}\) + \(H_2 + \frac{k}{2}\)\]
+        と分解でき、それぞれの項はエルミート演算子である。
+
+        エルミート演算子には固有関数からなる完全系が存在し、それぞれ$\{\phi_{1i}\},\ \{\phi_{2j}\}$とおく。$H$の固有値$\lambda$に属する固有関数$\phi$を
+            \[\phi = \sum_{i, j} \phi_{1i}\phi_{2j}\]
+        と展開できる。ここで
+            \[H(\phi_{1i}\phi_{2j}) = (H_1 + H_2)(\phi_{1i}\phi_{2j}) = (\lambda_1 + \lambda_2)\phi_{1i}\phi_{2j}\]
+        となり、$\phi_{1i}\phi_{2j}$は$H$の固有関数である。またその固有値は$\lambda = \lambda_1 + \lambda_2$である。
+    \end{proof}
+    \begin{thm}
+        ハミルトニアンが$H(p_1, \dots, p_m, q_1, \dots, q_n) = H_1(p_1, \dots, p_m) + H_2(q_1, \dots, q_n)$のように分解でき、$H_1$のある固有関数系が完全系を成すとき、$H$の固有値と固有関数は$H_1, H_2$の固有値と固有関数を用いて$\lambda = \lambda_1 + \lambda_2,\ \phi(p_1, \dots, p_m, q_1, \dots, q_n) = \phi_1(p_1, \dots, p_m)\phi_2(q_1, \dots, q_n)$と書ける。
+    \end{thm}
+    \begin{proof}
+        $H$の固有値$\lambda$に属する固有関数$\phi(p_1, \dots, p_m, q_1, \dots, q_n)$を$H_1$の固有関数完全系$\{\phi_{11}, \phi_{12}, \dots, \phi_{1m}\}$を用いて
+            \[\phi(p_i, q_j) = \sum_i \phi_{1i}(p_i)\phi_{2i}(q_j)\]
+
+            \[H\phi(p_i, q_j) = (H_1 + H_2)\phi(p_i, q_j) = \sum_i \lambda_{1i}\phi_{1i}\phi_{2i} + \sum_i \phi_{1i}(p_i)H_2\phi_{2i}(q_j)\]
+        \begin{align*}
+            H_1\phi_1\phi_2 &= \lambda_1\phi_1\phi_2\\
+            H_2\phi_1\phi_2 &= \lambda_2\phi_1\phi_2\\
+            (H_1 + H_2)\phi_1\phi_2 &= (\lambda_1 + \lambda_2)\phi_1\phi_2
+        \end{align*}
+        より$\phi_1\phi_2$は$H$の固有関数である。
+    \end{proof}

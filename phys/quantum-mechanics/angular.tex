@@ -1,0 +1,253 @@
+\section{角運動量の理論}
+
+\subsection{角運動量代数}
+    無次元の演算子$j$が次のような交換関係を満たすとする。
+        \[[j_x, j_y] = ij_z, \quad [j_y, j_z] = ij_x, \quad [j_z, j_x] = ij_y\]
+    このとき
+        \[\bm{j}^2 = j_x^2 + j_y^2 + j_z^2\]
+    とおくと
+    \begin{align*}
+        [\bm{j}^2, j_z]
+            &= (j_x^2 + j_y^2 + j_z^2)j_z - j_z(j_x^2 + j_y^2 + j_z^2)\\
+            &= j_x^2j_z + j_y(j_zj_y + ij_x) - (j_xj_z + ij_y)j_x - j_zj_y^2\\
+            &= -j_x[j_z, j_x] + [j_y, j_z]j_y\\
+            &= -j_x \cdot ij_y + ij_x \cdot j_y\\
+            &= 0
+    \end{align*}
+    である。そして上昇演算子(生成演算子)と下降演算子(消滅演算子)を導入する。
+        \[j_+ = j_x + ij_y, \quad j_- = j_x - ij_y\]
+    いくつかの計算を示す。
+    \begin{align*}
+        j_-j_+
+            &= (j_x - ij_y)(j_x + ij_y)\\
+            &= j_x^2 + ij_xj_y - ij_yj_x + j_y^2\\
+            &= j_x^2 + j_y^2 + i[j_x, j_y]\\
+            &= j_x^2 + j_y^2 - j_z\\
+            &= \bm{j}^2 - j_z^2 - j_z\\
+        j_+j_-
+            &= (j_x + ij_y)(j_x - ij_y)\\
+            &= j_x^2 - ij_xj_y + ij_yj_x + j_y^2\\
+            &= j_x^2 + j_y^2 - i[j_x, j_y]\\
+            &= j_x^2 + j_y^2 + j_z\\
+            &= \bm{j}^2 - j_z^2 + j_z\\
+        [j_z, j_{\pm}]
+            &= [j_z, j_x \pm ij_y]\\
+            &= [j_z, j_x] \pm i[j_z, j_y]\\
+            &= ij_y \pm j_x\\
+            &= \pm (j_x \pm ij_y)\\
+            &= \pm j_{\pm}
+    \end{align*}
+
+    $\bm{j}^2, j_z$は同時固有状態を持つ。それぞれの固有値が$\lambda, m$であるときの固有状態を$\ket{\lambda, m}$と書く。$j_+, j_-$は$\bm{j}^2$の固有値を変えない。$j_z$の固有値については
+    \begin{align*}
+        j_zj_{\pm}\ket{\lambda, m}
+            &= (j_{\pm}j_z \pm j_{\pm})\ket{\lambda, m}\\
+            &= j_{\pm}(j_z \pm 1)\ket{\lambda, m}\\
+            &= (m \pm 1)j_{\pm}\ket{\lambda, m}
+    \end{align*}
+    となる。従って、$j_+$を作用させると固有値$m + 1$の固有状態に移行し、$j_-$を作用させると固有値$m - 1$の固有状態に移行する。
+    \begin{thm}
+        $j_z$の固有値$m$には最大値と最小値が存在する。
+    \end{thm}
+    \begin{proof}
+        \begin{align*}
+            \lambda &= \ev{\bm{j}^2}{\lambda, m}\\
+                    &= \ev{j_x^2 + j_y^2}{\lambda, m} + m^2\\
+                    &\geq m^2 \geq 0
+        \end{align*}
+        最大値$j$に対して$j_+\ket{\lambda, j} = 0$だから
+        \begin{align*}
+            \lambda\ket{\lambda, j}
+                &= \bm{j}^2\ket{\lambda, j}\\
+                &= (j_-j_+ + j_z + j_z^2)\ket{\lambda, j}\\
+                &= j(j + 1)\ket{\lambda, j}\\
+            \lambda &= j(j + 1)
+        \end{align*}
+        最小値$j - n$に対して$j_-\ket{\lambda, j - n} = 0$だから
+        \begin{align*}
+            \lambda\ket{\lambda, j - n}
+                &= \bm{j}^2\ket{\lambda, j - n}\\
+                &= (j_+j_- - j_z + j_z^2)\ket{\lambda, j - n}\\
+                &= (j - n)(j - n - 1)\ket{\lambda, j - n}\\
+            \lambda &= (j - n)(j - n - 1)
+        \end{align*}
+    \end{proof}
+    従って
+    \begin{align*}
+        j(j + 1) &= (j - n)(j - n - 1)\\
+        j &= -(2n + 1)j + n(n + 1)\\
+        j &= \frac{n}{2}
+    \end{align*}
+    より、$j$は非負の半整数であり、$\lambda$に対して一意である。固有値は$-j, -(j - 1), \dots, j - 1, j$を取る。
+
+    \begin{align*}
+        |c|^2   &= \ev{j_+^\dagger j_+}{\lambda, m}\\
+                &= \ev{j_-j_+}{\lambda, m}\\
+                &= \ev{\bm{j}^2 - j_z^2 - j_z}{\lambda, m}\\
+                &= j(j + 1) - m^2 - m\\
+                &= (j - m)(j + m + 1)\\
+        |c'|^2  &= \ev{j_-^\dagger j_-}{\lambda, m}\\
+                &= \ev{j_+j_-}{\lambda, m}\\
+                &= \ev{\bm{j}^2 - j_z^2 + j_z}{\lambda, m}\\
+                &= j(j + 1) - m^2 + m\\
+                &= (j + m)(j - m + 1)
+    \end{align*}
+    より
+        \[c = \sqrt{(j - m)(j + m + 1)}, \quad c' = \sqrt{(j + m)(j - m + 1)}\]
+    とすれば良い。
+
+\subsection{スピン}
+    量子力学においてスピンと呼ばれる内部自由度が存在する。粒子の状態は位置または運動量だけでは決定せず、スピンを持ち出す必要がある。
+
+    粒子はスピン演算子$S$に対して必ず$S^2$の固有状態となっている。固有値$s(s + 1)\hbar$に属する$S^2$の固有状態にある粒子はスピン$s$を持つという。例えば電子はスピン$1/2$であることが実験で確認されている。
+    
+    波動関数はそれぞれの空間座標とスピン座標の関数として表現できる。また、状態空間は元々の空間とスピノル空間$D_s$のテンソル積となる。
+    \[\psi(r_1, \sigma_1, \dots, r_n, \sigma_n) = (\psi(r_1, r_2, \dots, r_n), m_1, m_2, \dots, m_n) \in L^2(\R^{3n}) \otimes D_s\]
+
+\subsection{角運動量の合成}
+    $\{c_0x^t + c_1x^{t-1}y + \dots + c_ty^y\}$によって得られる表現を$D_j\ (j = t/2)$と書く。
+
+    有限次元ベクトル空間$V$について、線形演算子$j_x, j_y, j_z: V \rightarrow V$が
+
+    $R_{2j+1} = \gen{v_{-j}, v_{-(j-1)}, \dots, v_{j-1}, v_j}$は既約である。これは$D_j$と同型である。
+
+    全角運動量演算子を
+        \[j = j_1 \otimes 1 + 1 \otimes j_2\]
+    で定める。
+    
+    半整数$j_1, j_2$に対し
+        \[D_{j_1} \otimes D_{j_2} = D_{|j_1-j_2|} \oplus D_{|j_1-j_2|+1} \oplus \dots \oplus D_{j_1+j_2}\]
+    である。$D_{j_1} \otimes D_{j_2}$の基底として$\{\ket{j_1, m_1} \otimes \ket{j_2, m_2} \mid |m_1| \leq j_1, |m_2| \leq j_2\}$を考えることができる。
+        \[j_z\ket{j_1, m_1} \otimes \ket{j_2, m_2} = (m_1 + m_2)\ket{j_1, m_1} \otimes \ket{j_2, m_2}\]
+    より、$m$に属する$j_z$の固有ベクトルとして、$\ket{j_1, m_1}\ket{j_2, m_2}\ (m_1 + m_2 = m)$ある。$j_1 \leq j_2$なら固有ベクトルの数はそれぞれ
+    \[
+        \begin{cases}
+            j_1 + j_2 - |m| & (m \leq j_1 - j_2)\\
+            2j_1 + 1 & (j_1 - j_2 < m < -j_1 + j_2)\\
+            j_1 + j_2 - |m| & (-j_1 + j_2 \leq m)
+        \end{cases}
+    \]
+    である。最大の固有値$j_1 + j_2$の固有ベクトルがただ一つ存在し、下降演算子を適用することで$D_{j_1+j_2}$が得られる。直交補空間を考えれば各固有値の固有ベクトルが一つずつ減る。残った最大の固有値$j_1 + j_2 - 1$の固有ベクトルに対して同様に繰り返すことで、$D_{j_1+j_2-1}, \dots, D_{|j_1-j_2|}$が得られる。
+
+    $\ket{j, m} \in D_{j_1} \otimes D_{j_2}$を
+        \[\ket{j, m} = \sum C^{jm}_{j_1m_1j_2m_2} \ket{j_1, m_1} \otimes \ket{j_2, m_2}\]
+    と表したとき、係数$C^{jm}_{j_1m_1j_2m_2}$をクレブシュ＝ゴルダン係数と呼ぶ。
+
+\subsection{2電子系}
+    電子のスピンは$1/2$なので、$s_z$の固有値は$+1/2, -1/2$の二つである。それぞれの固有状態を$\ket{\alpha}, \ket{\beta}$とする。つまり
+        \[s_z\ket{\alpha} = \frac{1}{2}\ket{\alpha}, \quad s_z\ket{\beta} = -\frac{1}{2}\ket{\beta}\]
+    である。2電子のスピンの合成$s \otimes 1 + 1 \otimes s$を考えると、$D_{1/2} \otimes D_{1/2} = D_0 \oplus D_1$と分解される。$D_1$の固有状態は
+    \begin{align*}
+        \ket{1, 1} &= \ket{\alpha} \otimes \ket{\alpha}\\
+        \ket{1, 0} &= \frac{1}{\sqrt{2}}(\ket{\alpha} \otimes \ket{\beta} + \ket{\beta} \otimes \ket{\alpha})\\
+        \ket{1, -1} &= \ket{\beta} \otimes \ket{\beta}
+    \end{align*}
+    となる。これは2電子の入れ替えに対して対称である。$D_0$の固有状態は
+        \[\ket{0, 0} = \frac{1}{\sqrt{2}}(\ket{\alpha} \otimes \ket{\beta} - \ket{\beta} \otimes \ket{\alpha})\]
+    となる。これは2電子に入れ替えに対して反対称である。
+
+    ハミルトニアン
+        \[H_{ss} = \alpha s_1 \cdot s_2\]
+    によって定義される作用をスピン-スピン相互作用という。また
+        \[H_{so} = \beta l \cdot s\]
+    をスピン軌道相互作用という。
+
+\subsection{ゼーマン相互作用}
+    電磁ポテンシャルのハミルトニアンは$\sigma = (\sigma_x, \sigma_y, \sigma_z)$をパウリ行列として
+        \[H = \frac{[\sigma \cdot (p - eA)]^2}{2m} + e\phi\]
+    である。
+
+\subsection{スピン軌道相互作用}
+        \[H_{\text{SO}} = \alpha L \cdot S\]
+    軌道角運動量とスピン角運動量の相互作用をスピン軌道相互作用という。
+    \begin{align*}
+        L \cdot S(L_x + S_x)
+            &= (L_xS_x + L_yS_y + L_zS_z)(L_x + S_x)\\
+            &= L_x^2S_x + L_yL_xS_y + L_zL_xS_z + L_xS_x^2 + L_yS_yS_x + L_zS_zS_x\\
+        (L_x + S_x)L \cdot S
+            &= (L_x + S_x)(L_xS_x + L_yS_y + L_zS_z)\\
+            &= L_x^2S_x + L_xL_yS_y + L_xL_zS_z + L_xS_x^2 + L_yS_xS_y + L_zS_xS_z\\
+        [L \cdot S, L_x + S_x]
+            &= -[L_x, L_y]S_y + [L_z, L_x]S_z - L_y[S_x, S_y] + L_z[S_z, S_x]\\
+            &= -i\hbar L_zS_y + i\hbar L_yS_z - i\hbar L_yS_z + i\hbar L_zS_y\\
+            &= 0
+    \end{align*}
+    $y, z$についても同様なので、$[L \cdot S, L + S] = 0$つまりスピン軌道相互作用は全角運動量$J = L + S$と交換する。
+    
+    $L_i, S_i$は交換するので
+    \begin{align*}
+        J^2 &= (L + S)^2\\
+            &= (L_x + S_x, L_y + S_y, L_z + S_z)^2\\
+            &= (L_x + S_x)^2 + (L_y + S_y)^2 + (L_z + S_z)^2\\
+            &= L^2 + 2 L \cdot S + S^2
+    \end{align*}
+    つまり
+        \[L \cdot S = \frac{1}{2}(J^2 - L^2 - S^2)\]
+    である。
+
+    粒子の方位量子数が$l$、スピン量子数が$s$のとき、$D_l \otimes D_s = D_{|l-s|} \oplus \dots \oplus D_{l+s}$より、全角運動量の量子数$j$は$l - s \leq j \leq l + s$を取る。固有状態はクレブシュ=ゴルダン係数を用いて
+        \[\ket{j, m_j} = \sum C^{jm_j}_{lm_lsm_s} \ket{l, m_l} \otimes \ket{s, m_s}\]
+    と表される。このときのエネルギー固有値は
+    \begin{align*}
+        2 L \cdot S \ket{j, m_j}
+            &= J^2 \ket{j, m_j} - (L^2 + S^2) \sum C^{jm_j}_{lm_lsm_s} \ket{l, m_l} \otimes \ket{s, m_s}\\
+            &= j(j + 1)\hbar^2 \ket{j, m_j} - (l(l + 1)\hbar^2 + s(s + 1)\hbar^2) \sum C^{jm_j}_{lm_lsm_s} \ket{l, m_l} \otimes \ket{s, m_s}\\
+            &= [j(j + 1) - l(l + 1) - s(s + 1)]\hbar^2 \ket{j, m_j}
+    \end{align*}
+    より$\alpha/2 [j(j + 1) - l(l + 1) - s(s + 1)]\hbar^2$となる。したがって$j$の値によってエネルギーが分裂する。スピン軌道相互作用によって起こされるこのようなエネルギーの微細な分裂を微細構造という。
+
+    パッシェン=バック効果
+
+\subsection{ラーモア歳差運動}
+    $z$軸方向に一様な磁場$B$がかかっている場合を考える。軌道運動を無視しスピンのみを考えると、ハミルトニアンは
+        \[H_s = -\mu B s_z\]
+    である。$s_z$の固有状態$\ket{\alpha}, \ket{\beta}$が$H_s$の固有状態であり、
+    \begin{align*}
+        H_s\ket{\alpha} &= -\mu B s_z\ket{\alpha} = -\frac{\mu B}{2}\ket{\alpha}\\
+        H_s\ket{\beta} &= -\mu B s_z\ket{\beta} = \frac{\mu B}{2}\ket{\beta}
+    \end{align*}
+    である。エネルギー固有値はそれぞれ$E_\alpha = -\mu B/2, E_\beta = \mu B/2$である。つまり波動関数は
+        \[\ket{\sigma(t)} = c_1e^{-i\frac{E_\alpha}{\hbar}t}\ket{\alpha} + c_2e^{-i\frac{E_\beta}{\hbar}t}\ket{\beta}\]
+    となる。$t = 0$のとき
+        \[\ket{\sigma} = \cos\frac{\theta}{2}\ket{\alpha} + \sin\frac{\theta}{2}e^{i\delta}\ket{\beta}\]
+    であるとすると
+        \[c_1 = \cos\frac{\theta}{2}, \quad c_2 = \sin\frac{\theta}{2}e^{i\delta}\]
+    となる。つまり
+        \[\ket{\sigma(t)} = \cos\frac{\theta}{2}e^{-i\frac{E_\alpha}{\hbar}t}\ket{\alpha} + \sin\frac{\theta}{2}e^{i\delta}e^{-i\frac{E_\beta}{\hbar}t}\ket{\beta}\]
+    である。
+
+    \begin{alignat*}{2}
+        s_x\ket{\alpha} &= \frac{1}{2}\ket{\beta}, &\quad s_x\ket{\beta} &= \frac{1}{2}\ket{\alpha}\\
+        s_y\ket{\alpha} &= \frac{i}{2}\ket{\beta}, & s_y\ket{\beta} &= -\frac{i}{2}\ket{\alpha}\\
+        s_z\ket{\alpha} &= \frac{1}{2}\ket{\alpha}, & s_z\ket{\beta} &= -\frac{1}{2}\ket{\beta}
+    \end{alignat*}
+    なので
+    \begin{align*}
+        s_x\ket{\sigma(t)} &= \frac{1}{2}\cos\frac{\theta}{2}e^{i\frac{\mu B}{2\hbar}t}\ket{\beta} + \frac{1}{2}\sin\frac{\theta}{2}e^{i\delta}e^{-i\frac{\mu B}{2\hbar}t}\ket{\alpha}\\
+        s_y\ket{\sigma(t)} &= \frac{i}{2}\cos\frac{\theta}{2}e^{i\frac{\mu B}{2\hbar}t}\ket{\beta} - \frac{i}{2}\sin\frac{\theta}{2}e^{i\delta}e^{-i\frac{\mu B}{2\hbar}t}\ket{\alpha}\\
+        s_z\ket{\sigma(t)} &= \frac{1}{2}\cos\frac{\theta}{2}e^{i\frac{\mu B}{2\hbar}t}\ket{\alpha} - \frac{1}{2}\sin\frac{\theta}{2}e^{i\delta}e^{-i\frac{\mu B}{2\hbar}t}\ket{\beta}
+    \end{align*}
+    となるから、
+    \begin{align*}
+        \ev{s_x}{\sigma(t)}
+            &= \(\cos\frac{\theta}{2}e^{-i\frac{\mu B}{2\hbar}t}\bra{\alpha} + \sin\frac{\theta}{2}e^{-i\delta}e^{i\frac{\mu B}{2\hbar}t}\bra{\beta}\)\(\frac{1}{2}\cos\frac{\theta}{2}e^{i\frac{\mu B}{2\hbar}t}\ket{\beta} + \frac{1}{2}\sin\frac{\theta}{2}e^{i\delta}e^{-i\frac{\mu B}{2\hbar}t}\ket{\alpha}\)\\
+            &= \frac{1}{2}\cos\frac{\theta}{2}\sin\frac{\theta}{2} e^{i\delta} e^{-i\frac{\mu B}{\hbar}t} + \frac{1}{2}\cos\frac{\theta}{2}\sin\frac{\theta}{2} e^{-i\delta} e^{i\frac{\mu B}{\hbar}t}\\
+            &= \frac{1}{2} \sin\theta \cos\(\frac{\mu B}{\hbar}t - \delta\)\\
+        \ev{s_y}{\sigma(t)}
+            &= \(\cos\frac{\theta}{2}e^{-i\frac{\mu B}{2\hbar}t}\bra{\alpha} + \sin\frac{\theta}{2}e^{-i\delta}e^{i\frac{\mu B}{2\hbar}t}\bra{\beta}\)\(\frac{i}{2}\cos\frac{\theta}{2}e^{i\frac{\mu B}{2\hbar}t}\ket{\beta} - \frac{i}{2}\sin\frac{\theta}{2}e^{i\delta}e^{-i\frac{\mu B}{2\hbar}t}\ket{\alpha}\)\\
+            &= -\frac{i}{2}\cos\frac{\theta}{2}\sin\frac{\theta}{2} e^{i\delta} e^{-i\frac{\mu B}{\hbar}t} + \frac{i}{2}\cos\frac{\theta}{2}\sin\frac{\theta}{2} e^{-i\delta} e^{i\frac{\mu B}{\hbar}t}\\
+            &= -\frac{1}{2} \sin\theta \sin\(\frac{\mu B}{\hbar}t - \delta\)\\
+        \ev{s_z}{\sigma(t)}
+            &= \(\cos\frac{\theta}{2}e^{-i\frac{\mu B}{2\hbar}t}\bra{\alpha} + \sin\frac{\theta}{2}e^{-i\delta}e^{i\frac{\mu B}{2\hbar}t}\bra{\beta}\)\(\frac{1}{2}\cos\frac{\theta}{2}e^{i\frac{\mu B}{2\hbar}t}\ket{\alpha} - \frac{1}{2}\sin\frac{\theta}{2}e^{i\delta}e^{-i\frac{\mu B}{2\hbar}t}\ket{\beta}\)\\
+            &= \frac{1}{2}\cos^2\frac{\theta}{2} - \frac{1}{2}\sin^2\frac{\theta}{2}\\
+            &= \frac{1}{2} \cos\theta
+    \end{align*}
+    となる。つまり、粒子のスピンが磁場方向に傾いている場合、スピンの各方向の期待値が指すベクトルは、磁場方向に水平な円周の上を角振動数$\mu B/\hbar$で回転する。これをラーモア歳差運動という。
+
+\subsection{ランダウ準位}
+\subsection{アハラノフ＝ボーム効果}
+    二重スリット実験において、電子の波動関数はスリットAを通るものとスリットBを通るものの重ね合わせで表される。
+        \[\psi = \psi_A + \psi_B\]
+
+\subsection{ラビ振動}
+% 湯川相互作用、クライン・仁科の式、朝永・ラッティンジャー液体、ゲルマン西島の関係式、近藤効果

@@ -1,0 +1,242 @@
+\section{相対論的量子力学}
+
+\subsection{ディラック方程式}
+    スピン$1/2$、電荷$q$を持つ粒子は以下のディラック方程式に従う。
+    \begin{gather*}
+        i\hbar\frac{1}{c}\pdv{t}\psi(x) = \left[\alpha \cdot (-i\hbar\nabla - qA) + \beta mc + \frac{q\phi}{c}\right]\psi(x)\\
+        \alpha^i = \begin{pmatrix}
+            0 & \sigma^i\\
+            \sigma^i & 0
+        \end{pmatrix}, \quad
+        \beta = \begin{pmatrix}
+            \sigma^0 & 0\\
+            0 & -\sigma^0
+        \end{pmatrix}
+    \end{gather*}
+    $\alpha, \beta$は$4 \times 4$のエルミート行列であり、波動関数$\psi(x)$は4成分ベクトルである。ディラック方程式とその複素共役を取ったものにそれぞれエルミート共役を掛けると、
+    \begin{align*}
+        i\hbar \psi^\dagger\frac{1}{c}\pdv{t}\psi
+            &= \psi^\dagger \left[\alpha \cdot (-i\hbar\nabla - qA) + \beta mc + \frac{q\phi}{c}\right] \psi(x)\\
+        -i\hbar \psi^\top\frac{1}{c}\pdv{t}\psi^*
+            &= \psi^\top \left[\alpha^* \cdot (i\hbar\nabla - qA) + \beta^* mc + \frac{q\phi}{c}\right] \psi^*(x)\\
+            &= \psi^\dagger \left[\alpha \cdot (i\hbar\nabla - qA) + \beta mc + \frac{q\phi}{c}\right] \psi(x)
+    \end{align*}
+    辺々引いて2で割ると
+        \[i\hbar\frac{1}{c}\pdv{t}[\psi^\dagger(x)\psi(x)] = -i\hbar\nabla \cdot [\psi^\dagger(x) \alpha \psi(x)]\]
+    となる。
+        \[\rho(x) = |\psi(x)|^2, \quad j(x) = c \psi^\dagger(x)\alpha\psi(x)\]
+    とおくと、連続の方程式
+        \[\pdv{\rho}{t} + \nabla \cdot j = 0\]
+    を満たす。$\rho(x) \geq 0$なので、$\rho(x)$を確率密度、$j(x)$を確率密度流と解釈することができる。
+
+    また、共変微分とガンマ行列
+    \begin{gather*}
+        D_\mu = \partial_\mu - \frac{q}{i\hbar}A_\mu\\
+        \gamma^0 = \beta, \quad \gamma^i = \beta\alpha^i
+    \end{gather*}
+    を用いると、ディラック方程式は
+    \begin{align*}
+        i\hbar\beta\frac{1}{c}\pdv{t}\psi(x) &= \left[\beta\alpha \cdot (-i\hbar\nabla - qA) + \beta^2 mc + \beta\frac{q\phi}{c}\right]\psi(x)\\
+        i\hbar\gamma^0\left(\frac{1}{c}\pdv{t} - \frac{q}{i\hbar}\frac{\phi}{c}\right)\psi(x) &= -i\hbar\gamma^i \left(\partial_i - \frac{q}{i\hbar}A_i\right)\psi(x) + mc\psi(x)\\
+        i\hbar \gamma^\mu D_\mu \psi(x) &= mc\psi(x)
+    \end{align*}
+    となる。
+
+    それぞれの変数はローレンツ変換
+        \[\Lambda = \exp \begin{pmatrix}
+            0 & -\eta_x & -\eta_y & -\eta_z\\
+            -\eta_x & 0 & \theta_z & -\theta_y\\
+            -\eta_y & -\theta_z & 0 & \theta_x\\
+            -\eta_z & \theta_y & -\theta_x & 0
+        \end{pmatrix}\]
+    に対して
+    \begin{align*}
+        x'^\mu &= \Lambda^\mu_\nu x^\nu\\
+        D'_\mu &= \Lambda_\mu^\nu D_\nu\\
+        \psi'(x') &= \exp\left(-\frac{\eta}{2} \cdot \alpha + i\frac{\theta}{2} \cdot \Sigma\right)\psi(x)
+    \end{align*}
+    となる。ただし
+        \[\Sigma = -i(\alpha^2\alpha^3, \alpha^3\alpha^1, \alpha^1\alpha^2)\]
+    である。$\psi(x) \mapsto \psi'(x')$のような変換に従う量をディラックスピノルと呼ぶ。
+
+    ローレンツブーストに対して、$(\eta \cdot \alpha)^2 = |\eta|^2I$より、
+    \begin{align*}
+        \exp\left(-\frac{\eta}{2} \cdot \alpha\right)
+            &= \cosh\left(\frac{\eta}{2} \cdot \alpha\right) - \sinh\left(\frac{\eta}{2} \cdot \alpha\right)\\
+            &= \cosh\frac{|\eta|}{2} - \hat{\eta} \cdot \alpha \sinh\frac{|\eta|}{2}\\
+            &= \begin{pmatrix}
+                \cosh\frac{|\eta|}{2} & -\hat{\eta} \cdot \sigma \sinh \frac{|\eta|}{2}\\
+                -\hat{\eta} \cdot \sigma \sinh\frac{|\eta|}{2} & \cosh\frac{|\eta|}{2}\\
+            \end{pmatrix}
+    \end{align*}
+    である。また空間回転に対して、$(\theta \cdot \Sigma)^2 = |\theta|^2I$より、
+    \begin{align*}
+        \exp\left(i\frac{\theta}{2} \cdot \Sigma\right)
+            &= \cos\left(\frac{\theta}{2} \cdot \Sigma\right) + i\sin\left(\frac{\theta}{2} \cdot \Sigma\right)\\
+            &= \cos\frac{|\theta|}{2} + i\hat{\theta} \cdot \Sigma \sin\frac{|\theta|}{2}\\
+            &= \begin{pmatrix}
+                \cos\frac{|\theta|}{2} + i\hat{\theta} \cdot \sigma \sin\frac{|\theta|}{2} & 0\\
+                0 & \cos\frac{|\theta|}{2} + i\hat{\theta} \cdot \sigma \sin\frac{|\theta|}{2}
+            \end{pmatrix}
+    \end{align*}
+    である。
+
+\subsection{物理量の演算子}
+    ディラックスピノルに対する位置演算子、運動量演算子、軌道角運動量演算子は、各成分ごとに作用させるとして良い。
+    
+    ディラック方程式において、スピン角運動量演算子は
+        \[S = \frac{\hbar}{2}\Sigma = -\frac{i\hbar}{2}(\alpha^2\alpha^3, \alpha^3\alpha^1, \alpha^1\alpha^2) = \frac{\hbar}{2}\begin{pmatrix}
+            \sigma^i & 0\\
+            0 & \sigma^i
+        \end{pmatrix}\]
+    と書ける。
+    \begin{align*}
+        S^2 &= \frac{\hbar^2}{4}((\Sigma^1)^2 + (\Sigma^2)^2 + (\Sigma^3)^2) = \frac{3}{4}\hbar^2I
+    \end{align*}
+    であり、ディラック方程式がスピン$1/2$の粒子の方程式であることが分かる。
+    
+    % 固有値は$\pm \hbar/2$で、それぞれの固有状態は
+    % \begin{align*}
+    %     \ket{\alpha_x} &= \frac{1}{\sqrt{2}}\vectwo{1}{1}, & \ket{\beta_x} &= \frac{1}{\sqrt{2}}\vectwo{1}{-1}\\
+    %     \ket{\alpha_y} &= \frac{1}{\sqrt{2}}\vectwo{1}{i}, & \ket{\beta_y} &= \frac{1}{\sqrt{2}}\vectwo{1}{-i}\\
+    %     \ket{\alpha_z} &= \vectwo{1}{0}, & \ket{\beta_z} &= \vectwo{0}{1}
+    % \end{align*}
+    % となる。
+
+    また、運動量方向のスピン角運動量
+        \[h = S \cdot \frac{p}{|p|} = \frac{\hbar}{2}\Sigma \cdot \frac{p}{|p|}\]
+    をヘリシティという。$p/|p| = (\sin\theta\cos\phi, \sin\theta\sin\phi, \cos\theta)$に対して、ヘリシティの固有値$\pm \hbar/2$に属する固有状態は
+    \begin{align*}
+        \psi_\uparrow &= \vectwo{\cos\frac{\theta}{2}}{e^{i\phi}\sin\frac{\theta}{2}}\\
+        \psi_\downarrow &= \vectwo{e^{-i\phi}\sin\frac{\theta}{2}}{-\cos\frac{\theta}{2}}
+    \end{align*}
+    として
+    \begin{align*}
+        \vectwo{\psi_+}{k\psi_+}, \quad \vectwo{\psi_-}{k\psi_-}
+    \end{align*}
+    となる。$\psi_\uparrow$のとき、スピン角運動量と運動量が平行であり右巻きと呼ばれる。$\psi_\downarrow$のとき、スピン角運動量と運動量が反平行であり左巻きと呼ばれる。
+
+    また、
+    \begin{align*}
+        [H, h]
+            &= \left[c\alpha \cdot p + \beta mc^2, \frac{\hbar}{2}\Sigma \cdot \frac{p}{|p|}\right]\\
+    \end{align*}
+    \begin{align*}
+        [H, h]
+            &= \left[H, S \cdot \frac{p}{|p|}\right]\\
+            &= [H, S] \cdot \frac{p}{|p|}\\
+            &= i\hbar c \sum_{i,j,k} \epsilon^{ijk}\alpha^jp^k\frac{p^i}{|p|}
+        [\alpha \cdot p, \Sigma \cdot p]
+            &= -i[\alpha^1p_x + \alpha^2p_y + \alpha^3p_z, \alpha^2\alpha^3p_x + \alpha^3\alpha^1p_y + \alpha^1\alpha^2p_z]\\
+            &= 0\\
+        [\beta, \Sigma \cdot p]
+            &= -i[\beta, \alpha^2\alpha^3p_x + \alpha^3\alpha^1p_y + \alpha^1\alpha^2p_z]\\
+            &= 0
+    \end{align*}
+    より自由粒子の場合ヘリシティは保存する。
+
+        \[\gamma^5 = i\gamma^0\gamma^1\gamma^2\gamma^3\]
+    をカイラリティという。
+
+\subsection{非相対論的極限}
+    波動関数を
+        \[\psi(x) = \vectwo{\psi_+(x)}{\psi_-(x)} e^{-imc^2t/\hbar}\]
+    とおくと、ディラック方程式は
+    \begin{align*}
+        i\hbar \pdv{t}\vectwo{\psi_+}{\psi_-} e^{-imc^2t/\hbar} + mc^2 \vectwo{\psi_+}{\psi_-}e^{-imc^2t/\hbar}
+            &= \left[\begin{pmatrix} 0 & \sigma\\ \sigma & 0 \end{pmatrix} \cdot (pc - qcA) + \begin{pmatrix} \sigma^0 & 0\\ 0 & -\sigma^0 \end{pmatrix} mc^2 + q\phi\right] \vectwo{\psi_+}{\psi_-} e^{-imc^2t/\hbar}\\
+            &= \vectwo{\sigma \cdot (pc - qcA)\psi_- + (+mc^2 + q\phi)\psi_+}{\sigma \cdot (pc - qcA)\psi_+ + (-mc^2 + q\phi)\psi_-} e^{-imc^2t/\hbar}\\
+        i\hbar \pdv{t}\vectwo{\psi_+}{\psi_-} + mc^2 \vectwo{\psi_+}{\psi_-}
+            &= \vectwo{\sigma \cdot (pc - qcA)\psi_- + (+mc^2 + q\phi)\psi_+}{\sigma \cdot (pc - qcA)\psi_+ + (-mc^2 + q\phi)\psi_-}
+    \end{align*}
+    成分ごとに書き下すと、
+    \begin{align*}
+        i\hbar\pdv{t}\psi_+ &= \sigma \cdot (pc - qcA)\psi_- + q\phi\psi_+\\
+        \left(2mc^2 + i\hbar\pdv{t}\right)\psi_- &= \sigma \cdot (pc - qcA)\psi_+ + q\phi\psi_-
+    \end{align*}
+    非相対論的極限において運動エネルギー$i\hbar\pdv*{t}$と静電エネルギー$q\phi$は静止エネルギー$mc^2$に比べて無視できる。つまり
+    \begin{align*}
+        i\hbar\pdv{t}\psi_+
+            &= \sigma \cdot (-i\hbar c\nabla - qcA)\psi_- + q\phi\psi_+\\
+            &= \sigma \cdot (-i\hbar c\nabla - qcA) \frac{\sigma \cdot (-i\hbar c\nabla - qcA)}{2mc^2}\psi_+ + q\phi\psi_+\\
+            &= \left[\frac{(\sigma \cdot (-i\hbar\nabla - qA))^2}{2m} + q\phi\right]\psi_+
+    \end{align*}
+    となり、パウリ方程式が導かれる。$\psi_+(x)$はワイルスピノルと呼ばれる。$(\sigma \cdot a)(\sigma \cdot b) = a \cdot b + i\sigma \cdot a \times b$を用いると、
+    \begin{align*}
+        (\sigma \cdot (-i\hbar\nabla - qA))^2
+            &= (-i\hbar\nabla - qA)^2 + i\sigma \cdot (-i\hbar\nabla - qA) \times (-i\hbar\nabla - qA)\\
+            &= (-i\hbar\nabla - qA)^2 + i\sigma \cdot (-\hbar^2\nabla \times \nabla + i\hbar\nabla \times qA + qA \times i\hbar\nabla)\\
+            &= (-i\hbar\nabla - qA)^2 + i\sigma \cdot (i\hbar\nabla \times qA)\\
+            &= (-i\hbar\nabla - qA)^2 - q\hbar \sigma \cdot B
+    \end{align*}
+    なので
+        \[i\hbar\pdv{t}\psi_+ = \left[\frac{(-i\hbar\nabla - qA)^2}{2m} + q\phi - \frac{q\hbar}{2m}\sigma \cdot B\right]\psi+\]
+    となる。第三項はパウリ項と呼ばれ、スピン角運動量と磁場の相互作用を表す。$\mu_B = q\hbar / 2m$は電子の磁気モーメントである。特に磁場が$z$成分しか持たないときは、
+    \begin{align*}
+        i\hbar\pdv{t}\psi_\uparrow &= \left[\frac{(-i\hbar\nabla - qA)^2}{2m} + q\phi - \frac{q\hbar}{2m}B_z\right]\psi_\uparrow\\
+        i\hbar\pdv{t}\psi_\downarrow &= \left[\frac{(-i\hbar\nabla - qA)^2}{2m} + q\phi + \frac{q\hbar}{2m}B_z\right]\psi_\downarrow
+    \end{align*}
+    となる。
+
+\subsection{球対称ポテンシャル}
+    球対称ポテンシャル$V(r)$を考える。電荷を持たない粒子に対するハミルトニアンは$H = c\alpha \cdot p + \beta mc^2 + V(r)$である。
+    \begin{align*}
+        [H, L^i] &= -i\hbar c \sum_{j,k} \epsilon^{ijk}\alpha^jp^k\\
+        [H, S^i] &= i\hbar c \sum_{j,k} \epsilon^{ijk}\alpha^jp^k\\
+        [H, J^i] &= 0
+    \end{align*}
+    軌道角運動量とスピン角運動量は保存量ではないが、全角運動量は保存量となる。
+
+    \begin{align*}
+        L^2 &= (J - S)^2 = J^2 - 2J \cdot S + S^2\\
+        L_z &= J_z - S_z\\
+        L \cdot \sigma
+            &= \sum_i L^i \cdot \sigma^i\\
+            &= \begin{pmatrix}
+                L_z & L_x - iL_y\\
+                L_x + iL_y & -L_z
+            \end{pmatrix}
+            = \begin{pmatrix}
+                L_z & L_-\\
+                L_+ & -L_z
+            \end{pmatrix}
+    \end{align*}
+        
+    \begin{align*}
+        L^2\psi
+            &= (J^2 - 2J \cdot S + S^2)\psi\\
+            &= j(j + 1)\hbar^2 - \begin{pmatrix}
+                m\hbar & J_- & 0 & 0\\
+                J_+ & -m\hbar & 0 & 0\\
+                0 & 0 & m\hbar & J_-\\
+                0 & 0 & J_+ & -m\hbar
+            \end{pmatrix}\hbar\psi + \frac{3}{4}\hbar^2\psi\\
+            &= \begin{pmatrix}
+                j(j + 1) - m + 3/4 & J_- & 0 & 0\\
+                J_+ & j(j + 1) + m + 3/4 & 0 & 0\\
+                0 & 0 & j(j + 1) - m + 3/4 & J_-\\
+                0 & 0 & J_+ & j(j + 1) + m + 3/4
+            \end{pmatrix}\hbar^2\psi\\
+            &= (J^2 - 2L \cdot S - S^2)\psi\\
+            &= j(j + 1)\hbar^2 - \begin{pmatrix}
+                (m - 1/2)\hbar & L_- & 0 & 0\\
+                L_+ & -(m + 1/2)\hbar & 0 & 0\\
+                0 & 0 & (m - 1/2)\hbar & L_-\\
+                0 & 0 & L_+ & -(m + 1/2)\hbar
+            \end{pmatrix}\hbar\psi - \frac{3}{4}\hbar^2\psi\\
+        L_z\psi
+            &= (J_z - S_z)\psi\\
+            &= \left(m\hbar - \frac{\hbar}{2}\begin{pmatrix} \sigma^3 & 0\\ 0 & \sigma^3 \end{pmatrix}\right)\psi\\
+            &= \begin{pmatrix}
+                m - 1/2 & 0 & 0 & 0\\
+                0 & m + 1/2 & 0 & 0\\
+                0 & 0 & m - 1/2 & 0\\
+                0 & 0 & 0 & m + 1/2
+            \end{pmatrix}\hbar\psi
+    \end{align*}
+    より
+    \begin{align*}
+        \psi = \vecfour{Y_{l-1/2}^{m-1/2}(\theta, \phi)}{Y_{l-1/2}^{m+1/2}(\theta, \phi)}{Y_{l+1/2}^{m-1/2}(\theta, \phi)}{Y_{l+1/2}^{m+1/2}(\theta, \phi)}, \vecfour{Y_{l+1/2}^{m-1/2}(\theta, \phi)}{Y_{l+1/2}^{m+1/2}(\theta, \phi)}{Y_{l-1/2}^{m-1/2}(\theta, \phi)}{Y_{l-1/2}^{m+1/2}(\theta, \phi)}
+    \end{align*}
+    スピノル球関数
+        \[\mathcal{Y}_{jm}^\pm(\theta, \phi) = \vectwo{a Y_{j \mp 1/2}^{m - 1/2}(\theta, \phi)}{b Y_{j \mp 1/2}^{m + 1/2}(\theta, \phi)}\]

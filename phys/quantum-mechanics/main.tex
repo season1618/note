@@ -1,0 +1,51 @@
+\documentclass[uplatex]{jsarticle}
+
+\usepackage{amssymb,amsmath}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{physics}
+
+\renewcommand{\epsilon}{\varepsilon}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\renewcommand{\H}{\mathcal{H}}
+\newcommand{\U}{\mathcal{U}}
+
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\newcommand{\gen}[1]{\langle #1 \rangle}
+\newcommand{\vectwo}[2]{\begin{pmatrix} #1\\ #2 \end{pmatrix}}
+\newcommand{\vecfour}[4]{\begin{pmatrix} #1\\ #2\\ #3\\ #4 \end{pmatrix}}
+
+\renewcommand{\(}{\left(}
+\renewcommand{\)}{\right)}
+
+\theoremstyle{definition}
+\renewcommand{\proofname}{\textbf{証明}}
+
+\newtheorem{ax}{公理}
+\newtheorem{dfn}{定義}
+\newtheorem{prop}{命題}
+\newtheorem{lem}{補題}
+\newtheorem{thm}{定理}
+\newtheorem{cor}{系}
+\newtheorem{ex}{例}
+
+\title{量子力学}
+\author{season07001674}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\input{foundation.tex}
+\input{eigenvalue.tex}
+\input{1-body.tex}
+\input{angular.tex}
+\input{approx.tex}
+\input{n-body.tex}
+\input{chemistry.tex}
+\input{scatter.tex}
+\input{relativity.tex}
+
+\end{document}
