@@ -63,12 +63,12 @@
     である。これをオイラー・ラグランジュ方程式に合うように変形していく。
     \begin{align*}
         \nabla(v \cdot A) &= (v \cdot \nabla)A + v \times (\nabla \times A)\\
-        \de[A]{t} &= \pd[A]{t} + (v \cdot \nabla)A
+        \dv{A}{t} &= \pd[A]{t} + (v \cdot \nabla)A
     \end{align*}
     より
     \begin{align*}
-        F &= -q \left[\nabla(\phi - v\cdot A) + \de[A]{t}\right]\\
-        F_i &= q\left[\de{t}\pd[(\phi - v\cdot A)]{v_i} - \pd[(\phi - v\cdot A)]{x_i}\right]
+        F &= -q \left[\nabla(\phi - v\cdot A) + \dv{A}{t}\right]\\
+        F_i &= q\left[\dv{t}\pd[(\phi - v\cdot A)]{v_i} - \pd[(\phi - v\cdot A)]{x_i}\right]
     \end{align*}
     したがって、荷電粒子のラグランジアンは、
         \[L = \frac{1}{2}mv^2 - q(\phi - v\cdot A)\]

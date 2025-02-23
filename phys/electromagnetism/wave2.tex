@@ -2,7 +2,7 @@
 
 \subsection{誘電体中の電磁波}
     半導体や誘電体などの、電子が原子核に拘束されているような物質に電磁波が入射したときのことを考える。原子核は重いのでほとんど動かないとして良く、分子に拘束された電子を、抵抗を受けながら振動する調和振動子とみなす。これをローレンツ振動子モデルという。電子の変位を$u$、固有振動数を$\omega_0$とすると電子の運動方程式は
-        \[\de[^2u]{t^2} = - \omega_0^2 u - \gamma\de[u]{t} -\frac{eE}{m} \quad (\gamma > 0)\]
+        \[\dv[2]{u}{t} = - \omega_0^2 u - \gamma\dv{u}{t} -\frac{eE}{m} \quad (\gamma > 0)\]
     となる。電場が角振動数$\omega$で振動すれば、電子も同じ振動数でそれに追随して動く。
     \begin{align*}
         E(r, t) &= E(r)\exp(-i\omega t)\\
@@ -53,7 +53,7 @@
 
 \subsection{金属中の電磁波}
     金属やプラズマ中の自由電子には束縛力が働かないため、ローレンツ振動子モデルにおいて$\omega_0 = 0$とした方程式
-        \[m\de[^2u]{t} =  - \gamma \de[u]{t} - eE \quad (\gamma > 0)\]
+        \[m\dv[2]{u}{t} =  -\gamma\dv{u}{t} - eE \quad (\gamma > 0)\]
     を考えれば良い。これをドルーデモデルという。電気感受率と誘電率は
     \begin{align*}
         \chi(\omega) &= -\frac{nze^2}{\epsilon_0m(\omega^2 + i\gamma\omega)}\\
@@ -122,7 +122,7 @@
         \[\frac{\omega}{k_1} = \frac{1}{\sqrt{\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}}}\]
     群速度は
     \begin{align*}
-        \de[\omega]{k_1}
+        \dv{\omega}{k_1}
         &= \frac{1}{\sqrt{\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}}} - \frac{1}{2}\frac{k_1}{\left(\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}\right)^{3/2}} \cdot -2 \frac{\mu^2\sigma^2}{4k_1^3}\\
         &= \frac{1}{\sqrt{\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}}} + \frac{\mu^2\sigma^2}{4k_1^2\left(\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}\right)^{3/2}}
     \end{align*}
@@ -130,7 +130,7 @@
 
 \subsection{デバイモデル}
     電気双極子モーメント$p$の時間発展を緩和時間を$\tau$として
-        \[\tau\de[P]{t} = -P + \epsilon_0\chi_0 E\]
+        \[\tau\dv{P}{t} = -P + \epsilon_0\chi_0 E\]
     と定式化する。
     \begin{align*}
         E(t) &= E(\omega)\exp(-i\omega t)\\

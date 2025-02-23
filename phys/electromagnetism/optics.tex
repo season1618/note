@@ -113,12 +113,12 @@
 
 \subsection{散乱理論}
     散乱とは、光が物質に入射したとき光を四方八方に放射する現象である。古典的には、入射光によって誘起された電気双極子の振動により二次波が放出される、と説明される。物質を原点に置き、$z$軸の正の方向から光が入射するとする。単位時間に単位面積当たりに入射する粒子数のうち、半径$r$の球面のある立体角$d\Omega$内に散乱される単位時間当たりの粒子数の割合を微分断面積という。光散乱の場合は粒子数の代わりにエネルギーで測る。電磁波は振動するので平均を取る。すなわち、散乱波のポインティングベクトルを$S_s$、入射波のポインティングベクトルを$S_i$とすれば、
-        \[\de[\sigma(\theta)]{\Omega} = \frac{|S_s|}{|S_i|}r^2\]
+        \[\dv{\sigma(\theta)}{\Omega} = \frac{|S_s|}{|S_i|}r^2\]
     である。ここで$\theta$は散乱によって$z$軸から逸れた角度であり、散乱角と呼ばれる。これを全立体角で積分したものを全断面積という。
     
 \subsection{トムソン散乱}
     自由電子に振動数の低い電磁波が入射したときを考える。電子の運動方程式は、
-        \[m\de[u]{t} = eE_i\]
+        \[m\dv{u}{t} = eE_i\]
     である。$E_i = E_0\sin\omega t$とすれば、
         \[u = \frac{eE_i}{m\omega^2}\]
     つまり
@@ -134,7 +134,7 @@
     \end{align*}
     ただし$\alpha$は分極率である。したがって微分断面積は
     \begin{align*}
-        \de[\sigma]{\Omega} = \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2\sin^2\phi           
+        \dv{\sigma}{\Omega} = \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2\sin^2\phi           
     \end{align*}
     無偏光の場合は、散乱角を$\theta$としたとき$n = (\sin\theta, 0, \cos\theta), \quad E_0 / |E_0| = (\cos\psi, \sin\psi, 0)$と置くと
     \begin{align*}
@@ -146,11 +146,11 @@
     \end{align*}
     よって
     \begin{align*}
-        \de[\sigma]{\Omega} = \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2 \frac{1 + \cos^2\theta}{2}
+        \dv{\sigma}{\Omega} = \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2 \frac{1 + \cos^2\theta}{2}
     \end{align*}
     となる。$\alpha = e^2 / m\omega^2$を代入すれば
     \begin{align*}
-        \de[\sigma]{\Omega} = \left(\frac{e^2}{4\pi mc^2\epsilon_0}\right)^2 \frac{1 + \cos^2\theta}{2} = a_0^2\frac{1 + \cos^2\theta}{2}
+        \dv{\sigma}{\Omega} = \left(\frac{e^2}{4\pi mc^2\epsilon_0}\right)^2 \frac{1 + \cos^2\theta}{2} = a_0^2\frac{1 + \cos^2\theta}{2}
     \end{align*}
     である。光の進行方向に対して最も強く散乱することが分かる。$a_0$は静電エネルギーと静止エネルギーが一致する半径を示し、古典的電子半径と呼ばれる。全立体角で積分すれば
     \begin{align*}
@@ -165,7 +165,7 @@
         \[p = 4\pi\epsilon_0\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}a^3E_0\]
     である。微分散乱断面積は
     \begin{align*}
-        \de[\sigma]{\Omega}
+        \dv{\sigma}{\Omega}
             &= \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2 \frac{1 + \cos^2\theta}{2}\\
             &= \left(\epsilon_0\mu\omega^2\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}a^3\right)^2 \frac{1 + \cos^2\theta}{2}\\
             &= \left(\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}\right)^2 \left(\frac{\omega}{c}\right)^4 a^6 \frac{1 + \cos^2\theta}{2}

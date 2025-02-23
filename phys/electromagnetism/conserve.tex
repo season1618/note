@@ -15,7 +15,7 @@
         となる。ところで球殻の外側の電場は半径に依らず一定である。よって、半径$r, r + dr$の帯電球のエネルギーの差を取れば球殻内のエネルギー密度$u$が分かる。
         \begin{align*}
             U(r + dr) - U(r) &= -u \cdot 4\pi r^2dr\\
-            u &= -\frac{1}{4\pi r^2}\de[U]{r}\\
+            u &= -\frac{1}{4\pi r^2}\dv{U}{r}\\
             &= \frac{1}{4\pi r^2}\frac{q^2}{8\pi\epsilon_0 r^2} = \frac{q^2}{32\pi^2\epsilon_0 r^4}\\
             &= \frac{1}{2}\epsilon_0 E^2
         \end{align*}
@@ -23,12 +23,12 @@
     \subsubsection{静磁場のエネルギー}
     \subsubsection{電磁場のエネルギー}
         運動方程式
-            \[m_i\de[v_i]{t} = q_i(E(r_i) + v_i \times B(r_i))\]
+            \[m_i\dv{v_i}{t} = q_i(E(r_i) + v_i \times B(r_i))\]
         の両辺と$v_i$との内積を取る。
-            \[\de{t}\left(\frac{1}{2}m_iv_i^2\right) = q_iv_i \cdot E(r_i)\]
+            \[\dv{t}\left(\frac{1}{2}m_iv_i^2\right) = q_iv_i \cdot E(r_i)\]
         領域$V$内の全粒子について総和を取れば
         \begin{align*}
-            \de{t}\left(\sum_i \frac{1}{2}m_iv_i^2\right)
+            \dv{t}\left(\sum_i \frac{1}{2}m_iv_i^2\right)
                 &= \sum_i q_iv_i \cdot E(r_i)\\
                 &= \sum_i \int q_iv_i\delta(r' - r_i) \cdot E(r') dV\\
                 &= \int i(r') \cdot E(r') dV
@@ -56,12 +56,12 @@
     \begin{align*}
         F   &= \int \left[E \div D + \left(\rot H - \pd[D]{t}\right) \times B\right] dV\\
             &= \int \left[E \div D - B \times \rot H - \pd[D]{t} \times B\right] dV\\
-            &= \int \left(\epsilon_0E \div E - \frac{1}{\mu_0}B \times \rot B - \epsilon_0E \times \rot E - \epsilon_0\mu_0\de{t}(E \times H)\right) dV
+            &= \int \left(\epsilon_0E \div E - \frac{1}{\mu_0}B \times \rot B - \epsilon_0E \times \rot E - \epsilon_0\mu_0\dv{t}(E \times H)\right) dV
     \end{align*}
     $\div B = 0$なので、対称性を保つために$B \div B$という項を付け加える。
     \begin{align*}
         F   &= \int \left[\epsilon_0(E \div E - E \times \rot E) + \frac{1}{\mu_0}(B \div B - B \times \rot B)\right] dV\\
-            &\quad - \frac{1}{c^2}\de{t} \int (E \times H) dV
+            &\quad - \frac{1}{c^2}\dv{t} \int (E \times H) dV
     \end{align*}
     右辺第二項の積分の中身はポインティングベクトルである。マイナスの符号は電磁波が放出したことによる反作用を表している。ここで近接作用的な見方をするために、第一項を面積分に変換することを考える。つまり、積分の中身をあるベクトル場の発散として表すことができないか検討する。$x$成分だけを取り出せば
     \begin{align*}
@@ -92,8 +92,8 @@
     \end{align*}
     として
     \begin{align*}
-        F   &= \int \div T dV - \frac{1}{c^2}\de{t}\int S dV\\
-            &= \int T \cdot dS - \frac{1}{c^2}\de{t}\int S dV
+        F   &= \int \div T dV - \frac{1}{c^2}\dv{t}\int S dV\\
+            &= \int T \cdot dS - \frac{1}{c^2}\dv{t}\int S dV
     \end{align*}
     と表される。この$T$をマクスウェルの応力テンソルという。
 
@@ -101,26 +101,26 @@
 
 \subsection{電磁場の運動量}
     多粒子系の運動方程式
-        \[\sum_i m_i\dd[r_i]{t} = \sum_i \int \left[q_i\delta(r' - r_i)E(r') + q_i\delta(r' - r_i)\de[r_i]{t} \times B(r')\right] dV\]
+        \[\sum_i m_i\dv[2]{r_i}{t} = \sum_i \int \left[q_i\delta(r' - r_i)E(r') + q_i\delta(r' - r_i)\dv{r_i}{t} \times B(r')\right] dV\]
     に
     \begin{align*}
         \div D &= \sum_i q_i\delta(r' - r_i)\\
-        \rot H - \pd[D]{t} &= \sum_i q_i\delta(r' - r_i)\de[r_i]{t}\\
+        \rot H - \pd[D]{t} &= \sum_i q_i\delta(r' - r_i)\dv{r_i}{t}\\
     \end{align*}
     を代入すると、右辺は領域$V$内に働く電磁場による力と等しいので、マクスウェルの応力を用いると
     \begin{align*}
-        \sum_i m_i\dd[r_i]{t} = \int T \cdot dS - \frac{1}{c^2}\de{t}\int (E \times H) dV\\
-        \de{t}\left[\sum_i m_i\de[r_i]{t} + \frac{1}{c^2}\int S dV\right] = \int T \cdot dS
+        \sum_i m_i\dv[2]{r_i}{t} = \int T \cdot dS - \frac{1}{c^2}\dv{t}\int (E \times H) dV\\
+        \dv{t}\left[\sum_i m_i\dv{r_i}{t} + \frac{1}{c^2}\int S dV\right] = \int T \cdot dS
     \end{align*}
     となる。左辺第二項が電磁場の運動量であると解釈できる。
 
 \subsection{電磁場の角運動量}
     \begin{align*}
-        \de{t}\left[\sum_i r_i \times m_i\de[r_i]{t}\right]
-            &= \sum_i r_i \times m_i\dd[r_i]{t}\\
-            &= \sum_i r_i \times q_i\left(E(r_i) + \de[r_i]{t} \times B(r_i)\right)\\
-            &= \sum_i \int q_i\delta(r' - r_i)r' \times \left(E(r') + \de[r_i]{t} \times B(r')\right) dV\\
-            &= \int r' \times \left(\div T - \frac{1}{c^2}\de{t}(E \times H)\right) dV
+        \dv{t}\left[\sum_i r_i \times m_i\dv{r_i}{t}\right]
+            &= \sum_i r_i \times m_i\dv[2]{r_i}{t}\\
+            &= \sum_i r_i \times q_i\left(E(r_i) + \dv{r_i}{t} \times B(r_i)\right)\\
+            &= \sum_i \int q_i\delta(r' - r_i)r' \times \left(E(r') + \dv{r_i}{t} \times B(r')\right) dV\\
+            &= \int r' \times \left(\div T - \frac{1}{c^2}\dv{t}(E \times H)\right) dV
     \end{align*}
     ここで
     \begin{align*}
@@ -135,10 +135,10 @@
         \[r' \times T = (yT_z - zT_y, zT_x - xT_z, xT_y - yT_x)\]
     と定義すれば
     \begin{align*}
-        \de{t}\left[\sum_i r_i \times m_i\de[r_i]{t}\right]
-            &= \int \div(r' \times T) dV - \frac{1}{c^2}\de{t}\int r' \times S dV\\
-            &= \int r' \times T \cdot dS - \frac{1}{c^2}\de{t}\int r' \times S dV
+        \dv{t}\left[\sum_i r_i \times m_i\dv{r_i}{t}\right]
+            &= \int \div(r' \times T) dV - \frac{1}{c^2}\dv{t}\int r' \times S dV\\
+            &= \int r' \times T \cdot dS - \frac{1}{c^2}\dv{t}\int r' \times S dV
     \end{align*}
     従って
-        \[\de{t}\left[\sum_i r_i \times m_i\de[r_i]{t} + \frac{1}{c^2}\int r' \times S dV\right] = \int r' \times T \cdot dS\]
+        \[\dv{t}\left[\sum_i r_i \times m_i\dv{r_i}{t} + \frac{1}{c^2}\int r' \times S dV\right] = \int r' \times T \cdot dS\]
     となる。左辺第二項が電磁場の角運動量である。
