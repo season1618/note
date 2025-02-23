@@ -6,37 +6,37 @@
     と定義する。
     電気双極子が一様な電場$E$に置かれているとする。$s$と$E$のなす角が$\theta$であるときの電気双極子の位置エネルギーは$\theta = \pi / 2$のときを基準として
     \begin{align*}
-        U &= -\left[q|E|\frac{s}{2}\cos\theta + (-q|E|) \cdot -\frac{s}{2}\cos\theta\right]\\
-        &= -p \cdot E
+        U   &= -\left[q|E|\frac{s}{2}\cos\theta + (-q|E|) \cdot -\frac{s}{2}\cos\theta\right]\\
+            &= -p \cdot E
     \end{align*}
-    電気双極子の作る電位を求める。電気双極子の中心を原点として、正電荷と負電荷をそれぞれ$(-\frac{s}{2}, 0, 0), (+\frac{s}{2}, 0, 0)$の位置に置く。$r = (x, y, z)$における電位は
+    電気双極子の作る電位を求める。電気双極子の中心を原点として、正電荷と負電荷をそれぞれ$(-s/2, 0, 0), (+s/2, 0, 0)$の位置に置く。$r = (x, y, z)$における電位は
     \begin{align*}
         U(r) &= \frac{q}{4\pi\epsilon_0}\(\frac{1}{r_1} - \frac{1}{r_2}\)\\
         r_1 &= \sqrt{r^2 + (s/2)^2 - rs\cos\theta}\\
-        r_2 &= \sqrt{r^2 + (s/2)^2 + rs\cos\theta}\\
+        r_2 &= \sqrt{r^2 + (s/2)^2 + rs\cos\theta}
     \end{align*}
     ここで$s \ll r$として近似すると
     \begin{align*}
         \frac{1}{r_1}
-        &= \frac{1}{\sqrt{r^2 + (s/2)^2 - rs\cos\theta}}\\
-        &= \frac{1}{r}\(1 + \(\frac{s}{2r}\)^2 - \frac{s}{r}\cos\theta\)^{-1/2}\\
-        &\approx \frac{1}{r}\(1 - \frac{1}{2}\llr{\(\frac{s}{2r}\)^2 - \frac{s}{r}\cos\theta}\)\\
-        &= \frac{1}{r}\(1 - \frac{s^2}{8r^2} + \frac{s}{2r}\cos\theta\)
+            &= \frac{1}{\sqrt{r^2 + (s/2)^2 - rs\cos\theta}}\\
+            &= \frac{1}{r}\(1 + \(\frac{s}{2r}\)^2 - \frac{s}{r}\cos\theta\)^{-1/2}\\
+            &\simeq \frac{1}{r}\(1 - \frac{1}{2}\llr{\(\frac{s}{2r}\)^2 - \frac{s}{r}\cos\theta}\)\\
+            &= \frac{1}{r}\(1 - \frac{s^2}{8r^2} + \frac{s}{2r}\cos\theta\)
     \end{align*}
     同様に
-        \[\frac{1}{r_2} \approx \frac{1}{r}\(1 - \frac{s^2}{8r^2} - \frac{s}{2r}\cos\theta\)\]
+        \[\frac{1}{r_2} \simeq \frac{1}{r}\(1 - \frac{s^2}{8r^2} - \frac{s}{2r}\cos\theta\)\]
     だから
     \begin{align*}
         U(r)
-        &\approx \frac{q}{4\pi\epsilon_0}\frac{s}{r^2}\cos\theta\\
-        &= \frac{p \cdot r}{4\pi\epsilon_0r^3}
+            &\simeq \frac{q}{4\pi\epsilon_0}\frac{s}{r^2}\cos\theta\\
+            &= \frac{p \cdot r}{4\pi\epsilon_0r^3}
     \end{align*}
     電場は
     \begin{align*}
         E_x
-        &= -\pd{x}\(\frac{1}{4\pi\epsilon_0}\frac{p_x x + p_y y + p_z z}{(x^2+y^2+z^2)^{3/2}}\)\\
-        &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{(x^2 + y^2 + z^2)^{3/2}} - \frac{3}{2}(p_x x + p_y y + p_z z)(x^2 + y^2 + z^2)^{-5/2}(2x)}\\
-        &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{r^3} - \frac{3x(p \cdot r)}{r^5}}
+            &= -\pd{x}\(\frac{1}{4\pi\epsilon_0}\frac{p_x x + p_y y + p_z z}{(x^2+y^2+z^2)^{3/2}}\)\\
+            &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{(x^2 + y^2 + z^2)^{3/2}} - \frac{3}{2}(p_x x + p_y y + p_z z)(x^2 + y^2 + z^2)^{-5/2}(2x)}\\
+            &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{r^3} - \frac{3x(p \cdot r)}{r^5}}
     \end{align*}
     $y, z$も同様なので、結局
         \[E(r) = \frac{1}{4\pi\epsilon_0}\llr{\frac{p}{r^3} - \frac{3r(p\cdot r)}{r^5}}\]
@@ -68,7 +68,7 @@
     と定義すると
     \begin{align*}
         \int (\epsilon_0 E + P) \cdot dS &= q\\
-        \div D &= \rho\\
+        \div D &= \rho
     \end{align*}
     となる。多くの物質では$P = \epsilon_0\chi E$という関係が近似的に成り立つ。$\chi$は電気感受率と呼ばれる。比較的弱い電場では電場に比例した分極を起こすが、大きい電場をかけると絶縁破壊が起きて電気が流れてしまう。$\epsilon = \epsilon_0(1 + \chi)$と置くと、$D = \epsilon E$と表せる。$\epsilon$を物質の誘電率という。常に$\chi > 0$なので$\epsilon > \epsilon_0$である。また$\epsilon / \epsilon_0$を比誘電率という。
 
@@ -78,17 +78,17 @@
     また、分極ベクトルの時間変化によっても電流が発生する。密度$\rho$の電荷が$u$だけ変位したとき、発生する電流は
     \begin{gather*}
         i_p = \rho\pd[u]{t} = \pd[P]{t}\\
-        \rot B - \epsilon\mu_0\pd[E]{t} = \mu_0 (i + i_m)\\
+        \rot B - \epsilon\mu_0\pd[E]{t} = \mu_0 (i + i_m)
     \end{gather*}
     $i_p$を分極電流と呼ぶ。磁場を
         \[H = \frac{1}{\mu_0}(B - J)\]
     と定義するとアンペールの法則は、
     \begin{align*}
         \frac{1}{\mu_0}\rot B - \epsilon_0 \pd[E]{t}
-        &= i + i_m + i_p\\
-        &= i + \frac{1}{\mu_0}\rot J + \pd[P]{t}\\
+            &= i + i_m + i_p\\
+            &= i + \frac{1}{\mu_0}\rot J + \pd[P]{t}\\
         \frac{1}{\mu_0}\rot(B - J) &- \pd[(\epsilon E + P)]{t} = i\\
-        \rot H &- \pd[D]{t} = i\\
+        \rot H &- \pd[D]{t} = i
     \end{align*}
     となる。多くの物質では$J = \mu_0\chi_m H$という関係が近似的に成り立つ。$\chi_m$は磁化率と呼ばれる。磁場が一定以上強くなると分子電流の向きがすべて揃い、それ以上磁化ベクトルが大きくならないため、この比例関係は崩れる。$\mu = \mu_0(1 + \chi_m)$と置くと、$B = \mu H$と表せる。$\mu$を物質の透磁率という。磁性体の場合は$\mu$が正にも負にもなりうる。また$\mu / \mu_0$を比透磁率という。
 
@@ -98,5 +98,5 @@
         \div D &= \rho\\
         \div B &= 0\\
         \rot E &+ \pd[B]{t} = 0\\
-        \rot H &- \pd[D]{t} =  i\\
+        \rot H &- \pd[D]{t} =  i
     \end{align*}

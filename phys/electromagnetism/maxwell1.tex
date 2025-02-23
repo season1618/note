@@ -1,81 +1,46 @@
 \section{真空中のマクスウェル方程式}
 
-電気に関するのクーロンの法則$F = Qq/4\pi\epsilon_0r^2$から静電場$E = q/4\pi\epsilon_0r^2$を定義する。電荷の間に働く力には線形性が成り立つと仮定する。即ち複数の電場の影響は重ね合わせで計算できる。
+電気に関するのクーロンの法則$F = Qq / 4\pi\epsilon_0r^2$から静電場$E = q / 4\pi\epsilon_0r^2$を定義する。電荷の間に働く力には線形性が成り立つと仮定する。即ち複数の電場の影響は重ね合わせで計算できる。
 
 \subsection{ガウスの法則}
     電荷を覆う閉曲面$S$と電荷を中心とする単位球面を考える。$S$に垂直な電場の成分を積分すると
     \begin{align*}
         \int E \cdot n dS
-        &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r|^3}\int |r||n|\cos\theta dS'\\
-        &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r|^2}\int dS'\\
-        &= \frac{q}{\epsilon_0}\\
+            &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r|^3}\int |r||n|\cos\theta dS'\\
+            &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r|^2}\int dS'\\
+            &= \frac{q}{\epsilon_0}
     \end{align*}
     より閉曲面の形に依らない。電荷密度$\rho$を用いると$q = \int \rho dV$なのでガウスの発散定理より、
     \begin{align*}
-        \int \div EdV &= \int E \cdot n dS = \frac{1}{\epsilon_0}\int \rho dV\\
+        \int \div E dV &= \int E \cdot n dS = \frac{1}{\epsilon_0} \int \rho dV\\
         \div E &= \frac{\rho}{\epsilon_0}
     \end{align*}
     となる。これを電場に関するガウスの法則という。
-    % \paragraph{帯電球の静電場}
-    %     ガウスの法則から半径$a$の帯電球の電場を求める。電荷密度は一定であると仮定する。\\
-    %     $r \le a$の場合、
-    %     \begin{align*}
-    %         4\pi r^2\cdot E &= \frac{r^3}{a^3}\cdot 
-    %         \frac{q}{\epsilon_0}\\
-    %         E &= \rec{4\pi\epsilon_0}\frac{qr}{a^3}
-    %     \end{align*}
-    %     $r>a$の場合、
-    %     \begin{align*}
-    %         4\pi r^2\cdot E &= \frac{q}{\epsilon_0}\\
-    %         E &= \rec{4\pi\epsilon_0}\frac{q}{r^2}
-    %     \end{align*}
-    %     よって
-    %         \[E = 
-    %         \begin{cases}
-    %             \rec{4\pi\epsilon_0}\frac{qr}{a^3} & (r \le a)\\
-    %             \rec{4\pi\epsilon_0}\frac{q}{r^2} & (r>a)
-    %         \end{cases}\]
 
 \subsection{ファラデーの法則}
     静電場中を閉曲線$s$に沿って電荷を移動させることを考える。エネルギー保存則より$F = qE$の線積分は0となる。ストークスの定理より
     \begin{align*}
         \int \rot E \cdot ndS &= \oint E \cdot ds = 0\\
-        \rot E &= 0\\
+        \rot E &= 0
     \end{align*}
     ファラデーの電磁誘導の法則より、コイルに発生する起電力$V$はコイルを貫く磁束$\Phi$の変化に比例する。
         \[V = -\de[\Phi]{t}\]
     起電力は回路によって測られるが、近接作用の立場からコイルの有無に関わらず電場が存在していると考える。起電力は回路に沿って電場を線積分したものなので、
-        \[\int E \cdot ds = -\pd{t}\int B \cdot dS\]
+        \[\int E \cdot ds = -\pd{t} \int B \cdot dS\]
     ストークスの定理より
     \begin{align*}
-        \int \rot E \cdot dS = \int E \cdot ds &= -\pd{t}\int B \cdot dS\\
+        \int \rot E \cdot dS = \int E \cdot ds &= -\pd{t} \int B \cdot dS\\
         \int \(\rot E + \pd[B]{t}\) \cdot dS &= 0\\
-        \rot E + \pd[B]{t} &= 0\\
+        \rot E + \pd[B]{t} &= 0
     \end{align*}
-    % \paragraph{ポアソン方程式}
-    %     ガウスの法則とファラデーの法則から静電場の式が導けることを確認する。静電場$E$は静電ポテンシャル$\phi$を使って
-    %         \[E = -\grad\phi = \lr{-\pd[\phi]{x},-\pd[\phi]{y},-\pd[\phi]{z}}\]
-    %     と表せる。既にファラデーの法則を満たしているので、ガウスの法則に当てはめると、
-    %     \begin{align*}
-    %         -\dive\grad\phi = -\frac{\rho}{\epsilon_0}\\
-    %         \Delta\phi = -\frac{\rho}{\epsilon_0}
-    %     \end{align*}
-    %     この方程式をポアソン方程式と呼ぶ。ラプラシアン$\Delta$は極座標では、
-    %         \[\Delta = 
-    %             \rec{r^2}\pd{r}\lr{r^2\pd{r}}+
-    %             \rec{r^2\sin\theta}\pd{\theta}\lr{\sin\theta\pd{\theta}}+
-    %             \rec{r^2\sin^2\theta}\pd[^2]{\phi^2}\]
-    %     電荷は球対称に分布していると仮定すると静電場の方程式は、
-    %         \[\rec{r^2}\pd{r}\lr{r^2\pd[\phi]{r}} = -\frac{\rho}{\epsilon_0}\]
-    %     ここから先程と同じ式が導ける。
 
 \subsection{磁束保存の法則}
     ビオ＝サバ―ルの法則
         \[dB = \frac{\mu_0}{4\pi}\frac{Ids \times r}{|r|^3}\]
     を拡張し
-        \[B(r) = \frac{\mu_0}{4\pi}\int \frac{i(r') \times (r - r')}{|r - r'|^3} dr'\]
+        \[B(r) = \frac{\mu_0}{4\pi} \int \frac{i(r') \times (r - r')}{|r - r'|^3} dr'\]
     とする。ここでベクトルポテンシャル
-        \[A = \frac{\mu_0}{4\pi}\int \frac{i(r')}{|r - r'|}dr'\]
+        \[A = \frac{\mu_0}{4\pi} \int \frac{i(r')}{|r - r'|}dr'\]
     を導入すると、$B = \rot A$と表せるので、
         \[\div B = \div\rot A = 0\]
 

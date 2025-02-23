@@ -83,11 +83,10 @@
     これは$rE$に関する一次元波動方程式である。
         \[E(r, t) = \frac{1}{|r|}{f(k|r| - \omega t)}\]
     とおくと、この式は原点から拡散または収束するような波を表している。振幅は原点からの距離に反比例する。ガウスの法則より
-    \begin{align*}
-        \div E
-        &= -\frac{x + y + z}{(x^2 + y^2 + z^2)^{3/2}}f(k|r| - \omega t) + \frac{1}{|r|}\frac{k(x + y + z)}{(x^2 + y^2 + z^2)^{1/2}}f'(k|r| - \omega t) = 0\\
-        \frac{1}{|r|}f(k|r| - \omega t) &= kf'(k|r| - \omega t)
-    \end{align*}
+    \begin{gather*}
+        \div E = -\frac{x + y + z}{(x^2 + y^2 + z^2)^{3/2}}f(k|r| - \omega t) + \frac{1}{|r|}\frac{k(x + y + z)}{(x^2 + y^2 + z^2)^{1/2}}f'(k|r| - \omega t) = 0\\
+        \frac{1}{|r|}f(k|r| - \omega t) = kf'(k|r| - \omega t)
+    \end{gather*}
     電場と磁場は垂直だが、そのどちらも動径方向と垂直になるとは限らない。$r$と電場が垂直なものをTE球面波(transverse electric wave)、磁場と垂直なものをTM球面波(transverse magnetic wave)という。
 
 \subsection{偏光}
@@ -116,8 +115,7 @@
         \[\frac{1}{|E_1|^2}\frac{1}{|E_2|^2} - \frac{\cos^2\delta}{|E_1E_2|^2} = \frac{\sin^2\delta}{|E_1E_2|^2} > 0\]
     だから、電場の振動は楕円を描く。これを楕円偏光という。$E_1, E_2$の絶対値が等しく、直交するとき円偏光、$E_1, E_2$の位相差が$\pi$の整数倍であるとき直線偏光という。
     \begin{align*}
-        E^+ = \frac{E_1 - iE_2}{2},\,
-        E^- = \frac{E_1 + iE_2}{2}
+        E^+ = \frac{E_1 - iE_2}{2}, \quad E^- = \frac{E_1 + iE_2}{2}
     \end{align*}
     とおくと
     \begin{align*}
@@ -162,7 +160,7 @@
     である。遅延ポテンシャルから電磁場を求めたものはジェフィメンコ方程式と呼ばれている。
     % 第一項は近接項で、静電場と同じ形をしている。第二項は放射項で、電磁波による効果を表している。ジェフィメンコ方程式は電荷の保存則を満たすとは限らない。
 
-\subsection{リエナール・ヴィーヘルト・ポテンシャル}
+\subsection{リエナール＝ヴィーヘルト・ポテンシャル}
     遅延ポテンシャルから運動する点電荷の作る電磁場を求める。点電荷の軌道を$s(t)$とすると、電荷密度と電流密度はそれぞれ次のように表せる。
     \begin{align*}
         \rho(r, t) &= q\delta(r - s(t))\\
@@ -191,7 +189,7 @@
         \phi(r, t) &= \frac{q}{4\pi\epsilon_0}\frac{1}{|r - s(t_r)| + (r - s(t_r)) \cdot \dot{s}(t_r) / c}\\
         A(r, t) &= \frac{\mu_0q}{4\pi}\frac{\dot{s}(t_r)}{|r - s(t_r)| + (r - s(t_r)) \cdot \dot{s}(t_r) / c}
     \end{align*}
-    これをリエナール・ヴィーヘルト・ポテンシャルという。電磁場を求めると
+    これをリエナール＝ヴィーヘルト・ポテンシャルという。電磁場を求めると
     \begin{align*}
         E(r, t) &= \frac{q}{4\pi\epsilon_0}\left[\frac{(1 - v^2/c^2)(R/|R| - v/c)}{R^2b^3} + \frac{R \times ((R/|R| - v/c) \times a)}{R^2b^3c^2}\right]\\
         b &= 1 - \frac{R \cdot v}{|R|c}
@@ -199,7 +197,7 @@
     である。
 
 \subsection{等速運動する点電荷}
-    リエナール・ヴィーヘルト・ポテンシャルから等速運動する点電荷の作る電磁ポテンシャルを求める。点電荷の軌道を$s(t) = (vt, 0, 0)$とすると
+    リエナール＝ヴィーヘルト・ポテンシャルから等速運動する点電荷の作る電磁ポテンシャルを求める。点電荷の軌道を$s(t) = (vt, 0, 0)$とすると
     \begin{align*}
         t - t_r &= \frac{\sqrt{(x - vt_r)^2 + y^2 + z^2}}{c}\\
         c^2(t - t_r)^2 &= (x - vt_r)^2 + y^2 + z^2\\
