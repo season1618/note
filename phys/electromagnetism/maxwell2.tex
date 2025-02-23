@@ -11,7 +11,7 @@
     \end{align*}
     電気双極子の作る電位を求める。電気双極子の中心を原点として、正電荷と負電荷をそれぞれ$(-s/2, 0, 0), (+s/2, 0, 0)$の位置に置く。$r = (x, y, z)$における電位は
     \begin{align*}
-        U(r) &= \frac{q}{4\pi\epsilon_0}\(\frac{1}{r_1} - \frac{1}{r_2}\)\\
+        U(r) &= \frac{q}{4\pi\epsilon_0}\left(\frac{1}{r_1} - \frac{1}{r_2}\right)\\
         r_1 &= \sqrt{r^2 + (s/2)^2 - rs\cos\theta}\\
         r_2 &= \sqrt{r^2 + (s/2)^2 + rs\cos\theta}
     \end{align*}
@@ -19,12 +19,12 @@
     \begin{align*}
         \frac{1}{r_1}
             &= \frac{1}{\sqrt{r^2 + (s/2)^2 - rs\cos\theta}}\\
-            &= \frac{1}{r}\(1 + \(\frac{s}{2r}\)^2 - \frac{s}{r}\cos\theta\)^{-1/2}\\
-            &\simeq \frac{1}{r}\(1 - \frac{1}{2}\llr{\(\frac{s}{2r}\)^2 - \frac{s}{r}\cos\theta}\)\\
-            &= \frac{1}{r}\(1 - \frac{s^2}{8r^2} + \frac{s}{2r}\cos\theta\)
+            &= \frac{1}{r}\left(1 + \left(\frac{s}{2r}\right)^2 - \frac{s}{r}\cos\theta\right)^{-1/2}\\
+            &\simeq \frac{1}{r}\left(1 - \frac{1}{2}\llr{\left(\frac{s}{2r}\right)^2 - \frac{s}{r}\cos\theta}\right)\\
+            &= \frac{1}{r}\left(1 - \frac{s^2}{8r^2} + \frac{s}{2r}\cos\theta\right)
     \end{align*}
     同様に
-        \[\frac{1}{r_2} \simeq \frac{1}{r}\(1 - \frac{s^2}{8r^2} - \frac{s}{2r}\cos\theta\)\]
+        \[\frac{1}{r_2} \simeq \frac{1}{r}\left(1 - \frac{s^2}{8r^2} - \frac{s}{2r}\cos\theta\right)\]
     だから
     \begin{align*}
         U(r)
@@ -33,8 +33,7 @@
     \end{align*}
     電場は
     \begin{align*}
-        E_x
-            &= -\pd{x}\(\frac{1}{4\pi\epsilon_0}\frac{p_x x + p_y y + p_z z}{(x^2+y^2+z^2)^{3/2}}\)\\
+        E_x &= -\pd{x}\left(\frac{1}{4\pi\epsilon_0}\frac{p_x x + p_y y + p_z z}{(x^2+y^2+z^2)^{3/2}}\right)\\
             &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{(x^2 + y^2 + z^2)^{3/2}} - \frac{3}{2}(p_x x + p_y y + p_z z)(x^2 + y^2 + z^2)^{-5/2}(2x)}\\
             &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{r^3} - \frac{3x(p \cdot r)}{r^5}}
     \end{align*}

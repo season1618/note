@@ -11,11 +11,11 @@
     第3式の両辺の$\rot$を計算すると
     \begin{align*}
         \rot\rot E + \pd{t}(\rot B) &= 0\\
-        \grad\div E - \Delta E + \pd{t}\(\epsilon_0\mu_0\pd[E]{t}\) &= 0\\
-        \(-\epsilon_0\mu_0\pdd{t} + \Delta\)E &= 0
+        \grad\div E - \Delta E + \pd{t}\left(\epsilon_0\mu_0\pd[E]{t}\right) &= 0\\
+        \left(-\epsilon_0\mu_0\pdd{t} + \Delta\right)E &= 0
     \end{align*}
     第4式も同様に
-        \[\(-\epsilon_0\mu_0\pdd{t} + \Delta\)B = 0\]
+        \[\left(-\epsilon_0\mu_0\pdd{t} + \Delta\right)B = 0\]
     となる。この形の微分方程式は波動方程式と呼ばれる。電磁場が空間を伝わっていく現象を電磁波という。特に真空中の光速は
         \[c = \frac{1}{\sqrt{\epsilon_0\mu_0}}\]
     であり、$c$と表す。この値が当時の光速の測定値と一致したことは、光が電磁波であることの有力な証拠となった。物質中の場合は、電磁場によって電荷密度の偏りや電流密度が発生することを無視すれば、真空中と同じ形の方程式になる。物質中の光速は
@@ -39,7 +39,7 @@
     をファラデーの法則に代入する。
         \[-\pd[B_x]{t} = k_yf_z'(k \cdot r - \omega t) - k_zf_y'(k \cdot r - \omega t)\]
     だから
-        \[\(\pd[B_x]{t}, \pd[B_y]{t}, \pd[B_z]{t}\) = -k \times f'(k \cdot r - \omega t)\]
+        \[\left(\pd[B_x]{t}, \pd[B_y]{t}, \pd[B_z]{t}\right) = -k \times f'(k \cdot r - \omega t)\]
     となる。この両辺を積分する。積分定数は静磁場を意味するので省略すると
         \[(B_x, B_y, B_z) = \frac{k}{\omega} \times f(k \cdot r - \omega t)\]
     つまり電場と磁場は互いに直交する方向に振動し、全く同じ形で伝わっていくことになる。
@@ -128,8 +128,8 @@
 \subsection{遅延ポテンシャルと先進ポテンシャル}
     電磁場の原因が電荷密度$\rho$と電流密度$i$のみで、かつそれらが自己場の影響を受けないとした場合に、ローレンツゲージにおけるマクスウェル方程式の解を求める。
     \begin{align*}
-        \(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\)\phi &= -\frac{\rho}{\epsilon_0}\\
-        \(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\)A &= -\mu_0 i
+        \left(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\right)\phi &= -\frac{\rho}{\epsilon_0}\\
+        \left(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\right)A &= -\mu_0 i
     \end{align*}
     二つの解があったとき、それらの差は波動方程式の解なので、特殊解に任意の電磁波を重ねたものとなる。
 
@@ -141,7 +141,7 @@
     として
     \begin{align*}
         \frac{\omega^2}{c^2}\phi(r, \omega)e^{i\omega t} + \Delta \phi(r, \omega)e^{i\omega t} &= -\frac{\rho(r, \omega)}{\epsilon_0}e^{i\omega t}\\
-        \(\Delta + \frac{\omega^2}{c^2}\)\phi(r, \omega) &= -\frac{\rho(r, \omega)}{\epsilon_0}
+        \left(\Delta + \frac{\omega^2}{c^2}\right)\phi(r, \omega) &= -\frac{\rho(r, \omega)}{\epsilon_0}
     \end{align*}
     この解は
         \[\phi(r, \omega) = \frac{1}{4\pi\epsilon_0}\int \frac{Ae^{i\omega|r - r'|/c} + Be^{i\omega|r - r'|/c}}{|r - r'|}\rho(r, \omega)dr'^3\]
@@ -175,7 +175,7 @@
         &= \frac{1}{4\pi\epsilon_0}\int \frac{q\delta(t' - (t - |r - s(t')|/c))}{|r - s(t')|} dt'
     \end{align*}
     ここで
-        \[f(t') = t' - \(t - \frac{|r - s(t')|}{c}\)\]
+        \[f(t') = t' - \left(t - \frac{|r - s(t')|}{c}\right)\]
     とおくと
         \[f'(t') = 1 + \frac{(r - s(t')) \cdot -\dot{s}(t')}{c|r - s(t')|} = 1 - \frac{(r - s(t')) \cdot \dot{s}(t')}{c|r - s(t')|}\]
     である。$f(t_r) = 0$として積分を計算すれば
@@ -213,29 +213,29 @@
     \end{align*}
     ここで
     \begin{align*}
-        \left\{\(-c + \frac{v^2}{c}\)t_r + ct - \frac{vx}{c}\right\}^2
-        &= c^2\left\{-\(1 - \frac{v^2}{c^2}\)t_r + t - \frac{vx}{c^2}\right\}^2\\
-        &= c^2\left\{\(1 - \frac{v^2}{c^2}\)^2t_r^2 - 2\(1 - \frac{v^2}{c^2}\)\(t - \frac{vx}{c^2}\)t_r + \(t - \frac{vx}{c^2}\)^2\right\}\\
-        &= \(1 - \frac{v^2}{c^2}\)(x^2 + y^2 + z^2 - c^2t^2) + \(ct - \frac{vx}{c}\)^2\\
-        &= x^2 - 2xvt + v^2t^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\\
-        &= (x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)
+        \left\{\left(-c + \frac{v^2}{c}\right)t_r + ct - \frac{vx}{c}\right\}^2
+        &= c^2\left\{-\left(1 - \frac{v^2}{c^2}\right)t_r + t - \frac{vx}{c^2}\right\}^2\\
+        &= c^2\left\{\left(1 - \frac{v^2}{c^2}\right)^2t_r^2 - 2\left(1 - \frac{v^2}{c^2}\right)\left(t - \frac{vx}{c^2}\right)t_r + \left(t - \frac{vx}{c^2}\right)^2\right\}\\
+        &= \left(1 - \frac{v^2}{c^2}\right)(x^2 + y^2 + z^2 - c^2t^2) + \left(ct - \frac{vx}{c}\right)^2\\
+        &= x^2 - 2xvt + v^2t^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)\\
+        &= (x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)
     \end{align*}
     なので
     \begin{align*}
-        \phi(r, t) &= \frac{q}{4\pi\epsilon_0}\frac{1}{\sqrt{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)}}\\
-        A(r, t) &= \frac{\mu_0q}{4\pi}\frac{(v, 0, 0)}{\sqrt{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)}}
+        \phi(r, t) &= \frac{q}{4\pi\epsilon_0}\frac{1}{\sqrt{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)}}\\
+        A(r, t) &= \frac{\mu_0q}{4\pi}\frac{(v, 0, 0)}{\sqrt{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)}}
     \end{align*}
     となる。点電荷から見たとき、等ポテンシャル面は$yz$方向に引き伸ばされた回転楕円体であり、形を保ったまま点電荷に纏った状態で移動していく。つまり等速運動はエネルギーを必要としない。電場を計算すると
     \begin{align*}
         E(r, t)
         &= -\grad\phi - \pd[A]{t}\\
-        &= \frac{q}{4\pi\epsilon_0}\frac{(x - vt, \(1 - \frac{v^2}{c^2}\)y, \(1 - \frac{v^2}{c^2}\)z)}{\{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\}^{3/2}} - \frac{\mu_0q}{4\pi}\frac{(v^2(x - vt), 0, 0)}{\{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\}^{3/2}}\\
-        &= \frac{q}{4\pi\epsilon_0}\(1 - \frac{v^2}{c^2}\)\frac{(x - vt, y, z)}{\{(x - vt)^2 + \(1 - \frac{v^2}{c^2}\)(y^2 + z^2)\}^{3/2}}
+        &= \frac{q}{4\pi\epsilon_0}\frac{(x - vt, \left(1 - \frac{v^2}{c^2}\right)y, \left(1 - \frac{v^2}{c^2}\right)z)}{\{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)\}^{3/2}} - \frac{\mu_0q}{4\pi}\frac{(v^2(x - vt), 0, 0)}{\{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)\}^{3/2}}\\
+        &= \frac{q}{4\pi\epsilon_0}\left(1 - \frac{v^2}{c^2}\right)\frac{(x - vt, y, z)}{\{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)\}^{3/2}}
     \end{align*}
     である。特に$x - vt = 0, y = z = 0$の場合はそれぞれ
     \begin{align*}
         E(r, t) &= \frac{q}{4\pi\epsilon_0}\frac{1}{\sqrt{1 - \frac{v^2}{c^2}}}\frac{(0, y, z)}{\{(y^2 + z^2)\}^{3/2}}\\
-        E(r, t) &= \frac{q}{4\pi\epsilon_0}\(1 - \frac{v^2}{c^2}\)\frac{(x - vt, 0, 0)}{\{(x - vt)^2\}^{3/2}}
+        E(r, t) &= \frac{q}{4\pi\epsilon_0}\left(1 - \frac{v^2}{c^2}\right)\frac{(x - vt, 0, 0)}{\{(x - vt)^2\}^{3/2}}
     \end{align*}
     となる。$x$軸から離れた点では速度が大きくなるほど電場も大きくなり、$x$軸上では速度が大きくなるほど電場が小さくなることが分かる。
 

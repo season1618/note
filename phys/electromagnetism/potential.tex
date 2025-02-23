@@ -4,7 +4,7 @@
     $\div B = 0$だからポアンカレの補題より
         \[B = \rot A\]
     となるベクトル場$A$が存在する。これをベクトルポテンシャルという。ファラデーの法則を書き換えると
-        \[\rot E + \pd[B]{t} = \rot\(E + \pd[A]{t}\) = 0\]
+        \[\rot E + \pd[B]{t} = \rot\left(E + \pd[A]{t}\right) = 0\]
     である。再びポアンカレの補題より
         \[E + \pd[A]{t} = -\grad\phi\]
     となるスカラー場$\phi$が存在する。これをスカラーポテンシャルという。スカラーポテンシャル$\phi$とベクトルポテンシャル$A$のことを電磁ポテンシャルと呼ぶ。この二つを使って電場と磁場を
@@ -16,8 +16,8 @@
 
     電場と磁場が与えられたとき、それを満たす電磁ポテンシャルは一意には決まらない。微分可能な任意の関数$\chi$を用いて
     \begin{align*}
-        \phi &\rightarrow \phi - \pd[\chi]{t}\\
-        A &\rightarrow A + \grad\chi
+        \phi &\mapsto \phi - \pd[\chi]{t}\\
+        A &\mapsto A + \grad\chi
     \end{align*}
     と変換しても電磁場の形は変わらない。この変換をゲージ変換という。電磁ポテンシャルを決定するために用いられる次の条件をそれぞれローレンツゲージ、クーロンゲージという。
     \begin{align*}
@@ -33,33 +33,33 @@
     \end{align*}
     を電磁ポテンシャルを用いて書き換える。
     \begin{align*}
-        \div \(-\grad\phi - \pd[A]{t}\) &= \frac{\rho}{\epsilon_0}\\
+        \div \left(-\grad\phi - \pd[A]{t}\right) &= \frac{\rho}{\epsilon_0}\\
         \Delta \phi + \pd{t}\div A &= -\frac{\rho}{\epsilon_0}\\
-        \(\Delta - \epsilon_0\mu_0\pd[^2]{t^2}\)A &- \grad\(\div A + \epsilon_0\mu_0\pd[\phi]{t}\) = -\mu_0 i
+        \left(\Delta - \epsilon_0\mu_0\pd[^2]{t^2}\right)A &- \grad\left(\div A + \epsilon_0\mu_0\pd[\phi]{t}\right) = -\mu_0 i
     \end{align*}
     ここでローレンツゲージを仮定すると
     \begin{align*}
-        \(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\)\phi &= -\frac{\rho}{\epsilon_0}\\
-        \(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\)A &= -\mu_0 i
+        \left(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\right)\phi &= -\frac{\rho}{\epsilon_0}\\
+        \left(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\right)A &= -\mu_0 i
     \end{align*}
     となる。まとめると
     \begin{align*}
-        \(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\)\phi &= -\frac{\rho}{\epsilon_0}\\
-        \(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\)A &= -\mu_0 i\\
+        \left(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\right)\phi &= -\frac{\rho}{\epsilon_0}\\
+        \left(\Delta-\epsilon_0\mu_0\pd[^2]{t^2}\right)A &= -\mu_0 i\\
         \div A + \epsilon_0\mu_0\pd[\phi]{t} &= 0
     \end{align*}
     となる。これをローレンツゲージにおけるマクスウェル方程式という。
 
     また、先程の式でクーロンゲージを仮定すると
-    \begin{align*}
-        \Delta \phi &= -\frac{\rho}{\epsilon_0}\\
-        -\epsilon_0\mu_0\pd{t}\grad\phi &+ \(\Delta - \epsilon_0\mu_0\pd[^2]{t^2}\)A = -\mu_0 i
-    \end{align*}
+    \begin{gather*}
+        \Delta \phi = -\frac{\rho}{\epsilon_0}\\
+        -\epsilon_0\mu_0\pd{t}\grad\phi + \left(\Delta - \epsilon_0\mu_0\pd[^2]{t^2}\right)A = -\mu_0 i
+    \end{gather*}
     となる。これをクーロンゲージにおけるマクスウェル方程式という。
 
 \subsection{荷電粒子のラグランジアン}
     ローレンツ力を電磁ポテンシャルを使って表すと
-        \[F = q(E + v \times B) = q\(-\grad\phi - \pd[A]{t} + v \times \rot A\)\]
+        \[F = q(E + v \times B) = q\left(-\grad\phi - \pd[A]{t} + v \times \rot A\right)\]
     である。これをオイラー・ラグランジュ方程式に合うように変形していく。
     \begin{align*}
         \nabla(v \cdot A) &= (v \cdot \nabla)A + v \times (\nabla \times A)\\

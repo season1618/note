@@ -18,7 +18,7 @@
     電気感受率と誘電率は
     \begin{align*}
         \chi(\omega) &= -\frac{nze^2}{\epsilon_0m(\omega^2 - \omega_0^2 + i\gamma\omega)}\\
-        \epsilon(\omega) &= \epsilon_0\(1 - \frac{nze^2}{m(\omega^2 - \omega_0^2 + i\gamma\omega)}\)
+        \epsilon(\omega) &= \epsilon_0\left(1 - \frac{nze^2}{m(\omega^2 - \omega_0^2 + i\gamma\omega)}\right)
     \end{align*}
     となる。実際には、複数の固有振動数と減衰係数について足し合わせたものとなる。
     
@@ -57,7 +57,7 @@
     を考えれば良い。これをドルーデモデルという。電気感受率と誘電率は
     \begin{align*}
         \chi(\omega) &= -\frac{nze^2}{\epsilon_0m(\omega^2 + i\gamma\omega)}\\
-        \epsilon(\omega) &= \epsilon_0\(1 - \frac{nze^2}{m(\omega^2 + i\gamma\omega)}\)
+        \epsilon(\omega) &= \epsilon_0\left(1 - \frac{nze^2}{m(\omega^2 + i\gamma\omega)}\right)
     \end{align*}
     となる。$\gamma = 0$のとき電子は入射した電場と完全に同位相の電場を作り出すため、誘電率が真空中よりも小さくなる。$\omega = 0$つまり静電場のとき誘電率が無限大だから、電場が完全に打ち消されることが分かる。同様に$\chi = \chi_1 + i\chi_2$として
     \begin{align*}
@@ -76,7 +76,7 @@
     第一式の$\rot$と第二式の時間偏微分を取り、磁場の項を消去すると
     \begin{align*}
         \grad\div E - \Delta E + \epsilon\mu\pdd[E]{t} &= - \mu \pd[i(r, t)]{t}\\
-        \(-\epsilon\mu\pdd{t} + \Delta\)E(r, t) &= \mu\pd[i(r, t)]{t}
+        \left(-\epsilon\mu\pdd{t} + \Delta\right)E(r, t) &= \mu\pd[i(r, t)]{t}
     \end{align*}
     右辺に電流密度の項があるため波動方程式ではなく、もはや同じ形を保って進む解は存在しない。電場と電流密度のラプラス変換を考え、それぞれ
     \begin{align*}
@@ -97,17 +97,17 @@
     \end{align*}
     $k_z = k_1 + ik_2$とおくと
     \begin{align*}
-        k_1 &= \omega\sqrt{\epsilon\mu}\left[\frac{\sqrt{1 + \(\frac{\sigma}{\epsilon\omega}\)^2} + 1}{2}\right]\\
-        k_2 &= \omega\sqrt{\epsilon\mu}\left[\frac{\sqrt{1 + \(\frac{\sigma}{\epsilon\omega}\)^2} - 1}{2}\right]
+        k_1 &= \omega\sqrt{\epsilon\mu}\left[\frac{\sqrt{1 + \left(\frac{\sigma}{\epsilon\omega}\right)^2} + 1}{2}\right]\\
+        k_2 &= \omega\sqrt{\epsilon\mu}\left[\frac{\sqrt{1 + \left(\frac{\sigma}{\epsilon\omega}\right)^2} - 1}{2}\right]
     \end{align*}
     振動数が小さいときは第一項を無視できる。実際、普通の金属の導電率は$\sigma \simeq 10^7 {\rm \Omega^{-1} \cdot m^{-1}}$、誘電率は$\epsilon \simeq \epsilon_0 \simeq 10^{-11}{\rm C^2 \cdot N^{-1} \cdot m^{-2}}$だから
         \[\omega \ll \frac{\sigma}{\epsilon} \simeq 10^{18}{\rm s^{-1}}\]
     であり、普通の電波($10^4$-$10^{10}$)や可視光($10^{14}$)では第二項だけで十分近似できる。このとき波数は複号を選択して
         \[k_z = \frac{1 + i}{\sqrt{2}}\sqrt{\mu\sigma\omega} = \frac{1 + i}{l}\]
     つまり電場は
-        \[E(r, t) = E(k, \omega)\exp\(i\(\frac{1 + i}{l}z - \omega t\)\) = E(k, \omega)e^{-z/l}\exp(i(z/l - \omega t))\]
+        \[E(r, t) = E(k, \omega)\exp\left(i\left(\frac{1 + i}{l}z - \omega t\right)\right) = E(k, \omega)e^{-z/l}\exp(i(z/l - \omega t))\]
     となる。実指数関数が含まれていてフーリエ変換できない関数だったことが分かる。電場は導体に入射すると進行方向に急激に減衰し、$l$の数倍の距離を進むとほとんど消えてしまう。侵入できる深さは先程の近似が成り立つ範囲で振動数が高いほど短い。$\omega = 10^{10}{\rm s^{-1}}$の場合、
-        \[l \simeq \(\frac{2}{4\times 3.14\times 10^{-7}\times 10^7\times 10^{10}}\)^{1/2} \simeq 10^{-6}\]
+        \[l \simeq \left(\frac{2}{4\times 3.14\times 10^{-7}\times 10^7\times 10^{10}}\right)^{1/2} \simeq 10^{-6}\]
     だから、電磁波は導体中にほとんど侵入できない。
 
     形を保ったまま移動する波が存在しないので、単純な意味での速度を考えることはできない。振動数は
@@ -123,8 +123,8 @@
     群速度は
     \begin{align*}
         \de[\omega]{k_1}
-        &= \frac{1}{\sqrt{\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}}} - \frac{1}{2}\frac{k_1}{\(\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}\)^{3/2}} \cdot -2 \frac{\mu^2\sigma^2}{4k_1^3}\\
-        &= \frac{1}{\sqrt{\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}}} + \frac{\mu^2\sigma^2}{4k_1^2\(\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}\)^{3/2}}
+        &= \frac{1}{\sqrt{\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}}} - \frac{1}{2}\frac{k_1}{\left(\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}\right)^{3/2}} \cdot -2 \frac{\mu^2\sigma^2}{4k_1^3}\\
+        &= \frac{1}{\sqrt{\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}}} + \frac{\mu^2\sigma^2}{4k_1^2\left(\epsilon\mu + \frac{\mu^2\sigma^2}{4k_1^2}\right)^{3/2}}
     \end{align*}
     となる。
 
@@ -144,5 +144,5 @@
     となる。よって電気感受率と誘電率は
     \begin{align*}
         \chi(\omega) &= \frac{\chi_0}{1 - i\omega\tau}\\
-        \epsilon(\omega) &= \epsilon_0\(1 + \frac{\chi_0}{1 - i\omega\tau}\)
+        \epsilon(\omega) &= \epsilon_0\left(1 + \frac{\chi_0}{1 - i\omega\tau}\right)
     \end{align*}
