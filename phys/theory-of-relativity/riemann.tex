@@ -1,0 +1,224 @@
+\section{リーマン幾何学}
+
+\subsection{一般座標系}
+    特殊相対論では加速する座標系と重力場を表現できなかった。一般相対論では次の二つの原理から出発し、特殊相対論を加速系と重力場の存在する系に拡張する。
+    \begin{itemize}
+        \item 一般相対性原理: 物理法則は全ての座標系で同等
+        \item 等価原理: 任意の点について、その点で慣性系となるような座標系が存在する
+    \end{itemize}
+    特殊相対性原理が任意の慣性系で物理法則が同等であることを仮定していたのに対し、一般相対性原理では任意の座標系で物理法則が同等であることを主張している。一般相対性原理を言い換えると、物理法則は共変形式で表されるということができる。
+
+    等価原理は、重力の存在する系でも適当な座標変換をすれば一点では慣性系を取れるということである。このような慣性系を局所慣性系という。さらに局所慣性系$(ct, x, y, z)$において、$t$が時間、$(x, y, z)$が直交座標を表すときミンコフスキー時空となり、局所ローレンツ系という。
+
+    これらに加え、局所慣性系では特殊相対論が成立すると仮定する。したがって特殊相対論の法則を一般座標系に拡張するには、等価原理により局所ローレンツ系へと変換して特殊相対論を適用し、元の座標系に逆変換すれば良い。
+
+\subsection{リーマン計量}
+    一般座標系$(x^\mu)$の点$p$において、局所ローレンツ系$(X^\mu)$を取り
+        \[ds^2 = \eta_{\mu\nu} dX^\mu dX^\nu\]
+    を考える。$ds^2$は慣性系において不変量なので、一般座標系においても不変量である。これを一般座標で表すと
+    \begin{align*}
+        ds^2
+            &= \eta_{\alpha\beta} dX^\alpha dX^\beta\\
+            &= \eta_{\alpha\beta} \left(\pdv{X^\alpha}{x^\mu}dx^\mu\right) \left(\pdv{X^\beta}{x^\nu}dx^\nu\right)\\
+            &= \left(\eta_{\alpha\beta}\pdv{X^\alpha}{x^\mu}\pdv{X^\beta}{x^\nu}\right) dx^\mu dx^\nu
+    \end{align*}
+    である。
+        \[g_{\mu\nu} = \pdv{X^\alpha}{x^\mu}\pdv{X^\beta}{x^\nu}\eta_{\alpha\beta}\]
+    と置けば、時空の線素は
+        \[dx^2 = g_{\mu\nu} dx^\mu dx^\nu\]
+    となる。線素は微小長さに対して双線形であり、$g_{\mu\nu}$は正定値でない2階対称テンソルである。このように表される距離空間を擬リーマン多様体と呼び、$g_{\mu\nu}$をリーマン計量または計量テンソルという。
+
+    リーマン計量は時空の歪みを表しており、重力ポテンシャルに対応する。
+
+    計量テンソル$g_{\mu\nu}$を行列と見たとき、逆行列を$g^{\mu\nu}$、行列式を$g$と書く。つまり
+    \begin{align*}
+        (g^{\mu\nu}) &= (g_{\mu\nu})^{-1}\\
+        g &= \det(g_{\mu\nu})
+    \end{align*}
+    である。以後、テンソルの添え字の上げ下げは$g_{\mu\nu}, g^{\mu\nu}$を使って行うこととする。
+
+    $g_{\mu\nu}$の余因子を$m(\mu, \nu)$と置くと、逆行列と行列式は
+    \begin{align*}
+        (g^{\mu\nu}) &= \frac{1}{g}(m(\mu, \nu))\\
+        g &= \sum_{\mu} g_{\mu\nu}m(\mu, \nu)
+    \end{align*}
+    と書ける。変分を考えると
+    \begin{gather*}
+        \delta(g^{\mu\lambda}g_{\lambda\nu}) = \delta g^{\mu\lambda} g_{\lambda\nu} + g^{\mu\sigma} \delta g_{\sigma\nu} = 0\\
+        \delta g = m(\mu, \nu) \delta g_{\mu\nu} = g g^{\mu\nu} \delta g_{\mu\nu}
+    \end{gather*}
+    となる。
+
+\subsection{レヴィ=チヴィタ接続}
+    一般に多様体上ではベクトルの微分が自然に定まらない。多様体論では、計量とは別に接続係数$\Gamma^\lambda_{\mu\nu}$と呼ばれる量を定義することによって、座標変換に依らない微分を
+        \[\nabla_\mu A_\nu = \partial_\mu A_\nu - \Gamma^\lambda_{\mu\nu} A_\lambda\]
+    と定義する。$\nabla_\mu$を共変微分という。
+    
+    % 一般相対論においては、局所ローレンツ系における通常の偏微分を共変微分と定義する。ベクトル$A^\mu(x)$を考える。局所ローレンツ系$(X^\mu)$に変換すると
+    % \begin{align*}
+    %     A^{||}_\mu(x + dx)\\
+    %     A'_\mu(X) &= \pdv{x^\nu}{X^\mu}A_\nu(x)\\
+    %     A'_\mu(X + dX)
+    %         &= \pdv{x^\nu}{X^\mu}\left(X + dX\right) A_\nu(x + dx)\\
+    %         &= \left(\pdv{x^\nu}{X^\mu}\left(X\right) + \pdv{x^\nu}{X^\mu}{X^\lambda}dX^\lambda\right) \left(A_\nu(x) + \partial_\sigma A_\nu dx^\sigma\right)\\
+    %         &= \left(\pdv{x^\nu}{X^\mu}\left(X\right) + \pdv{x^\nu}{X^\mu}{X^\lambda}dX^\lambda\right) \left(A_\nu(x) + \partial_\sigma A_\nu \pdv{x^\sigma}{X^\lambda}dX^\lambda\right)\\
+    %         &\simeq \pdv{x^\nu}{X^\mu}A_\nu(x) + \pdv{x^\nu}{X^\mu}{X^\lambda} A_\nu(x) dX^\lambda + \partial_\sigma A_\nu \pdv{x^\nu}{X^\mu}(X) \pdv{x^\sigma}{X^\lambda} dX^\lambda
+    % \end{align*}
+    % したがって
+    % \begin{align*}
+    %     \nabla_\lambda A_\mu
+    %         &= \partial_\sigma A_\nu \pdv{x^\nu}{X^\mu}(X) \pdv{x^\sigma}{X^\lambda} + \pdv{x^\nu}{X^\mu}{X^\lambda} A_\nu(x)\\
+    % \end{align*}
+
+    \begin{thm}
+        ある点$p$について以下は同値。
+        \begin{enumerate}
+            \item $\Gamma^\lambda_{\mu\nu}(p) = 0$となるような座標系が存在
+            \item $\Gamma^\lambda_{\mu\nu}(p) = \Gamma^\lambda_{\nu\mu}(p)$
+        \end{enumerate}
+    \end{thm}
+    \begin{proof}
+        $p$で接続係数が0となるような座標系$(X^\mu)$を取ると
+            \[\Gamma^\lambda_{\mu\nu}(p) = -\pdv{x^\lambda}{X^i}(p)\pdv{X^i}{x^\mu}{x^\nu}\left(p\right)\]
+        なので対称。逆に接続係数が対称であるとする。$p$を原点に取る。$a^\lambda_{\mu\nu} = -\Gamma^\lambda_{\mu\nu}(p)$として、座標系$(X^\mu)$を$x^\lambda = X^\lambda + 1/2 a^\lambda_{\mu\nu} X^\mu X^\nu$となるように取ると、
+            \[X^\lambda = x^\lambda - \frac{1}{2} a^\lambda_{\mu\nu} x^\mu x^\nu + O(x^3)\]
+        なので、
+            \[\pdv{x^\mu}{X^\nu}\left(p\right) = \delta^\mu_\nu, \quad \pdv{X^\mu}{x^\nu}\left(p\right) = \delta^\mu_\nu, \quad \pdv{x^\sigma}{X^\mu}{X^\nu}\left(p\right) = \frac{a^\sigma_{\mu\nu} + a^\sigma_{\nu\mu}}{2} = a^\sigma_{\mu\nu}\]
+        であり、
+        \begin{align*}
+            \Gamma'^k_{ij}(p)
+                &= \pdv{X^k}{x^\lambda}\pdv{x^\mu}{X^i}\pdv{x^\nu}{X^j}\Gamma^\lambda_{\mu\nu}(p) + \pdv{X^k}{x^\sigma}\pdv{x^\sigma}{X^i}{X^j}\\
+                &= \delta^k_\lambda \delta^\mu_i \delta^\nu_j \Gamma^\lambda_{\mu\nu}(p) + \delta^k_\lambda a^\sigma_{ij}\\
+                &= \Gamma^k_{ij}(p) + a^k_{ij} = 0
+        \end{align*}
+        となる。
+    \end{proof}
+
+    一般相対論においては平行移動によってベクトルの長さは変わらない。また後に述べるように、局所慣性系は数学的には接続係数が0となるような座標系を意味する。よって計量条件と捩れがないことから、許される接続はレヴィ=チヴィタ接続のみとなる(リーマン幾何学の基本定理)。
+
+    \begin{thm}
+        レヴィ=チヴィタ接続において以下は同値。
+        \begin{enumerate}
+            \item $\Gamma^\lambda_{\mu\nu}(p) = 0$
+            \item $\partial_\lambda g_{\mu\nu}(p) = 0$
+        \end{enumerate}
+    \end{thm}
+    \begin{proof}
+        $\Gamma^k_{ij}(p) = 0$のとき$\Gamma_{kij}(p) = g_{kl}(p)\Gamma^l_{ij}(p) = 0$である。
+        \begin{align*}
+            \Gamma_{ijk} &= \frac{1}{2}\(\pdv{g_{ki}}{x^j} + \pdv{g_{ij}}{x^k} - \pdv{g_{jk}}{x^i}\)\\
+            \Gamma_{jki} &= \frac{1}{2}\(\pdv{g_{ij}}{x^k} + \pdv{g_{jk}}{x^i} - \pdv{g_{ki}}{x^j} \)
+        \end{align*}
+        辺々足すと
+            \[\Gamma_{ijk} + \Gamma_{jki} = \pdv{g_{ij}}{x^k}\]
+        より$\partial_k g_{ij}(p) = 0$となる。
+    \end{proof}
+    
+    つまり局所ローレンツ系は数学的には
+        \[g_{\mu\nu}(p) = \eta_{\mu\nu}, \quad \partial_\lambda g_{\mu\nu}(p) = 0\]
+    と定義される。
+
+    % $g_{ij}$は線形変換しても接続係数は0のままである。$g_{ij}(p)$は実対称行列なので直交行列で対角化可能であり、
+    % \begin{gather*}
+    %     a^i_k a^j_l g_{ij}(p) = \eta_{kl}\\
+    %     a^i_j = \pdv{x^i}{X^j}
+    % \end{gather*}
+    % となる座標系$(X^i)$が存在する。
+
+    % 等価原理より局所慣性系$(y^i)$を取ることができ
+    %     \[\nabla_i f_j(p) = 0\]
+    % である。一般座標系$(x^i)$における基底ベクトル$(e_i)$は
+    %     \[e_j = \pdv{y^k}{x^j}f_k\]
+    % なので
+    % \begin{align*}
+    %     \nabla_i e_j(p)
+    %         &= \nabla_i\(\pdv{y^k}{x^j}f_k\)(p)\\
+    %         &= \nabla_i\(\pdv{y^k}{x^j}\)(p) f_k(p) + \pdv{y^k}{x^j}(p) \nabla_i f_k(p)\\
+    %         &= \nabla_i\(\pdv{y^k}{x^j}\)(p) f_k(p)\\
+    %         &= \nabla_i\(\pdv{y^k}{x^j}\)(p) \pdv{x^l}{y^k}(p)e_l(p)\\
+    % \end{align*}
+    %     \[\Gamma^k_{ij} = \pdv{x^k}{y^l}\pdv{y^l}{x^i}{x^j}\]
+
+% \subsection{共変微分}
+%     反変ベクトル$A^i(X^j)$を座標変換したものが$a^i(x^j)$であるとする。
+%     \begin{align*}
+%         \pd[a^i]{x^j} &= \pd{x^j}\lr{\pd[x^i]{X^l}A^l}\\
+%         &= \ppd{x^i}{x^j}{X^l}A^l
+%         +\pd[x^i]{X^l}\pd[X^k]{x^j}\pd[A^l]{X^k}\\
+%         \intertext{共変ベクトルも同様に、}
+%         \pd[a_i]{x^j} &= \pd{x^j}\lr{\pd[X^l]{x^i}A^l}\\
+%         &= \ppd{X^l}{x^i}{x^j}A_l
+%         + \pd[X^l]{x^i}\pd[X^k]{x^j}\pd[A_l]{X^k}
+%     \end{align*}
+%     第二項だけを見ればそれぞれ混合テンソル、共変テンソルのようになっている。ローレンツ変換だけを考えていれば、座標の二階微分である第一項は0になり、微分演算子はテンソルとして振る舞う。そこで新たに、一般の座標変換に対して共変であり、慣性系において通常の微分に一致するような演算子を考える必要がある。
+%     \begin{align*}
+%         \na_ja^i &= \pd[a^i]{x^j}-\ppd{x^i}{x^j}{X^l}A^l\\
+%         &= \pd[a^i]{x^j}-\ppd{x^i}{x^j}{X^l}\pd[X^l]{x^k}a^k\\
+%         \na_ja_i &= \pd[a_i]{x^j}-\ppd{X^l}{x^i}{x^j}A_l\\
+%         &= \pd[a_i]{x^j}-\ppd{X^l}{x^i}{x^j}\pd[x^k]{X^l}a_k
+%     \end{align*}
+%     とすれば$X$と$x$の二つの座標系間の変換で不変となる。これを共変微分という。第二項の$a^k,a_k$の係数は接続係数またはアフィン係数と呼ばれる。このままでは他の座標系に依存してしまうので$X$をデカルト座標で固定する。しかし、曲がった空間ではデカルト座標との関係が不定であり、そもそも存在を前提とするわけにはいかないので、計量を使って書き直す。ユークリッド計量を$\delta_{ij}$(クロネッカーのデルタ)とすると、
+%         \[g_{ij} = \pd[X^m]{x^i}\pd[X^n]{x^j}\delta_{mn}\]
+%     これを微分して、
+%         \[\pd[g_{ij}]{x^k} = \delta_{mn}
+%         \lr{\ppd{X^m}{x^i}{x^k}\pd[X^n]{x^j}
+%         +\pd[X^m]{x^i}\ppd{X^n}{x^j}{x^k}}\]
+%     計量は対称テンソルなので、添え字を巡回的に入れ替えて足し引きする。
+%         \[\rec{2}\lr{\pd[g_{jk}]{x^i}+\pd[g_{ki}]{x^j}-\pd[g_{ij}]{x^k}}
+%         = \delta_{mn}\ppd{X^m}{x^i}{x^j}\pd[X^n]{x^k}\]
+%     とすると左辺は第一種クリストッフェル記号そのものであり$\Ga_{kij}$と書く。第二種クリストッフェル記号を$\Ga^l_{ij}$と書き、
+%     \begin{align*}
+%         \Ga^l_{ij} &= g^{lk}\Ga_{kij}\\
+%         &= g^{lk}\delta_{mn}\ppd{X^m}{x^i}{x^j}\pd[X^n]{x^k}\\
+%         &= \pd[x^l]{X^u}\pd[x^k]{X^v}\delta^{uv}
+%         \delta_{mn}\ppd{X^m}{x^i}{x^j}\pd[X^n]{x^k}\\
+%         \intertext{$\delta^{ij},\delta_{ij}=0(i\neq j)$なので}
+%         &= \pd[x^l]{X^u}\pd[x^k]{X^u}\ppd{X^m}{x^i}{x^j}\pd[X^m]{x^k}\\
+%         &= \ppd{X^m}{x^i}{x^j}\pd[x^l]{X^u}\pd[X^m]{X^u}\\
+%         \intertext{$\pd[X^m]{X^u}=\delta^m_u$より}
+%         &= \ppd{X^m}{x^i}{x^j}\pd[x^l]{X^m}
+%     \end{align*}
+%     となって共変ベクトルの共変微分の接続係数となる。一方、反変ベクトルの共変微分の接続係数は、
+%     \begin{align*}
+%         \ppd{x^i}{x^j}{X^l}\pd[X^l]{x^k} &= \pd{x^j}\lr{\pd[x^i]{X^l}}\pd[X^l]{x^k}\\
+%         &= \pd{x^j}\lr{\pd[x^i]{X^l}\pd[X^l]{x^k}}-\pd[x^i]{X^l}\pd{x^j}\pd[X^l]{x^k}\\
+%         &= \ppd{x^i}{x^j}{x^k}-\ppd{X^l}{x^j}{x^k}\pd[x^i]{X^l}\\
+%         &= -\Ga^i_{jk}
+%     \end{align*}
+%     となる。つまり接続係数はどちらもクリストッフェル記号で表すことができる。共変微分の定義を書き直すと、
+%     \begin{gather*}
+%         \na_ja^i = \pd[a^i]{x^j}+\Ga^i_{jk}a^k\\
+%         \na_ja_i = \pd[a_i]{x^j}-\Ga^k_{ij}a_k
+%     \end{gather*}
+%     となる。ミンコフスキー計量の場合接続係数は0になるので、慣性系では通常の微分に一致する。
+
+\subsection{曲率テンソル}
+    リーマン幾何学の概念をいくつか導入する。
+
+    共変微分は非可換であり
+        \[[\nabla_\mu, \nabla_\nu]A^\lambda = R^\lambda_{\sigma\mu\nu}A^\sigma\]
+    と表される。$R^\lambda_{\sigma\mu\nu}$はリーマン曲率テンソルと呼ばれ、クリストッフェル記号を用いると
+        \[R^\lambda_{\sigma\mu\nu} = \partial_\mu \Gamma^\lambda_{\sigma\nu} - \partial_\nu \Gamma^\lambda_{\sigma\mu} + \Gamma^\lambda_{\mu\alpha}\Gamma^\alpha_{\sigma\nu} - \Gamma^\lambda_{\nu\alpha}\Gamma^\alpha_{\sigma\mu}\]
+    となる。また
+        \[R_{\mu\nu} = R^\lambda_{\mu\lambda\nu} = \partial_\lambda \Gamma^\lambda_{\mu\nu} - \partial_\nu \Gamma^\lambda_{\mu\lambda} + \Gamma^\lambda_{\lambda\alpha}\Gamma^\alpha_{\mu\nu} - \Gamma^\lambda_{\nu\alpha}\Gamma^\alpha_{\mu\lambda}\]
+    をリッチテンソルといい、対称テンソルである。
+        \[R = g^{\mu\nu}R_{\mu\nu}\]
+    をリッチスカラーまたはスカラー曲率という。これらはテンソルであり座標系に依らない量である。
+
+    リーマン曲率テンソルはビアンキの恒等式
+        \[\nabla_\lambda R^\alpha_{\beta \mu\nu} + \nabla_\mu R^\alpha_{\beta \nu\lambda} + \nabla_\nu R^\alpha_{\beta \lambda\mu} = 0\]
+    を満足する。ビアンキの恒等式を変形すると
+        \[\nabla_\mu \left(R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu}\right) = 0\]
+    となる。
+        \[G_{\mu\nu} = R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu}\]
+    をアインシュタインテンソルという。
+
+    \begin{thm}
+        $g_{\mu\nu}(x) = \eta_{\mu\nu} \iff R^\lambda_{\sigma\mu\nu}(x) = 0$である。
+    \end{thm}
+    \begin{proof}
+        必要性は自明。
+    \end{proof}
+
+\subsection{計量と重力}
+    計量テンソルは重力ポテンシャルに相当し、計量テンソルの一階微分は重力場に相当する。計量テンソルとその一階微分のみからなるクリストッフェル記号は、適当な座標変換によって局所的に0にすることができるため、重力の存在は分からず「見かけの重力」を表す。しかし計量テンソルの二階微分つまり潮汐力を含むリーマン曲率テンソルは、座標変換によって不変であり「真の重力」の情報を内包している。

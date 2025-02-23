@@ -1,0 +1,208 @@
+\section{時空の方程式}
+
+\subsection{測地線の方程式}
+    等価原理より局所ローレンツ系$(X^i)$が存在し
+        \[\dv[2]{X^i}{\tau} = 0\]
+    である。一般座標系$(x^i)$に変換すると
+    \begin{align*}
+        \dv[2]{X^l}{\tau}
+            &= \dv{\tau}\(\sum_i \pdv{X^l}{x^i}\dv{x^i}{\tau}\)\\
+            &= \sum_k \pdv{X^l}{x^k}\dv[2]{x^k}{\tau} + \sum_{i, j} \pdv{X^l}{x^i}{x^j}\dv{x^i}{\tau}\dv{x^j}{\tau} = 0
+    \end{align*}
+    両辺に$\pdv*{x^k}{X^l}$を掛けて$l$について和を取る。
+        \[\dv[2]{x^k}{\tau} + \pdv{x^k}{X^l}\pdv{X^l}{x^i}{x^j}\dv{x^i}{\tau}\dv{x^j}{\tau} = 0\]
+    一般座標系における接続係数が
+        \[\Gamma^k_{ij} = \pdv{x^k}{X^l}\pdv{X^l}{x^i}{x^j}\]
+    なので
+        \[\dv[2]{x^k}{\tau} + \Gamma^k_{ij}\dv{x^i}{\tau}\dv{x^j}{\tau} = 0\]
+    となる。
+
+    つまり局所慣性系は、数学的には時空の一点で接続係数が0になるような座標系である。定理より接続係数は対称
+
+\subsection{電磁場の方程式}
+    等価原理より局所ローレンツ系$(X^i)$が存在し、電磁テンソル$F^{\mu\nu}$、四元電流密度$j^\mu$とすると
+    \begin{gather*}
+        \partial_\nu F^{\mu\nu} = \mu_0 j^\mu\\
+        \partial_\rho F_{\mu\nu} + \partial_\mu F_{\nu\rho} + \partial_\nu F_{\rho\mu} = 0
+    \end{gather*}
+    が成り立つ。ここで$F^{\mu\nu} = \eta^{\mu\alpha}\eta^{\nu\beta}F_{\alpha\beta}$である。これを一般座標系$(x^i)$に変換すると
+    \begin{gather*}
+        \nabla_\nu F^{\mu\nu} = \mu_0 j^\mu\\
+        \nabla_\rho F_{\mu\nu} + \nabla_\mu F_{\nu\rho} + \nabla_\mu F_{\nu\rho} = 0\\
+        F^{\mu\nu} = g^{\mu\alpha}g^{\nu\beta}F_{\alpha\beta}
+    \end{gather*}
+    となる。
+
+    $F_{\mu\nu} = \nabla_\alpha A_\beta - \nabla_\beta A_\alpha$を代入すると
+    \begin{align*}
+        g^{\mu\alpha}g^{\nu\beta}\nabla_\nu(\nabla_\alpha A_\beta - \nabla_\beta A_\alpha)
+            &= g^{\mu\alpha}\nabla_\nu\nabla_\alpha A^\nu - g^{\nu\beta}\nabla_\nu\nabla_\beta A^\mu\\
+            &= g^{\mu\alpha}(\nabla_\nu\nabla_\alpha - \nabla_\alpha\nabla_\nu)A^\nu + g^{\mu\alpha}\nabla_\alpha\nabla_\nu A^\nu - g^{\mu\alpha}g^{\nu\beta}\nabla_\beta A^\mu\\
+            &= g^{\mu\alpha}R^\nu_{\lambda\nu\alpha}A^\lambda + g^{\mu\alpha}\nabla_\alpha(\nabla_\nu A^\nu) - \square A^\mu\\
+            &= R^\mu_\nu A^\nu + g^{\mu\alpha}\nabla_\alpha(\nabla_\nu A^\nu) - \square A^\mu
+    \end{align*}
+    より電磁ポテンシャルによるマクスウェル方程式は
+        \[R^\mu_\nu A^\nu + g^{\mu\alpha}\nabla_\alpha(\nabla_\nu A^\nu) - \square A^\mu = \mu_0 j^\mu\]
+    となる。またローレンツゲージ$\nabla_\nu A^\nu = 0$を仮定すると
+        \[R^\mu_\nu A^\nu - \square A^\mu = \mu_0 j^\mu\]
+    である。
+
+\subsection{重力場の方程式}
+    時空の計量と物質分布の関係を導出する。一般相対性理論における重力場の方程式は次の条件の下でニュートン力学に一致するはずである。
+    \begin{itemize}
+        \item 質点の速さは光速に比べて十分遅い
+        \item 重力場は十分弱い
+        \item 重力場の時間変化は十分小さい
+    \end{itemize}
+
+    時空の計量は物質の分布つまりエネルギー運動量テンソルに依存するはずである。$\nabla_jT_{ij} = 0$だから、計量に関係する量$X_{ij}$で、$X_{ij} = T_{ij}$となるようなものがあれば、$\nabla_jX_{ij} = 0$を満たす。アインシュタインテンソル$G_{ij}$や計量テンソル$g_{ij}$はそのような性質を持っている。ニュートン力学における重力場の方程式はポアソン方程式
+        \[\Delta\phi = 4\pi G\rho\]
+    である。$\phi$の二階微分は$g_{00}$の二階微分に比例するので、$X_{ij}$は計量の二階微分を含まなければならない。実は、$g_{ij}$の$x$に関する0, 1, 2階微分を含み、$\pdv*[2]{g_{ij}}{x}$の一次式であり、その共変微分が0となるような二階共変テンソルは$G_{ij}$と$g_{ij}$の線形結合に限ることが分かっている。つまり、
+        \[G_{ij} + \Lambda g_{ij} = \kappa T_{ij}\]
+    である。両辺に$g^{ij}$を掛けて縮約する。
+        \[g^{ij}R_{ij} - \frac{1}{2}Rg^{ij}g_{ij} + \Lambda g^{ij}g_{ij} = \kappa g^{ij}T_{ij}\]
+    $g^{ij}g_{ij}$はクロネッカーのデルタのトレースなので4である。
+    \begin{gather*}
+        R - 2R + 4\Lambda = \kappa T\\
+        R = 4\Lambda - \kappa T
+    \end{gather*}
+    これを元の式に代入して、
+    \begin{gather*}
+        R_{ij} - \frac{1}{2}(4\Lambda - \kappa T)g_{ij} + \Lambda g_{ij} = \kappa T_{ij}\\
+        R_{ij} - \Lambda g_{ij} = \kappa\(T_{ij} + \frac{1}{2}Tg_{ij}\)
+    \end{gather*}
+    である。
+
+    まず加速度系における計量を求める。慣性系$K$に対して加速度系$K'$が$x$軸方向に加速度$g$で進んでいるとする。時刻$t = 0$で両者が一致しているとすれば、十分小さい$t$について、
+    \begin{align*}
+        t' &= t\\
+        x' &= x-\frac{1}{2}gt^2\\
+        y' &= y\\
+        z' &= z
+    \end{align*}
+    である。従って慣性系ではミンコフスキー計量なので、
+    \begin{align*}
+        ds^2 &= -c^2dt^2 + dx^2 + dy^2 + dz^2\\
+             &= -c^2dt'^2 + (dx' + gtdt')^2 + dy'^2 + dz'^2\\
+             &= \(-1 + \frac{(gt)^2}{c^2}\)(cdt')^2 + 2gtdt'dx' + dx'^2 + dy'^2 + dz'^2
+    \end{align*}
+    $K'$系の原点では$x = \frac{1}{2}gt'^2$、重力ポテンシャルは$\phi = -gx$なので
+    \begin{align*}
+        ds^2 &= \(-1 + \frac{2gx}{c^2}\)(cdt')^2 + 2\sqrt{2gx}dt'dx' + dx'^2 + dy'^2 + dz'^2\\
+             &= \(-1 - \frac{2\phi}{c^2}\)(cdt')^2 - 2\sqrt{-2\phi}dt'dx' + dx'^2 + dy'^2 + dz'^2
+    \end{align*}
+    重力ポテンシャルはスカラーなので、加速の方向に依らず$g_{00}= -1 - 2\phi / c^2$である。
+
+    次にリッチテンソルを計算する。$g_{ij} = \eta_{ij} + h_{ij}$とおく。$h_{ij}$は十分小さいとして$h_{ij}$の二次の項を無視する。クリストッフェル記号は、
+    \begin{align*}
+        \Gamma^k_{ij}
+            &= \frac{1}{2}g^{kl}\(\pdv{g_{lj}}{x^i} + \pdv{g_{li}}{x^j} - \pdv{g_{ij}}{x^l}\)\\
+            &= \frac{1}{2}\eta_{kl}\(\pdv{h_{lj}}{x^i} + \pdv{h_{li}}{x^j} - \pdv{h_{ij}}{x^l}\)
+    \end{align*}
+    $h_{00} = -2\phi / c^2$なので
+    \begin{align*}
+        \Gamma^k_{00}
+            &= \frac{1}{2}\eta_{kl}\(\pdv{h_{l0}}{x^0} + \pdv{h_{l0}}{x^0} - \pdv{h_{00}}{x^l}\)\\
+            &= -\frac{1}{2}\eta_{kl}\pdv{h_{00}}{x^l}
+    \end{align*}
+    である。リッチテンソルは後ろの二項が$h_{ij}$の二次になるので無視して
+    \begin{align*}
+        R_{00}  &= R^k_{0k0}\\
+                &= \pdv{\Gamma^k_{00}}{x^k} - \pdv{\Gamma^k_{0k}}{x^0}\\
+                &= \pdv{\Gamma^k_{00}}{x^k}\\
+                &= -\frac{1}{2}\eta_{kl}\pdv{h_{00}}{x^k}{x^l}\\
+                &= -\frac{1}{2}\partial^i\partial_ih_{00}\\
+                &= -\frac{1}{2}\Delta h_{00}
+    \end{align*}
+
+    次にエネルギー運動量テンソルを計算する。$T_{ij} = \rho u_iu_j$だが、速さが十分小さいので$T_{00} = \rho c^2$で残りの成分は全て無視する。よって$T = g_{ij}T^{ij} = g_{00}\rho c^2$である。したがって方程式は、
+    \begin{align*}
+        R_{ij} - \Lambda g_{ij} = \kappa\(T_{ij} + \frac{1}{2}Tg_{ij}\)\\
+        -\frac{1}{2}\Delta h_{00} - \Lambda g_{00} = \kappa\rho c^2\(1 - \frac{1}{2}g_{00}^2\)
+    \end{align*}
+    $h_{00} = -2\phi / c^2, g_{00} = -1$を代入すれば、
+    \begin{align*}
+        \frac{1}{c^2}\Delta\phi + \Lambda = \frac{c^2}{2}\kappa\rho
+    \end{align*}
+    ポアソン方程式$\Delta\phi = 4\pi G\rho$と比較すると、$\Lambda = 0, \kappa = 8\pi G / c^4$である。つまり、
+        \[R_{ij} - \frac{1}{2}Rg_{ij} = \frac{8\pi G}{c^4}T_{ij}\]
+    これを重力場の方程式またはアインシュタイン方程式と呼ぶ。
+
+\subsection{弱い重力場}
+    弱い重力場$g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}$ ($|h_{ij}| \ll 1$)において、アインシュタイン方程式を$h_{\mu\nu}$について線形化する。
+
+    クリストッフェル記号は前節と同様
+    \begin{align*}
+        \Gamma^\lambda_{\mu\nu}
+            &= \frac{1}{2}g^{\lambda\sigma}(g_{\nu\sigma, \mu} + g_{\sigma\mu, \nu} - g_{\mu\nu, \sigma})\\
+            &= \frac{1}{2}\eta^{\lambda\sigma}(h_{\nu\sigma, \mu} + h_{\sigma\mu, \nu} - h_{\mu\nu, \sigma})
+    \end{align*}
+    リーマン曲率テンソルは
+    \begin{align*}
+        R^\lambda_{\sigma\mu\nu}
+            &= \partial_\mu \Gamma^\lambda_{\sigma\nu} - \partial_\nu \Gamma^\lambda_{\sigma\mu}\\
+            &= \partial_\mu\left(\frac{1}{2}\eta^{\lambda\alpha}(h_{\nu\alpha, \sigma} + h_{\alpha\sigma, \nu} - h_{\sigma\nu, \alpha})\right) - \partial_\nu\left(\frac{1}{2}\eta^{\lambda\alpha}(h_{\mu\alpha, \sigma} + h_{\alpha\sigma, \mu} - h_{\sigma\mu, \alpha})\right)\\
+            &= \partial_\mu\left(\frac{1}{2}\eta^{\lambda\alpha}(h_{\nu\alpha, \sigma} - h_{\sigma\nu, \alpha})\right) - \partial_\nu\left(\frac{1}{2}\eta^{\lambda\alpha}(h_{\mu\alpha, \sigma} - h_{\sigma\mu, \alpha})\right)
+    \end{align*}
+    リッチテンソルは
+    \begin{align*}
+        R_{\mu\nu}
+            &= R^\lambda_{\mu\lambda\nu}\\
+            &= \partial_\lambda\left(\frac{1}{2}\eta^{\lambda\alpha}(h_{\nu\alpha, \mu} - h_{\mu\nu, \alpha})\right) - \partial_\nu\left(\frac{1}{2}\eta^{\lambda\alpha}(h_{\lambda\alpha, \mu} - h_{\mu\lambda, \alpha})\right)\\
+            &= \frac{1}{2}\eta^{\lambda\alpha}(h_{\nu\alpha, \mu\lambda} - h_{\mu\nu, \alpha\lambda} - h_{\lambda\alpha, \mu\nu} + h_{\mu\lambda, \alpha\nu})
+    \end{align*}
+    スカラー曲率は
+    \begin{align*}
+        R   &= g^{\mu\nu}R_{\mu\nu}\\
+            &= \frac{1}{2}\eta^{\mu\nu}\eta^{\lambda\alpha}(h_{\nu\alpha, \mu\lambda} - h_{\mu\nu, \alpha\lambda} - h_{\lambda\alpha, \mu\nu} + h_{\mu\lambda, \alpha\nu})\\
+            &= \partial^\alpha \partial^\beta h_{\alpha\beta} - \square h
+    \end{align*}
+    アインシュタインテンソルは
+    \begin{align*}
+        G_{\mu\nu}
+            &= R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu}\\
+            &= \frac{1}{2}\eta^{\lambda\alpha}(h_{\nu\alpha, \mu\lambda} - h_{\mu\nu, \alpha\lambda} - h_{\lambda\alpha, \mu\nu} + h_{\mu\lambda, \alpha\nu})\\
+                &\quad - \frac{1}{2}(\partial^\alpha \partial^\beta h_{\alpha\beta} - \square h)\eta_{\mu\nu}\\
+    \end{align*}
+
+\subsection{重力場の作用}
+    アインシュタインテンソルはゲージ変換に対して不変である。
+
+    重力場の作用は
+        \[S_g[g_{\mu\nu}(x)] = \int \frac{c^4}{16\pi G}(R - 2\Lambda) \sqrt{-g}dx^4\]
+    であり、アインシュタイン=ヒルベルト作用と呼ばれている。これの変分を計算する。まず
+        
+    \begin{align*}
+        \delta g
+            &= g g^{\mu\nu} \delta g_{\mu\nu}\\
+        \delta \sqrt{-g}
+            &= \frac{1}{2}\sqrt{-g}g^{\mu\nu}\delta g_{\mu\nu}\\
+            &= -\frac{1}{2}\sqrt{-g}g_{\mu\nu}\delta g^{\mu\nu}\\
+        \delta R_{\mu\nu}
+            &= \delta(\partial_\lambda \Gamma^\lambda_{\mu\nu} - \partial_\nu \Gamma^\lambda_{\mu\lambda} + \Gamma^\lambda_{\lambda\alpha}\Gamma^\alpha_{\mu\nu} - \Gamma^\lambda_{\nu\alpha}\Gamma^\alpha_{\mu\lambda})\\
+            &= \partial_\lambda \delta\Gamma^\lambda_{\mu\nu} - \partial_\nu \delta\Gamma^\lambda_{\mu\lambda} + \delta\Gamma^\lambda_{\lambda\alpha} \Gamma^\alpha_{\mu\nu} + \Gamma^\lambda_{\lambda\alpha} \delta\Gamma^\alpha_{\mu\nu} - \delta\Gamma^\lambda_{\nu\alpha} \Gamma^\alpha_{\mu\lambda} - \Gamma^\lambda_{\nu\alpha} \delta\Gamma^\alpha_{\mu\lambda}\\
+            &= (\partial_\lambda \delta\Gamma^\lambda_{\mu\nu} + \Gamma^\lambda_{\lambda\alpha} \delta\Gamma^\alpha_{\mu\nu} - \Gamma^\alpha_{\mu\lambda} \delta\Gamma^\lambda_{\nu\alpha} - \Gamma^\lambda_{\nu\alpha} \delta\Gamma^\alpha_{\mu\lambda}) - (\partial_\nu \delta\Gamma^\lambda_{\mu\lambda} - \Gamma^\alpha_{\mu\nu} \delta\Gamma^\lambda_{\lambda\alpha})\\
+            &= \nabla_\lambda \delta\Gamma^\lambda_{\mu\nu} - \nabla_\nu \delta\Gamma^\lambda_{\mu\lambda}\\
+        \delta R
+            &= \delta g^{\mu\nu} R_{\mu\nu} + g^{\mu\nu} \delta R_{\mu\nu}\\
+            &= R_{\mu\nu} \delta g^{\mu\nu} + g^{\mu\nu} (\nabla_\lambda \delta\Gamma^\lambda_{\mu\nu} - \nabla_\nu \delta\Gamma^\lambda_{\mu\lambda})\\
+            &= R_{\mu\nu} \delta g^{\mu\nu} +  \nabla_\lambda (g^{\mu\nu} \delta\Gamma^\lambda_{\mu\nu}) - \nabla_\nu(g^{\mu\nu} \delta\Gamma^\lambda_{\mu\lambda})\\
+            &= R_{\mu\nu} \delta g^{\mu\nu} +  \nabla_\lambda(g^{\mu\nu} \delta\Gamma^\lambda_{\mu\nu} - g^{\mu\lambda} \delta\Gamma^\nu_{\mu\nu})\\
+        \delta S_g
+            &= \frac{c^3}{16\pi G} \int \delta\left[(R - 2\Lambda)\sqrt{-g}\right] dx^4\\
+            &= \frac{c^3}{16\pi G} \int (\delta R \sqrt{-g} - (R - 2\Lambda)\delta \sqrt{-g}) dx^4\\
+            &= \frac{c^3}{16\pi G} \int \left(R_{\mu\nu} \delta g^{\mu\nu} \sqrt{-g} - (R - 2\Lambda)\frac{1}{2}\sqrt{-g}g_{\mu\nu}\delta g^{\mu\nu}\right) dx^4\\
+            &= \frac{c^3}{16\pi G} \int \left(R_{\mu\nu} - \frac{1}{2}Rg^{\mu\nu} + \Lambda g^{\mu\nu}\right) \delta g^{\mu\nu} \sqrt{-g} dx^4
+    \end{align*}
+    となる。全体の作用
+        \[S = S_m + S_g\]
+    の変分が0となるので、
+    \begin{gather*}
+        \begin{aligned}
+            \delta S
+                &= -\frac{1}{2c} \int T_{\mu\nu} \delta g^{\mu\nu} \sqrt{-g} dx^4\\
+                &\quad + \frac{c^3}{16\pi G} \int \left(R_{\mu\nu} - \frac{1}{2}Rg^{\mu\nu} + \Lambda g^{\mu\nu}\right) \delta g^{\mu\nu} \sqrt{-g} dx^4 = 0\\
+        \end{aligned}\\
+        R_{\mu\nu} - \frac{1}{2}Rg_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8\pi G}{c^4}T_{\mu\nu}
+    \end{gather*}
+    となりアインシュタイン方程式が導かれる。

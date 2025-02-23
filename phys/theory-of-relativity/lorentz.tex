@@ -1,0 +1,185 @@
+\section{時間と空間の相対性}
+
+\subsection{時間と空間の定義}
+
+\subsection{ローレンツ変換}
+    相対性原理と光速度不変の原理から、ガリレイ変換に代わる新たな慣性系間の変換を導出する。
+
+    二つの慣性系$K, K'$を考える。時刻$t = t' = 0$のとき両者の原点は一致していたとする。つまり慣性系の変換として$(0, 0, 0, 0) \mapsto (0, 0, 0, 0)$であるものを考える。時刻0で原点から光が出発して球面上に広がる状態を考えると、両方の系で光速は等しいので、
+    \begin{align*}
+        x^2 + y^2 + z^2 &= (ct)^2\\
+        x'^2 + y'^2 + z'^2 &= (ct')^2
+    \end{align*}
+    となる。つまり$-(ct)^2 + x^2 + y^2 + z^2$は不変となる。また、二つの慣性系は互いに等速直線運動をしているので、速度を反転させたものは逆変換となるはずであり、線形変換である。よって、このような原点を原点に写し、$-(ct)^2 + x^2 + y^2 + z^2$を保つような線形変換をローレンツ変換と呼ぶ。
+    
+    $K'$系が$K$系に対して$x$軸方向に速さ$v$で進んでいるとき、ローレンツ変換の具体的な表示を求める。
+    \begin{align*}
+        ct' &= a_{00}ct + a_{01}x + a_{02}y + a_{03}z\\
+        x' &= a_{10}ct + a_{11}x + a_{12}y + a_{13}z\\
+        y' &= a_{20}ct + a_{21}x + a_{22}y + a_{23}z\\
+        z' &= a_{30}ct + a_{31}x + a_{32}y + a_{33}z
+    \end{align*}
+    とおく。$(x', y', z') = (0, 0, 0)$のとき$(x, y, z) = (vt, 0, 0)$なので、
+    \begin{align*}
+        a_{10}c + a_{11}v &= 0\\
+        a_{20}c + a_{21}v &= 0\\
+        a_{30}c + a_{31}v &= 0
+    \end{align*}
+    同様に、$(x, y, z) = (0, 0, 0)$のとき$(x', y', z') = (-vt', 0, 0)$なので、
+    \begin{align*}
+        \frac{a_{10}}{a_{00}} &= -\frac{v}{c}\\
+        \frac{a_{20}}{a_{00}} &= 0\\
+        \frac{a_{30}}{a_{00}} &= 0
+    \end{align*}
+    つまり$a_{20} = a_{21} = a_{30} = a_{31} = 0$である。
+    
+    $y, z$軸は$x$軸の周りに回転させても形は変わらないので、自明に$a_{02} = a_{03} = a_{12} = a_{13} = 0$である。また第3,4式についても適用する。$y, z$軸は対称なので、$a_{22} = a_{33} = p, a_{23} = a_{32} = q$とおくと
+    \begin{align*}
+        \begin{pmatrix}
+            \cos\theta & -\sin\theta\\
+            \sin\theta & \cos\theta
+        \end{pmatrix}
+        \begin{pmatrix}
+            p & q\\
+            q & p
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            p & q\\
+            q & p
+        \end{pmatrix}
+        \begin{pmatrix}
+            \cos\theta & -\sin\theta\\
+            \sin\theta & \cos\theta
+        \end{pmatrix}\\
+        \begin{pmatrix}
+            p\cos\theta - q\sin\theta & -p\sin\theta + q\cos\theta\\
+            p\sin\theta + q\cos\theta & p\cos\theta + q\sin\theta
+        \end{pmatrix}
+        &=
+        \begin{pmatrix}
+            p\cos\theta + q\sin\theta & -p\sin\theta + q\cos\theta\\
+            p\sin\theta + q\cos\theta & p\cos\theta - q\sin\theta
+        \end{pmatrix}
+    \end{align*}
+    この式は任意の$y, z$及び$\theta$で成立するので$q = 0$。逆変換を考えれば$p^2 = 1$。物理的に妥当なのは$p = 1$である。
+    
+    開始と同時に原点から$x$軸方向に向かって光が放たれたとすると、$(x, y, z) = (ct, 0, 0)$のとき$(x', y', z') = (ct', 0, 0)$なので、
+        \[ct' = (a_{00} + a_{01})ct = (a_{10} + a_{11})ct\]
+    同様に$(x, y, z) = (-ct, 0, 0)$のとき$(x', y', z') = (-ct', 0, 0)$なので、
+        \[ct' = (a_{00} - a_{01})ct = (-a_{10} + a_{11})ct\]
+    つまり$a_{00} = a_{11} = a, a_{01} = a_{10} = b$とおくことができる。速度$v$の符号を反転させれば逆変換になる。しかし係数にどのような形で$v$が含まれているか分からないので、代わりに$x$軸を反転させる。
+    \begin{align*}
+        ct' &= act - b \cdot -x\\
+        -x' &= -bct + a \cdot -x
+    \end{align*}
+    よって、
+    \[
+        \begin{pmatrix}
+            a & b\\
+            b & a
+        \end{pmatrix}
+        \begin{pmatrix}
+            a & -b\\
+            -b & a
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            a^2 - b^2 & 0\\
+            0 & a^2 - b^2
+        \end{pmatrix}
+        =
+        \begin{pmatrix}
+            1 & 0\\
+            0 & 1
+        \end{pmatrix}
+    \]
+    なので$a^2 - b^2 = 1$である。$b / a = -v / c$なので、$a = 1 / \sqrt{1-(v/c)^2}, b = -(v / c) / \sqrt{1-(v/c)^2}$となる。
+
+    従ってローレンツ変換は次のようになる。
+    \begin{align*}
+        ct' &= \frac{1}{\sqrt{1 - (v / c)^2}}ct - \frac{v / c}{\sqrt{1 - (v / c)^2}}x\\
+        x'  &= -\frac{v / c}{\sqrt{1 - (v / c)^2}}ct + \frac{1}{\sqrt{1 - (v / c)^2}}x\\
+        y'  &= y\\
+        z'  &= z
+    \end{align*}
+    $v \ll c$の極限でガリレイ変換に一致することが分かる。また$\gamma = 1 / \sqrt{1 - (v / c)^2}$をローレンツ因子と呼ぶ。
+
+    相対性原理とは全ての慣性系で物理法則が不変であるというものだった。特に物理法則はローレンツ変換に対して不変でなければならず、これを特殊相対性原理と呼ぶ。
+
+\subsection{時間の遅れとローレンツ収縮}
+    $x' = 0$と置けば$x = vt$を得る。これを$t$について解けば、
+        \[t = \frac{t'}{\sqrt{1 - \frac{v^2}{c^2}}}\]
+    つまり動いている物体は時間が遅れる。
+    
+    また$K$系と$K'$系の原点の間の距離を$l, l'$と置くと、$l = x = vt$。また$x = 0$と置けば$x' = -\gamma vt$より$l' = -x' = \gamma vt$なので、
+        \[l = \sqrt{1 - \frac{v^2}{c^2}}l'\]
+    つまり動いている物体はその長さが進行方向に対して縮む。これをローレンツ収縮という。
+
+\subsection{速度の合成}
+    $K'$系が$K$系に対して$x$軸方向に速度$v_1$で進んでいて、$K'$系で質点が$(x', y') = (v_2t'\cos\theta, v_2t'\sin\theta)$で移動しているとする。これをローレンツ変換して、
+    \begin{align*}
+        ct  &= \gamma ct' + \gamma v_1 / c \cdot v_2t'\cos\theta\\
+        x   &= \gamma v_1 / c \cdot ct' + \gamma v_2t'\cos\theta\\
+        y   &= v_2t'\sin\theta
+    \end{align*}
+    よって合成速度$V$は、
+    \begin{align*}
+        V_x &= \frac{x}{t} = \frac{v_1 + v_2\cos\theta}{1 + \frac{v_1v_2\cos\theta}{c^2}}\\
+        V_y &= \frac{y}{t} = \frac{1}{\gamma}\frac{v_2\sin\theta}{1 + \frac{v_1v_2\cos\theta}{c^2}}
+    \end{align*}
+    $u_1 = v_1 / c, u_2 = v_2 / c, U = V / c$と置くと$U$の絶対値は
+    \begin{align*}
+        V^2 &= V_x^2 + V_y^2 = \frac{(v_1 + v_2\cos\theta)^2 + (1 - v_1^2 / c^2)v_2^2\sin^2\theta}{\(1 + \frac{v_1v_2\cos\theta}{c^2}\)^2}\\
+        U^2 &= \frac{(u_1 + u_2\cos\theta)^2 + (1 - u_1^2)u_2^2\sin^2\theta}{(1 + u_1u_2\cos\theta)^2}\\
+            &= \frac{u_1^2 + u_2^2 + 2u_1u_2\cos\theta - u_1^2u_2^2\sin^2\theta}{(1 + u_1u_2\cos\theta)^2}
+    \end{align*}
+    3点が必ず同一平面上にあることに注意すると、合成速度はベクトルで書くことができて、
+        \[U^2 = \frac{u_1^2 + u_2^2 + 2u_1\cdot u_2 - |u_1 \times u_2|^2}{(1 + u_1 \cdot u_2)^2}\]
+    となる。これを変形すると、
+    \begin{align*}
+        U^2 &= \frac{-1 + u_1^2 + u_2^2 - u_1^2u_2^2 + 1 + 2u_1 \cdot u_2 + (u_1 \cdot u_2)^2}
+        {(1 + u_1 \cdot u_2)^2}\\
+            &= \frac{(1 + u_1 \cdot u_2)^2 - (1 - u_1^2)(1 - u_2^2)}{(1 + u_1 \cdot u_2)^2}\\
+        1 - U^2 &= \frac{(1 - u_1^2)(1 - u_2^2)}{(1 + u_1 \cdot u_2)^2}
+    \end{align*}
+    となるので$u_1, u_2 \leq 1$なら$U \leq 1$より合成速度が光速を超えないことが分かる。
+
+\subsection{光行差}
+    光行差とは、移動している観測者が天体を見るとき、天体が移動方向にずれて見える現象またはそのずれを指す。垂直に降っている雨を電車の中から見ると斜めに降っているように見えるのと同じだが、相対論的効果を考慮しなければならない。観測者が速度$v$で移動しており、その進行方向に対して角$\theta$にある天体の光行差を$a$とする。$K$系では時刻$t$における光の位置が$(-ct\cos\theta, -ct\sin\theta)$であるとする。これをローレンツ変換して、
+    \begin{align*}
+        ct' &= \gamma ct - \gamma v / c \cdot (-ct\cos\theta)\\
+        x'  &= -\gamma v / c ct + \gamma (-ct\cos\theta)\\
+        y'  &= y = -ct\sin\theta
+    \end{align*}
+    したがって
+    \begin{align*}
+        \frac{1}{\tan(\theta - a)}
+            &= \frac{x'}{y'} = \frac{-\gamma vt - \gamma ct\cos\theta}{-ct\sin\theta}\\
+            &= \frac{1}{\sqrt{1 - (v / c)^2}}\(\frac{v}{c\sin\theta} + \frac{1}{\tan\theta}\)
+    \end{align*}
+    となる。
+
+\subsection{光のドップラー効果}
+    $K$系の原点に光源があり、光が$(ct\cos\theta, ct\sin\theta)$に到達したとする。これをローレンツ変換して、
+    \begin{align*}
+        ct' &= \gamma ct - \gamma v / c \cdot ct\cos\theta\\
+        x'  &= -\gamma v / c \cdot ct + \gamma ct\cos\theta\\
+        y'  &= y = ct\sin\theta
+    \end{align*}
+    光速度不変の原理より、光の進む経路長の比は経過時間の比に等しいので、
+    \begin{align*}
+        \frac{\sqrt{x'^2 + y'^2}}{ct}
+            &= \frac{\gamma ct - \gamma v / c \cdot ct\cos\theta}{ct}\\
+            &= \gamma\(1 - \frac{v}{c}\cos\theta\)
+    \end{align*}
+    となる。二つの慣性系で光の振動する回数は等しいので、
+    \begin{align*}
+        \lambda' &= \frac{1 - (v / c)\cos\theta}{\sqrt{1 - (v / c)^2}}\lambda\\
+        \nu' &= \frac{\sqrt{1 - (v / c)^2}}{1 - (v / c)\cos\theta}\nu
+    \end{align*}
+    である。特に$\theta = 0^\circ$の時は、
+        \[\lambda' = \frac{1 - (v / c)}{\sqrt{1 - (v / c)^2}}\lambda\]
+    $v > 0$の時光源に近付いていて、$v < 0$の時に光源から遠ざかっていることに注意すると、近付くときは波長が縮んで青みがかって見え(青方偏移)、遠ざかるときは波長が伸びて赤みがかって見える(赤方偏移)。また$\theta = 90^\circ$の時は、
+        \[\lambda' = \frac{1}{\sqrt{1 - (v / c)^2}}\lambda\]
+    となって波長が伸びる。これを横ドップラー効果という。

@@ -1,0 +1,464 @@
+\section{古典物理学の修正}
+力学と電磁気学を共変形式に書き直す。
+
+\subsection{運動方程式}
+    運動方程式は通常の運動量と力の代わりに四元運動量と四元力を用いて
+        \[\dv{p^\mu}{\tau} = f^\mu\]
+    となる。四元力の時間成分はエネルギーの変化つまり仕事を表す。自由粒子の場合、
+        \[\dv{p^\mu}{\tau} = 0\]
+    である。時間成分はエネルギー保存則を表し、空間成分は運動量保存則を表す。
+    % 四元力$f^i$を
+    %     \[f^i = \dv{p^i}{\tau}\]
+    % と定義する。これがそのまま相対論におけるニュートンの運動方程式である。観測者の座標で書き換えると
+    % \begin{align*}
+    %     f   &= \dv{p}{\tau} = \gamma m\dv{u}{t}\\
+    %         &= \gamma m\(\gamma \dv{(c,v)}{t} + \dv{\gamma}{t}(c, v)\)
+    % \end{align*}
+    % なので、
+    % \begin{align*}
+    %     \dv{t}\(1 - \frac{v^2}{c^2}\)^{-1/2}
+    %         &= -\frac{1}{2}\(1 - \frac{v^2}{c^2}\)^{-3 / 2}\cdot -\frac{1}{c^2}\dv{(v^2)}{t}\\
+    %         &= \frac{\gamma^3}{c^2}\dv{(v^2 / 2)}{t}
+    % \end{align*}
+    % より、
+    % \begin{align*}
+    %     f^0 &= \gamma m\frac{\gamma^3}{c^2}\dv{(v^2 / 2)}{t}c\\
+    %         &= \frac{\gamma^4}{c}\dv{t}\(\frac{1}{2}mv^2\)\\
+    %         &= \gamma^4\dv{t}\frac{E}{c}\\
+    %     f^i &= \gamma m\(\gamma\dv{v^i}{t} + \frac{\gamma^3}{c^2}\dv{(v^2 / 2)}{t}v^i\)\\
+    %         &= \gamma^2\dv{p^i}{t} + \frac{\gamma^4}{c^2}\dv{t}\(\frac{1}{2}mv^2\)v^i\\
+    %         &= \gamma^2\dv{p^i}{t} + \gamma^4\dv{t}\frac{E}{c} \cdot \frac{v^i}{c} \quad (i = 1, 2, 3)
+    % \end{align*}
+
+\subsection{電磁場}
+    マクスウェル方程式は元々ローレンツ共変な方程式なので、修正を加える部分はなく単純に書き換えるだけである。
+
+    電磁場形式のマクスウェル方程式は
+    \begin{gather*}
+        \begin{aligned}
+            \div E &= \frac{\rho}{\epsilon_0}\\
+            \div B &= 0
+        \end{aligned}\\
+        \begin{aligned}
+            \rot E + \pdv{B}{t} &= 0\\
+            \rot B - \frac{1}{c^2}\pdv{E}{t} &= \mu_0 i
+        \end{aligned}
+    \end{gather*}
+    である。まず第一式と第四式を展開する。
+    \begin{align*}
+        \partial \cdot (0, E_x, E_y, E_z) &= \frac{\rho}{\epsilon_0}\\
+        \partial \cdot (-E_x/c, 0, B_z, -B_y) &= \mu_0 i_x\\
+        \partial \cdot (-E_y/c, -B_z, 0, B_x) &= \mu_0 i_y\\
+        \partial \cdot (-E_z/c, B_y, -B_x, 0) &= \mu_0 i_z
+    \end{align*}
+    次に第二式と第三式を展開して、
+    \begin{align*}
+        \partial \cdot (0, B_x, B_y, B_z) &= 0\\
+        \partial \cdot (-B_x, 0, E_z/c, -E_y/c) &= 0\\
+        \partial \cdot (-B_y, -E_z/c, 0, E_x/c) &= 0\\
+        \partial \cdot (-B_z, E_y/c, -E_x/c, 0) &= 0
+    \end{align*}
+    ここで、
+    \begin{align*}
+        F^{\mu\nu} &=
+        \begin{bmatrix}
+            0 & E_x / c & E_y / c & E_z / c\\
+            -E_x / c & 0 & B_z & -B_y\\
+            -E_y / c & -B_z & 0 & B_x\\
+            -E_z / c & B_y & -B_x & 0
+        \end{bmatrix}\\
+        G^{\mu\nu} &=
+        \begin{bmatrix}
+            0 & B_x & B_y & B_z\\
+            -B_x & 0 & E_z / c & -E_y / c\\
+            -B_y & -E_z / c & 0 & E_x / c\\
+            -B_z & E_y / c & -E_x / c & 0
+        \end{bmatrix}\\
+        j^\mu &= (\rho c, i_x, i_y, i_z)
+    \end{align*}
+    とすれば、
+    \begin{align*}
+        \partial_\nu F^{\mu\nu} &= \mu_0 j^\mu\\
+        \partial_\nu G^{\mu\nu} &= 0
+    \end{align*}
+    となる。$F^{\mu\nu}$を電磁テンソル、$j^\mu$を四元電流密度という。
+    % 第二式の右辺の0ベクトルはスカラーだが、同時に反変ベクトル、共変ベクトルでもある。したがって形式を整えるために$G^{\mu\nu}$も二階反変テンソルとした。
+    $F^{\mu\nu}$とミンコフスキー計量で縮約をとり共変テンソルにすると、
+    \begin{align*}
+        F_{\mu\nu} 
+            &= \eta_{\mu\alpha}\eta_{\nu\beta}F^{\alpha\beta} = \eta_{\mu\mu}\eta_{\nu\nu}F^{\mu\nu}\\
+            &= \begin{bmatrix}
+                0 & -E_x / c & -E_y / c & -E_z / c\\
+                E_x / c & 0 & B_z & -B_y\\
+                E_y / c & -B_z & 0 & B_x\\
+                E_z / c & B_y & -B_x & 0
+            \end{bmatrix}
+    \end{align*}
+    これを用いて$G^{\mu\nu}$を書き直すと、
+    \[
+        G^{\mu\nu} =
+        \begin{bmatrix}
+            0 & -F_{23} & -F_{31} & -F_{12}\\
+            F_{23} & 0 & F_{30} & F_{02}\\
+            -F_{13} & -F_{30} & 0 & -F_{01}\\
+            F_{12} & F_{20} & F_{01} & 0
+        \end{bmatrix}
+    \]
+    となる。したがって
+    \begin{gather*}
+        \partial_\nu F^{\mu\nu} = \mu_0 j^\mu\\
+        \partial_\rho F_{\mu\nu} + \partial_\mu F_{\nu\rho} + \partial_\nu F_{\rho\mu} = 0 \tag{ビアンキの恒等式}
+    \end{gather*}
+    である(第二式は添え字が重なる場合も成り立つ)。
+
+    電磁場のローレンツ変換は
+        \[F'^{ab} = \Lambda^a_\mu \Lambda^b_\nu F^{\mu\nu}\]
+    より
+    \begin{align*}
+        E_x' &= c F'^{01} = c \Lambda^0_\mu \Lambda^1_\nu F^{\mu\nu}\\
+             &= c (\gamma \cdot -\gamma v/c F^{00} + \gamma \cdot \gamma F^{01} - \gamma v/c \cdot -\gamma v/c F^{10} + -\gamma v/c \cdot \gamma F^{11})\\
+             &= \gamma^2 E_x - \gamma^2 v^2/c^2 E_x\\
+             &= E_x\\
+        E_y' &= c F'^{02} = c \Lambda^0_\mu \Lambda^2_\nu F^{\mu\nu}\\
+             &= c (\gamma F^{02} - \gamma v/c F^{12})\\
+             &= \gamma(E_y - v B_z)\\
+        E_z' &= c F'^{03} = c \Lambda^0_\mu \Lambda^3_\nu F^{\mu\nu}\\
+             &= c (\gamma F^{03} - \gamma v/c F^{13})\\
+             &= \gamma(E_z + v B_y)\\
+        B_x' &= F'^{23} = \Lambda^2_\mu \Lambda^3_\nu F^{\mu\nu}\\
+             &= F^{23}\\
+             &= B_x\\
+        B_y' &= F'^{31} = \Lambda^3_\mu \Lambda^1_\nu F^{\mu\nu}\\
+             &= -\gamma v/c F^{30} + \gamma F^{31}\\
+             &= \gamma\(B_y + \frac{v}{c^2} E_z\)\\
+        B_z' &= F'^{12} = \Lambda^1_\mu \Lambda^2_\nu F^{\mu\nu}\\
+             &= -\gamma v/c F^{02} + \gamma F^{12}\\
+             &= \gamma\(B_z - \frac{v}{c^2} E_y\)
+    \end{align*}
+    となる。コイルに磁石を近付けるとき、コイルの立場では磁場が変化するので電磁誘導によってコイルに電場が発生する。しかし、磁石の立場では近付いてきたコイルの中の電子がローレンツ力を受けて電流を発生させる。このとき電場は生じていない。このように相対論では電磁場も相対的な量となる。$x$軸方向に運動したとき、ローレンツ収縮によって$x$軸方向の長さが$\gamma$倍縮むので、$y, z$方向の電気力線と磁力線の密度も$\gamma$倍になると考えられる。
+
+    % 次に電磁ポテンシャル形式のマクスウェル方程式は
+    % \begin{gather*}
+    %     \square A - \grad\(\div A + \frac{1}{c^2}\pdv{\phi}{t}\) = -\mu_0i\\
+    %     \Delta\phi + \div\pdv{A}{t} = -\frac{\rho}{\epsilon_0}
+    % \end{gather*}
+    % である。第一式の$\grad$の中身を見れば、新たに$A^\mu = (\phi/c, A_x, A_y, A_z),\ A_\mu = (-\phi/c, A_x, A_y, A_z)$とすれば良いとわかる。$A^\mu, A_\mu$を四元ポテンシャルという。第一式は
+    % \[
+    %     \begin{aligned}
+    %         \square A^\mu - \partial^\mu\partial_\nu A^\nu &= -\mu_0j^\mu & (\mu = 1,2,3)
+    %     \end{aligned}
+    % \]
+    % となる。第二式は
+    % \begin{align*}
+    %     \(\Delta - \frac{1}{c^2}\pdv[2]{t}\)\phi + \pdv{t}\(\div A + \frac{1}{c^2}\pdv{\phi}{t}\) &= -\frac{\rho}{\epsilon_0}\\
+    %     \square \phi + \pdv{t}\partial_\nu A^\nu &= -\frac{\phi}{\epsilon_0}\\
+    %     \square A^0 - \partial^0\partial_\nu A^\nu &= -\mu_0j^0
+    % \end{align*}
+    % となる。二つの式をまとめると
+    %     \[\square A^\mu - \partial^\mu\partial_\nu A^\nu = -\mu_0j^\mu\]
+    % である。この式を
+    %     \[\partial_\nu(\partial^\mu A^\nu - \partial^\nu A^\mu) = \mu_0j^\mu\]
+    % と書いて、先ほどの電磁テンソルの式と比較すれば、$F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu + X^{\mu\nu}$だが、$X^{\mu\nu} = 0$となることが分かるので、
+    % \begin{align*}
+    %     F^{\mu\nu} &= \partial^\mu A^\nu - \partial^\nu A^\mu\\
+    %     F_{\mu\nu} &= \partial_\mu A_\nu - \partial_\nu A_\mu
+    % \end{align*}
+    % となる。$F_{\mu\nu}$は無条件にビアンキの恒等式を満たす。
+
+    電磁テンソル$F_{\mu\nu}$を電磁ポテンシャルで書き直す。
+    \begin{align*}
+        E &= -\grad\phi - \pdv{A}{t}\\
+        B &= \rot A
+    \end{align*}
+    なので
+    \begin{align*}
+        F_{i0} &= E_i / c = -\partial_i (\phi / c) - \partial_0 A_i\\
+        F_{jk} &= B_i = \partial_j A_k - \partial_k A_j
+    \end{align*}
+    だから、$A_\mu = (-\phi / c, A_x, A_y, A_z)$とすれば
+        \[F_{\mu\nu} = \partial_\mu A_\nu - \partial_\nu A_\mu\]
+    となる。先ほどの式に代入するとマクスウェル方程式は
+    \begin{align*}
+        \partial_\nu(\partial^\mu A^\nu - \partial^\nu A^\mu) = \mu_0 j^\mu\\
+        \partial^\mu(\partial_\nu A^\nu) - \square A^\mu = \mu_0 j^\mu
+    \end{align*}
+    となる。ビアンキの恒等式は自動的に成立している。
+
+    スカラー$\chi$に対し、$A_\mu \mapsto A_\mu + \partial_\mu \chi$がゲージ変換
+    \begin{align*}
+        \phi &\mapsto \phi - \pdv{\chi}{t}\\
+        A &\mapsto A + \div\chi
+    \end{align*}
+    となっていることが分かる。さらにローレンツ条件
+        \[\frac{1}{c^2}\pdv{\phi}{t} + \div A = 0\]
+    は
+        \[\partial_\mu A^\mu = 0\]
+    と書ける。つまりローレンツゲージにおけるマクスウェル方程式は
+    \begin{align*}
+        \square A^\mu = -\mu_0 j^\mu
+    \end{align*}
+
+\subsection{荷電粒子}
+    ローレンツ力は電磁気学の中でも力学と接点を持つ概念なので、運動方程式と同様修正する必要がある。
+        \[F = q(E + v \times B)\]
+    を展開すると、
+    \[
+        \begin{pmatrix}
+            F_x\\
+            F_y\\
+            F_z
+        \end{pmatrix}
+        = q
+        \begin{pmatrix}
+            -E_x/c & 0 & B_z & -B_y\\
+            -E_y/c & -B_z & 0 & B_x\\
+            -E_z/c & B_y & -B_x & 0
+        \end{pmatrix}
+        \begin{pmatrix}
+            -c\\
+            v_x\\
+            v_y\\
+            v_z
+        \end{pmatrix}
+    \]
+    となる。中央の行列は電磁テンソルと1,2,3行成分が一致している。これに0行目を追加する。さらに通常の力と速度の代わりに四元力と四元速度を用いると
+        \[f^\mu = q F^{\mu\nu} u_\nu\]
+    である。ローレンツ力の時間成分は電磁場が荷電粒子に対してなす仕事を表す。
+
+\subsection{質点のエネルギー・運動量}
+    多粒子系を考える。粒子$i$の質量を$m_i$、位置を$z_i^\mu$、粒子$j$が粒子$i$に及ぼす四元力$f_{ij}^\mu$とすると、運動方程式は
+        \[m_i\dv[2]{z_i^\mu}{\tau} = \sum_j f_{ij}^\mu\]
+    である。全ての粒子について足し合わせると
+        \[\sum_i m_i \dv[2]{z_i^\mu}{\tau} = \sum_{i, j} f_{ij}^\mu\]
+    となる。ここで密度分布と速度場、力場を
+    \begin{align*}
+        \rho(x) &= \sum_i m_i \delta(x - z_i)\\
+        u^\mu(x) &= \sum_i \dv{z_i^\mu}{\tau} \delta(x - z_i)\\
+        f^\mu(x) &= \sum_i f_i \delta(x - z_i)
+    \end{align*}
+    と置くと
+    \begin{align*}
+        \int \rho(x)\pdv{u^\mu}{\tau}(x) dV &= \int f^\mu(x) dV\\
+        \rho \pdv{u^\mu}{\tau} &= f^\mu\\
+        \rho \pdv{u^\mu}{x^\nu}u^\nu &= f^\mu
+    \end{align*}
+    である。つまり
+        \[\partial_\nu(\rho u^\mu u^\nu) = f^\mu + \rho u^\mu \partial_\nu u^\nu\]
+    となる。
+    \begin{align*}
+        T^{00} &= \gamma^2 mc^2\\
+        T^{0i} &= T^{i0} = \gamma^2 mcv^i = \gamma m p^i c\\
+        T^{ij} &= \gamma^2 m v^i v^j
+    \end{align*}
+    である。つまり時間-時間成分はエネルギー、時間-空間成分は運動量を表す。これを多粒子系に拡張する。粒子$i$の質量$m(i)$、位置$z(i)$として
+    \begin{align*}
+        T^{\mu\nu}(x) = \sum_i \int_{-\infty}^\infty m(i)\dv{z(i)^\mu}{\tau}\dv{z(i)^\nu}{\tau}\delta(x - z(i)) d\tau
+    \end{align*}
+    となる。これをエネルギー運動量テンソルと呼ぶ。
+    \begin{align*}
+        \partial_\mu T^{\mu\nu}
+            &= \partial_\mu \sum_i \int_{-\infty}^\infty m(i)\dv{z(i)^\mu}{\tau}\dv{z(i)^\nu}{\tau}\delta(x - z(i)) d\tau\\
+            &= \sum_i m(i) \int_{-\infty}^\infty \dv{z(i)^\mu}{\tau}\dv{z(i)^\nu}{\tau} \partial_\mu \delta(x - z(i)) d\tau\\
+            &= -\sum_i m(i) \int_{-\infty}^\infty \dv{\delta(x - z(i))}{\tau}\dv{z(i)^\nu}{\tau} d\tau\\
+            &= -\sum_i m(i) \int_{-\infty}^\infty \dv{\tau}\left(\delta(x - z(i))\dv{z(i)^\nu}{\tau}\right) - \delta(x - z(i))\dv[2]{z(i)^\nu}{\tau} d\tau\\
+            &= 0
+    \end{align*}
+    となる。
+
+\subsection{完全流体のエネルギー・運動量}
+
+\subsection{電磁場のエネルギー・運動量}
+    古典電磁気学におけるエネルギーと運動量の保存は
+    \begin{align*}
+        \pdv{t}\left(\sum_i \frac{1}{2}m_i v_i^2 + \int u dV\right) &= - \int \div S dV\\
+        \pdv{t}\left(\sum_i m_i v_i + \frac{1}{c^2}\int S dV\right) &= \int \div T dV
+    \end{align*}
+    と表される。ただし$u$は電磁場のエネルギー密度、$S$はポインティングベクトル、$T$はマクスウェルの応力テンソルである。
+    \begin{align*}
+        u &= \frac{E \cdot D + H \cdot B}{2}\\
+        S &= E \times H\\
+        T &= \epsilon_0 \begin{bmatrix}
+            E_x^2 - E^2/2 & E_xE_y & E_xE_z\\
+            E_yE_x & E_y^2 - E^2/2 & E_yE_z\\
+            E_zE_x & E_zE_y & E_z^2 - E^2/2
+        \end{bmatrix}
+        +
+        \frac{1}{\mu_0} \begin{bmatrix}
+            B_x^2 - B^2/2 & B_xB_y & B_xB_z\\
+            B_yB_x & B_y^2 - B^2/2 & B_yB_z\\
+            B_zB_x & B_zB_y & B_z^2 - B^2/2
+        \end{bmatrix}
+    \end{align*}
+    第一式は
+    \begin{align*}
+        \pdv{(ct)}\left(\sum_i \frac{1}{2}m_iv_i^2 + \int u dV\right) &= -\frac{1}{c} \int \div S dV\\
+        \pdv{(ct)}\left(T_m^{00} + u\right) &= - \frac{1}{c}\div S\\
+        \pdv{(ct)}\left(T_m^{00} + u\right) + \frac{1}{c}\left(\pdv{S_x}{x} + \pdv{S_y}{y} + \pdv{S_z}{z}\right) &= 0
+    \end{align*}
+    第二式は
+    \begin{align*}
+        \pdv{(ct)}\left(\sum_i m_i v_i c + \frac{1}{c}\int S dV\right) &= \int \div T dV\\
+        \pdv{(ct)}\left(T_m^{0i} + \frac{S_i}{c}\right) &= \div T_i\\
+        \pdv{(ct)}\left(T_m^{i0} + \frac{S_i}{c}\right) - \left(\pdv{T_{i1}}{x} + \pdv{T_{i2}}{y} + \pdv{T_{i3}}{z}\right) &= 0
+    \end{align*}
+    つまり
+    \begin{align*}
+        T_{em} = \begin{bmatrix}
+            u & S_x/c & S_y/c & S_z/c\\
+            S_x/c & -T_{11} & -T_{12} & -T_{13}\\
+            S_y/c & -T_{21} & -T_{22} & -T_{23}\\
+            S_z/c & -T_{31} & -T_{32} & -T_{33}
+        \end{bmatrix}
+    \end{align*}
+    とおくと
+        \[\partial_\nu(T_m^{\mu\nu} + T_{em}^{\mu\nu}) = 0\]
+    となる。$T_{em}^{\mu\nu}$は電磁場のエネルギー・運動量テンソルである。
+    \begin{align*}
+        u &= \frac{1}{\mu_0}\frac{(E/c)^2 + B^2}{2}\\
+        S/c &= \frac{1}{\mu_0 c}(E_yB_z - E_zB_y, E_zB_x - E_xB_z, E_xB_y - E_yB_x)\\
+        T &= \frac{1}{\mu_0 c^2} \begin{bmatrix}
+            E_x^2 - E^2/2 & E_xE_y & E_xE_z\\
+            E_yE_x & E_y^2 - E^2/2 & E_yE_z\\
+            E_zE_x & E_zE_y & E_z^2 - E^2/2
+        \end{bmatrix}
+        +
+        \frac{1}{\mu_0} \begin{bmatrix}
+            B_x^2 - B^2/2 & B_xB_y & B_xB_z\\
+            B_yB_x & B_y^2 - B^2/2 & B_yB_z\\
+            B_zB_x & B_zB_y & B_z^2 - B^2/2
+        \end{bmatrix}
+    \end{align*}
+    より${T_{em}}^{\mu\nu}$は
+        \[{T_{em}}^{\mu\nu} = \frac{1}{\mu_0}\left(-\eta_{\alpha\beta}F^{\mu\alpha}F^{\nu\beta} + \frac{1}{4}F^{\alpha\beta}F_{\alpha\beta}\eta^{\mu\nu}\right)\]
+    と書ける。
+
+\section{保存則}
+\subsection{電磁場のエネルギーと運動量}
+    荷電粒子の運動方程式は
+        \[m \dv[2]{z^\mu}{\tau} = q F^{\mu\nu} u_\nu\]
+    である。多粒子系では四元電流密度を用いて
+        \[\rho\pdv{u^\mu}{\tau} = F^{\mu\nu}j_\nu\]
+    となる。
+    \begin{align*}
+        \partial_\nu(\rho u^\mu u^\nu) = F^{\mu\lambda}j_\lambda + \rho u^\mu \partial_\nu u^\nu
+    \end{align*}
+    マクスウェル方程式$\partial_\nu F^{\mu\nu} = \mu_0 j^\mu$より
+    \begin{align*}
+        \partial_\nu(\rho u^\mu u^\nu)
+            &= F^{\mu\lambda}j_\lambda + \rho u^\mu \partial_\nu u^\nu\\
+            &= \frac{1}{\mu_0} \eta_{\lambda\sigma} F^{\mu\lambda}\partial_\nu F^{\sigma\nu} + \rho u^\mu \partial_\nu u^\nu\\
+    \end{align*}
+    
+    質点のエネルギー運動量テンソルは
+    \begin{align*}
+        \partial_\nu {T_m}^{\mu\nu}
+            &= \sum_i m(i) \int_{-\infty}^\infty \dv[2]{z(i)^\mu}{\tau}\delta(x - z(i)) d\tau\\
+            &= \sum_i \int_{-\infty}^\infty q(i) F^{\mu\nu} u(i)_\nu \delta(x - z(i)) d\tau\\
+            &= \int_{-\infty}^\infty F^{\mu\nu} \sum_i q(i)u(i)_\nu \delta(x - z(i)) d\tau\\
+            &= F^{\mu\nu}j_\nu
+    \end{align*}
+    四元電流密度はマクスウェル方程式より$j^\mu = \partial_\nu F^{\mu\nu} / \mu_0$なので
+    \begin{align*}
+        \partial_\nu {T_m}^{\mu\nu}
+            &= F^{\mu\nu} \left(\eta_{\nu\alpha} \frac{1}{\mu_0} \partial_\beta F^{\alpha\beta}\right)\\
+            &= \frac{1}{\mu_0} \eta_{\nu\alpha} F^{\mu\nu} \partial_\beta F^{\alpha\beta}\\
+            &= \frac{1}{\mu_0} \eta_{\nu\alpha} F^{\mu\nu} \delta_\beta^\mu \partial_\mu F^{\alpha\beta}\\
+            &= \frac{1}{\mu_0} \eta_{\sigma\alpha} F^{\mu\sigma} \delta_\beta^\nu \partial_\nu F^{\alpha\beta}\\
+            &= \frac{1}{\mu_0} \eta_{\sigma\alpha} F^{\mu\sigma} \partial_\nu F^{\alpha\nu}\\
+            &= \frac{1}{\mu_0}(\partial_\nu(\eta_{\sigma\alpha} F^{\mu\sigma} F^{\alpha\nu}) - \eta_{\sigma\alpha}\partial_\nu F^{\mu\sigma} F^{\alpha\nu})\\
+            &= \frac{1}{\mu_0}(\partial_\nu(\eta_{\sigma\alpha} F^{\mu\sigma} F^{\alpha\nu}) - \eta^{\mu\beta}\partial_\nu F_{\alpha\beta} F^{\alpha\nu})
+    \end{align*}
+    またマクスウェル方程式より$-\partial_\nu F_{\alpha\beta} = \partial_\alpha F_{\beta\nu} + \partial_\beta F_{\nu\alpha}$なので
+    \begin{align*}
+        \partial_\nu {T_m}^{\mu\nu}
+            &= \frac{1}{\mu_0}(\partial_\nu(\eta_{\sigma\alpha} F^{\mu\sigma} F^{\alpha\nu}) + \eta^{\mu\beta}(\partial_\alpha F_{\beta\nu} + \partial_\beta F_{\nu\alpha})F^{\alpha\nu})\\
+            &= \frac{1}{\mu_0}(\partial_\nu(\eta_{\sigma\alpha} F^{\mu\sigma} F^{\alpha\nu}) + \eta^{\mu\beta}\delta_\alpha^\nu \partial_\nu F_{\beta\lambda}F^{\alpha\lambda} + \frac{1}{2}\eta^{\mu\beta} \partial_\beta(F_{\lambda\alpha}F^{\alpha\lambda}))\\
+    \end{align*}
+
+\subsection{変分原理}
+    変分原理によれば、物体はラグランジアンを位置、速度、時間の関数$L(x^i, v^i, t)$として、作用
+        \[S[x(t)] = \int_{t_1}^{t_2} L(x^i, \dot{x}^i, t) dt\]
+    を極小にするような軌道を取る。そのような物体の軌道はオイラー=ラグランジュ方程式
+        \[\dv{t}\pdv{L}{\dot{x}^i} - \pdv{L}{x^i} = 0\]
+    に従う。相対論では、ラグランジアンを四次元座標$x^i$、四元速度、固有時の関数$L(x^i, u^i, \tau)$として、作用
+        \[S[x(\tau)] = \int_{\tau_1}^{\tau_2} L(x^i, \dot{x}^i, \tau) d\tau\]
+    を極小にするよう世界線を考える。そしてそのような軌道は
+        \[\dv{\tau}\pdv{L}{\dot{x}^i} - \pdv{L}{x^i} = 0\]
+    に従う。
+
+    また場の変分原理は、作用を
+        \[S[A(ct, x, y, z)] = \int \mathcal{L}(ct, x, y, z) d(ct)dxdydz\]
+    
+    古典力学では自由質点、荷電粒子、電磁場の作用は
+    \begin{align*}
+        S &= S_m + S_{qm} + S_{em}\\
+        S_m    &= \int \frac{1}{2}mv^2 dt\\
+        S_{qm} &= \int -q(\phi - v \cdot A) dt\\
+        S_{em} &= 
+    \end{align*}
+    であった。特殊相対論における作用は
+    \begin{align*}
+        S &= S_m + S_{qm} + S_{em}\\
+        S_m    &= \int -mc\sqrt{-\eta_{\mu\nu} u^\mu u^\nu} d\tau\\
+        S_{qm} &= \int q u^\mu A_\mu d\tau\\
+        S_{em} &= \int -\frac{1}{4\mu_0}F^{\mu\nu}F_{\mu\nu} + A^\mu j_\mu d(ct)dxdydz
+    \end{align*}
+    となる。
+
+    上述の方程式が導出されることを確認する。まず荷電粒子の運動は、
+    \begin{align*}
+        \dv{\tau}\pdv{L_m}{u^\mu} - \pdv{L_m}{x^\mu}
+            &= \dv{\tau}\left(-mc \cdot \frac{1}{2}(-\eta_{\mu\nu} u^\mu u^\nu)^{-1/2} \cdot -2\eta_{\mu\nu}u^\nu\right) - 0\\
+            &= \dv{\tau}mu_\mu\\
+        \dv{\tau}\pdv{L_{qm}}{u^\mu} - \pdv{L_{qm}}{x^\mu}
+            &= \dv{\tau} qA_\mu - \partial_\mu(q u^\nu A_\nu)\\
+            &= q u^\nu \partial_\nu A_\mu - q u^\nu \partial_\mu A_\nu\\
+            &= -q u^\nu F_{\mu\nu}
+    \end{align*}
+    よって
+        \[m \dv[2]{x^\mu}{\tau} = qF^{\mu\nu}u_\nu\]
+    となる。
+
+    次に電磁場を考える。ラグランジアン密度を
+    \begin{align*}
+        \mathcal{L}_\text{em} &= -\frac{1}{4\mu_0}F^{\mu\nu}F_{\mu\nu}\\
+        \mathcal{L}_\text{int} &= A^{\mu}j_{\mu}
+    \end{align*}
+    とする。$F^{\mu\nu}$は反対称テンソルであることに注意すると、
+    \begin{align*}
+        \pdv{x^\mu}\pdv{\mathcal{L}_\text{em}}{(\partial_\mu A^\nu)} - \pdv{\mathcal{L}_\text{em}}{A^\nu}
+            &= -\frac{1}{4\mu_0} \partial^\mu \pdv{\eta_{ik}\eta_{jl}F^{ij}F^{kl}}{(\partial^\mu A^\nu)}\\
+            &= -\frac{1}{2\mu_0} \partial^\mu\left(\eta_{ik}\eta_{jl}F^{ij} \pdv{(\partial^k A^l - \partial^l A^k)}{(\partial^\mu A^\nu)}\right)\\
+            &= -\frac{1}{2\mu_0}\partial^\mu(\eta_{i\mu}\eta_{j\nu}F^{ij} - \eta_{i\nu}\eta_{j\mu}F^{ij})\\
+            &= -\frac{1}{2\mu_0}\partial^\mu(F_{\mu\nu} - F_{\nu\mu})\\
+            &= -\frac{1}{\mu_0} \partial^\mu F_{\mu\nu}\\
+        \pdv{x^\mu}\pdv{\mathcal{L}_\text{int}}{(\partial_\mu A^\nu)} - \pdv{\mathcal{L}_{int}}{A^\nu}
+            &= -\pdv{(A^\mu j_\mu)}{A^\nu}\\
+            &= -j_\nu
+    \end{align*}
+    よって
+    \begin{align*}
+        \partial_\mu F^{\mu\nu} &= -\mu_0 j^\nu\\
+        \partial_\nu F^{\mu\nu} &= \mu_0 j^\mu
+    \end{align*}
+    となる。
+
+    $L_m$は複雑に見えるが、$(cd\tau)^2 = -\eta_{ij}x^ix^j$なので、
+        \[\delta S = -mc^2 \int d\tau = 0\]
+    である\footnote{つまり$L_m(x, u, \tau) = -mc^2$としても良いが、この場合ラグランジュ方程式は$x^i, u^i$の条件を導出しない。}。つまり物体は固有時が極大となるような軌道をとる。時間$t$をパラメータとして、ハミルトニアンを求めると、
+    \begin{align*}
+        H_m &= \gamma mv \cdot v - L_m\\
+            &= \gamma mv^2 + mc^2\frac{1}{\gamma}\\
+            &= \gamma mc^2\left\{\frac{v^2}{c^2} + \(1 - \frac{v^2}{c^2}\)\right\}\\
+            &= \gamma mc^2
+    \end{align*}
+    となり粒子の全エネルギーになる。
+
+\subsection{ネーターの定理}
+    \begin{align*}
+        \delta x^\mu &= X^\mu_\nu(x)\epsilon^\nu\\
+        \delta \phi_\alpha &= M_{\nu\alpha}^\beta \phi_\beta \epsilon^\nu
+    \end{align*}
+    \begin{align*}
+        \partial_\nu\left(\pdv{L}{\phi_{\alpha\nu}}M_{r\alpha}^\beta \phi_\beta - T^\mu_\lambda X^\lambda_r\right) = 0
+    \end{align*}

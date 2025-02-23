@@ -1,0 +1,241 @@
+\section{天体}
+
+\subsection{シュバルツシルト解}
+    定常で球対称な天体を考える。外部に物質は存在せず、時空は無限遠で平坦に近づくとする。計量も球対称なので、時間方向の変位$dw^2$、動径方向の変位$dr^2$、球面上の距離$r^2d\theta^2 + r^2\sin^2\theta d\phi^2$だけに依存し、係数は半径のみに依存する。三次元極座標$(x^0, x^1, x^2, x^3) = (w, r, \theta, \phi)$を用いると
+        \[ds^2 = -A(r)dw^2 + B(r)dr^2 + C(r)r^2(d\theta^2 + \sin^2\theta d\phi^2)\]
+    となる。更に動径方向のスケールを$r \to r / \sqrt{C(r)}$と変更することで$C(r)$は1にできる。ミンコフスキー計量は、$-dw^2 + dx^2 + dy^2 + dz^2 = -dw^2 + dr^2 + r^2(d\theta^2 + \sin^2\theta d\phi^2)$なので、$r \to \infty$で$A(r), B(r) \to 1$となる。つまり
+    \begin{align*}
+        g_{00} = -A(r), g_{11} = B(r), g_{22} = r^2, g_{33} = r^2\sin^2\theta
+    \end{align*}
+    である。また
+    \begin{align*}
+        A(r) &= e^{\nu(r)}\\
+        B(r) &= e^{\lambda(r)}
+    \end{align*}
+    と置く。まずクリストッフェル記号は
+        \[\chr{i}{jk} = \frac{1}{2}g^{il}\(\pdv{g_{kl}}{x^j} + \pdv{g_{jl}}{x^k} - \pdv{g_{jk}}{x^l}\)\]
+    であった。$l = i$のときだけを考えれば良いので、
+    \begin{align*}
+        \chr{0}{01} &= \chr{0}{10} = \frac{1}{2}e^{-\nu(r)}\(\pdv{g_{10}}{x^0} + \pdv{g_{00}}{x^1}\) = \frac{1}{2}\nu'\\
+        \chr{1}{00} &= \frac{1}{2}e^{\nu - \lambda}\nu'\\
+        \chr{1}{11} &= \frac{1}{2}\lambda'\\
+        \chr{1}{22} &= -re^{-\lambda}\\
+        \chr{1}{33} &= -re^{-\lambda}\sin^2\theta\\
+        \chr{2}{12} &= \chr{2}{21} = \frac{1}{r}\\
+        \chr{2}{33} &= -\sin\theta\cos\theta\\
+        \chr{3}{13} &= \chr{3}{31} = \frac{1}{r}\\
+        \chr{3}{23} &= \chr{3}{32} = \frac{1}{\tan\theta}
+    \end{align*}
+    その他は全て0である。
+
+    まず天体外部の時空の計量について考える。これをシュバルツシルトの外部解という。天体の外部ではエネルギー運動量テンソルは0なのでリッチテンソルも0である。リーマン曲率テンソルは
+        \[\ricci{i}{jkl} = \partial_k\Gamma^i_{jl} - \partial_l\Gamma^i_{jk} + \Gamma^m_{jl}\Gamma^i_{km} - \Gamma^m_{jk}\Gamma^i_{lm}\]
+    結果だけを示すとリッチテンソルは、
+    \begin{align*}
+        e^{\lambda - \nu}R_{00} &= \frac{1}{2}\nu'' - \frac{1}{4}\nu'\lambda' + \frac{1}{4}\nu'^2 + \frac{\nu'}{r} = 0\\
+        R_{11} &= - \frac{1}{2}\nu'' + \frac{1}{4}\nu'\lambda' - \frac{1}{4}\nu'^2 + \frac{\lambda'}{r} = 0\\
+        R_{22} &= 1 - \frac{1}{2}e^{-\lambda}(r\nu' - r\lambda' + 2) = 0\\
+        R_{33} &= R_{22}\sin^2\theta = 0
+    \end{align*}
+    その他は全て0である。あとはこの微分方程式を解けば良い。第一式と第二式を足すと
+        \[\frac{\nu' + \lambda'}{r} = 0\]
+    より$\nu + \lambda$は定数である。$r \to \infty$で$A(r), B(r) \to 1$なので結局$\nu + \lambda = 0$となる。第三式を書き直すと
+        \[\left[1 - \frac{1}{2}r(\lambda' - \nu')\right]e^{-\lambda} = 1\]
+    $\lambda' - \nu' = 2\lambda'$より
+    \begin{align*}
+        (1 - r\lambda')e^{-\lambda} &= 1\\
+        (re^{-\lambda})' &= 1
+    \end{align*}
+    $a$を定数として
+        \[re^{-\lambda} = r - a\]
+    したがって
+    \begin{align*}
+        A(r) &= e^{\nu(r)} = 1 - \frac{a}{r}\\
+        B(r) &= e^{\lambda(r)} = \(1 - \frac{a}{r}\)^{-1}
+    \end{align*}
+    である。つまり
+        \[g_{00} = -A(r) = -1 + \frac{a}{r}\]
+    ニュートン重力では
+        \[g_{00} \simeq -1 - \frac{2\phi}{c^2} = -1 + \frac{2GM}{rc^2}\]
+    なので
+        \[a = \frac{2GM}{c^2}\]
+    この$a$をシュバルツシルト半径と呼ぶ。したがってシュバルツシルト計量は、
+        \[ds^2 = -\(1 - \frac{a}{r}\)dw^2 + \(1 - \frac{a}{r}\)^{-1}dr^2 + r^2d\theta^2 + r^2\sin^2\theta d\phi^2\]
+    となる。
+    
+    バーコフの定理とは、真空場において球対称解は静的で漸近的平坦であるという定理である。つまり球対称な物質分布が時間変化しても計量は変化せず、重力波を放出しない。つまり外部解はシュバルツシルト解である。球対称に拍動する星は重力波を放出しない。また球殻の内部はミンコフスキー計量によって与えられる。これは球対称に分布する星の内部では重力は厳密に相殺するということであり、ニュートンの球殻定理(Newton's shell theorem)に対応するものである。
+
+\subsection{物体の軌道}
+    シュバルツシルト計量から物体の運動を導出するには、シュバルツシルト解の導出の際に求めたおいた接続係数から測地線の方程式を解けば良い。しかし測地線の方程式は変数が混在しているので解くのが煩雑になる。そこで、質量を持つ物体については固有時をパラメータとして使えるので、オイラー=ラグランジュ方程式を解く。
+
+    ラグランジアン
+    \begin{align*}
+        L   &= -mc \dv{\tau} \sqrt{\(1 - \frac{a}{r}\)dw^2 - \(1 - \frac{a}{r}\)^{-1}dr^2 - r^2(d\theta^2 + \sin^2\theta d\phi^2)}\\
+            &= -mc \sqrt{\(1 - \frac{a}{r}\)c^2\dot{t}^2 - \(1 - \frac{a}{r}\)^{-1}\dot{r}^2 - r^2(\dot{\theta}^2 + \sin^2\theta\dot{\phi}^2)}\\
+            &= -m \left\{\(1 - \frac{a}{r}\)c^2\dot{t}^2 - \(1 - \frac{a}{r}\)^{-1}\dot{r}^2 - r^2(\dot{\theta}^2 + \sin^2\theta\dot{\phi}^2)\right\}
+    \end{align*}
+    からオイラー=ラグランジュ方程式を導く。$t, \theta, \phi$については
+    \begin{align*}
+        \pdv{L}{\dot{t}} &= -2mc^2\(1 - \frac{a}{r}\)\dot{t}\\
+        \pdv{L}{\dot{\theta}} &= 2mr^2\dot{\theta}\\
+        \pdv{L}{\dot{\phi}} &= 2mr^2\sin^2\theta\dot{\phi}
+    \end{align*}
+    物体は原点を中心とする平面上を運動するので、$\theta = \pi / 2$として良い。右辺は定数となるので
+    \begin{align*}
+        \(1 - \frac{a}{r}\)\dot{t} &= \epsilon\\
+        r^2\dot{\phi} &= h
+    \end{align*}
+    とおく。第二式は角運動量の保存を表す。$r$については計量の式から
+    \begin{gather*}
+        \begin{aligned}
+            \(1 - \frac{a}{r}\)c^2\dot{t}^2 - \(1 - \frac{a}{r}\)^{-1}\dot{r}^2 - r^2\dot{\phi}^2 &= c^2\\
+            \(1 - \frac{a}{r}\)^2c^2\dot{t}^2 - \(\dv{r}{\tau}\)^2 - \(1 - \frac{a}{r}\)r^2\(\dv{\phi}{\tau}\)^2 &= \(1 - \frac{a}{r}\)c^2
+        \end{aligned}\\
+        \begin{aligned}
+            \(\dv{r}{\tau}\)^2 + r^2\(\dv{\phi}{\tau}\)^2
+                &= c^2\epsilon^2 - \(1 - \frac{a}{r}\)c^2 + ar\dot{\phi}^2\\
+                &= c^2(\epsilon^2 - 1) + \frac{2GM}{r} + \frac{2GM}{c^2}\frac{h^2}{r^3}
+        \end{aligned}
+    \end{gather*}
+    ここで
+    \begin{align*}
+        E &= \frac{mc^2(\epsilon^2 - 1)}{2}\\
+        U &= -\frac{GMm}{r}\(1 + \frac{h^2}{r^2c^2}\)
+    \end{align*}
+    とおけば
+        \[\frac{1}{2}m \left\{\(\dv{r}{\tau}\)^2 + r^2\(\dv{\phi}{\tau}\)^2\right\} + U(r) = E\]
+    第一項は運動エネルギーの極座標表示なので、エネルギー保存則を表す。ポテンシャルエネルギーの第二項が一般相対論的な効果によるもので、ニュートン重力に加えて距離の4乗に反比例する引力が働くことになる。改めて軌道の方程式を書くと
+    \begin{gather*}
+        \(\dv{r}{\tau}\)^2 + r^2\(\dv{\phi}{\tau}\)^2 = c^2(\epsilon^2 - 1) + \frac{2GM}{r} + \frac{2GMh^2}{r^3c^2}\\
+        r^2\dv{\phi}{\tau} = h
+    \end{gather*}
+    第一式を第二式の二乗で割れば
+        \[\frac{1}{r^4}\(\dv{r}{\phi}\)^2 + \frac{1}{r^2} = \frac{c^2(\epsilon^2 - 1)}{h^2} + \frac{2GM}{h^2r} + \frac{2GM}{r^3c^2}\]
+    $u = 1 / r$とおけば
+        \[\dv{r}{\phi} = -\frac{1}{u^2}\dv{u}{\phi}\]
+    なので
+        \[\(\dv{u}{\phi}\)^2 + u^2 = \frac{c^2(\epsilon^2 - 1)}{h^2} + \frac{2GM}{h^2}u + \frac{2GM}{c^2}u^3\]
+    両辺を$\phi$で微分して
+        \[2\dv{u}{\phi}\dv[2]{u}{\phi} + 2u\dv{u}{\phi} = \frac{2GM}{h^2}\dv{u}{\phi} + \frac{6GM}{c^2}u^2\dv{u}{\phi}\]
+    両辺を$2\dv*{u}{\theta}$で割ると
+    \begin{align*}
+        \dv[2]{u}{\phi} &+ u = \frac{GM}{h^2} + \frac{3GM}{c^2}u^2\\
+        \dv[2]{u}{\phi} &= \frac{GM}{h^2} - u + \frac{3GM}{c^2}u^2
+    \end{align*}
+    となる。ニュートン力学におけるケプラー運動の方程式は
+        \[\dv[2]{u}{\phi} = \frac{GM}{h^2} - u\]
+    であり、原点との距離が近付くほど一般相対論的効果が大きくなる。太陽系の場合、太陽に最も近い惑星である水星の近日点移動に関して、ニュートン力学から計算される数値との間に無視できない誤差が生まれる。この方程式の解は半直弦$l = h^2/GM$、離心率$e$と近点$\alpha$\footnote{$e, \alpha$が積分定数となる。}を用いて
+        \[u = \frac{1 + e\cos(\phi - \alpha)}{l}\]
+    である。一般相対論的摂動により近点が一周期当たり$\Delta$($\ll 1$)進むとすると、解は
+        \[u = \frac{1 + e\cos(1 - \Delta / 2\pi)\phi}{l}\]
+    と書ける。相対論的な軌道方程式に代入すると
+    \begin{align*}
+        \dv[2]{u}{\phi}
+            &= -\frac{e}{l}\(1 - \frac{\Delta}{2\pi}\)^2\cos\(1 - \frac{\Delta}{2\pi}\)\phi\\
+        \frac{1}{l} - u + \frac{3h^2}{lc^2}u^2
+            &= \frac{1}{l} - \frac{1 + e\cos(1 - \Delta / 2\pi)\phi}{l} + \frac{3h^2}{lc^2}\frac{1 + 2e \cos(1 - \Delta / 2\pi)\phi + e^2\cos^2(1 - \Delta / 2\pi)\phi}{l^2}\\
+            &= \frac{3h^2}{l^3c^2} - \frac{e}{l}\(1 - \frac{6h^2}{l^2c^2}\)\cos\(1 - \frac{\Delta}{2\pi}\)\phi + \frac{3h^2}{l^3c^2}e^2\cos^2\(1 - \frac{\Delta}{2\pi}\)\phi
+    \end{align*}
+    $\cos(1 - \Delta / 2\pi)\phi$の係数を比較すると
+        \[\(1 - \frac{\Delta}{2\pi}\)^2 = 1 - \frac{6h^2}{l^2c^2}\]
+    $\Delta^2$の項を無視すると
+    \begin{align*}
+        -\frac{\Delta}{\pi} &= -\frac{6h^2}{l^2c^2}\\
+        \Delta &= \frac{6\pi h^2}{l^2c^2} = \frac{6\pi GM}{lc^2}
+    \end{align*}
+    水星の場合、$l = 5.5 \times 10^{10} \mathrm{m}$で公転周期は0.2409年なので、100年当たりの近日点移動は
+        \[\Delta \times \frac{360}{2\pi} \times 3600 \times \frac{100}{0.2409} \simeq 43\]
+    で約43秒角となる。この値はニュートン力学から計算される近日点移動と実際の観測の差に一致した。
+
+\subsection{物体の落下}
+    上で導出した式
+        \[\(\dv{r}{\tau}\)^2 + r^2\(\dv{\phi}{\tau}\)^2 = c^2(\epsilon^2 - 1) + \frac{2GM}{r} + \frac{2GMh^2}{r^3c^2}\]
+    で角運動量を0とすると
+        \[\(\dv{r}{\tau}\)^2 = c^2(\epsilon^2 - 1) + c^2\frac{a}{r}\]
+    である。質量を持つ物体は静止した状態を考えることができる。$r_1 < r_2$について$r = r_2$で静止している状態から$r = r_1$に落下するまでの固有時間を求める。
+        \[(\epsilon^2 - 1) + \frac{a}{r_2} = 0\]
+    だから落下時間は
+    \begin{align*}
+        \Delta\tau &= \frac{1}{c} \int_{r_1}^{r_2} \left\{\frac{a}{r} - \frac{a}{r_2}\right\}^{-1/2} dr\\
+    \end{align*}
+    $r = r_2\cos^2\theta$ ($0 \leq \theta \leq \pi/2$)と置換すると
+        \[\dv{r}{\theta} = -r_2\sin 2\theta\]
+    なので、$\theta \colon \theta_1 \to \theta_2 = 0$で$r \colon r_1 \to r_2$とすれば
+    \begin{align*}
+        \Delta\tau(r_1, r_2)
+            &= \frac{1}{c} \int_{\theta_1}^{\theta_2} \left\{\frac{a}{r_2}\(\frac{1}{\cos^2\theta} - 1\)\right\}^{-1/2} \cdot -2r_2\sin\theta\cos\theta d\theta\\
+            &= -\frac{2}{c}\sqrt{\frac{r_2^3}{a}} \int_{\theta_1}^{\theta_2} \cos^2\theta d\theta\\
+            &= -\frac{2}{c}\sqrt{\frac{r_2^3}{a}} \left[\frac{\theta}{2} + \frac{\sin 2\theta}{4}\right]_{\theta_1}^{\theta_2}\\
+            &= \frac{1}{c}\sqrt{\frac{r_2^3}{a}} \left[\theta_1 + \sin\theta_1\cos\theta_1\right]\\
+            &= \frac{1}{c}\sqrt{\frac{r_2^3}{a}} \left[\arccos\sqrt{\frac{r_1}{r_2}} + \sqrt{\frac{r_1}{r_2}\(1 - \frac{r_1}{r_2}\)}\right]
+    \end{align*}
+    となる。
+        \[\Delta\tau(0, r_2) = \frac{\pi}{2c}\sqrt{\frac{r_2^3}{a}}\]
+    なので原点まで有限の時間で到達する。
+
+    次に座標時間を求める。
+    \begin{align*}
+        \dv{t}{\tau} = \frac{\epsilon}{1 - \frac{a}{r}} = \frac{\sqrt{1 - \frac{a}{r_2}}}{1 - \frac{a}{r}}
+    \end{align*}
+    より
+        \[\Delta t = \frac{1}{c} \sqrt{1 - \frac{a}{r_2}} \int_{r_1}^{r_2} \frac{1}{\(1 - \frac{a}{r}\) \sqrt{\frac{a}{r} - \frac{a}{r_2}}} dr\]
+    同様に$r = r_2\cos^2\theta$ ($0 \leq \theta \leq \pi/2$)と置換すると
+    \begin{align*}
+        \Delta t(r_1, r_2)
+            &= \frac{1}{c} \sqrt{1 - \frac{a}{r_2}} \int_{\theta_1}^{\theta_2} \frac{1}{\(1 - \frac{a}{r_2\cos^2\theta}\) \sqrt{\frac{a}{r_2\cos^2\theta} - \frac{a}{r_2}}} \cdot -2r_2\sin\theta\cos\theta d\theta\\
+            &= \frac{2r_2}{c} \sqrt{\frac{r_2}{a}}\sqrt{1 - \frac{a}{r_2}} \int_{\theta_1}^{\theta_2} \frac{1}{1 - \frac{a}{r_2\cos^2\theta}} \cdot -\cos^2\theta d\theta\\
+            &= -\frac{2r_2}{c} \sqrt{\frac{r_2}{a}}\sqrt{1 - \frac{a}{r_2}} \int_{\theta_1}^{\theta_2} \frac{\cos^4\theta}{\cos^2\theta - a / r_2} d\theta
+    \end{align*}
+    積分の部分だけ取り出すと
+    \begin{align*}
+        &\int_{\theta_1}^{\theta_2} \frac{\cos^4\theta}{\cos^2\theta - a / r_2} d\theta\\
+            &= \int_{\theta_1}^{\theta_2} \cos^2\theta + \frac{a}{r_2} + \(\frac{a}{r_2}\)^2 \frac{1}{\cos^2\theta - a / r_2} d\theta\\
+            &= \left[\(\frac{\theta}{2} + \frac{\sin 2\theta}{4}\) + \frac{a}{r_2}\theta + \(\frac{a}{r_2}\)^2 \cdot \frac{1}{2\sqrt{k(1 - k)}} \log \left\|\frac{\sqrt{k}\tan\theta_1 + \sqrt{1 - k}}{\sqrt{k}\tan\theta_1 - \sqrt{1 - k}}\right\|\right]_{\theta_1}^{\theta_2} \quad (k = a / r_2)\\
+            &= -\frac{\theta_1}{2} - \frac{\sin\theta_1\cos\theta_1}{2} - \frac{a}{r_2}\theta_1 - \frac{\sqrt{k}^3}{2\sqrt{1 - k}} \log \left\|\frac{\sqrt{k}\sin\theta_1 + \sqrt{1 - k}\cos\theta_1}{\sqrt{k}\sin\theta_1 - \sqrt{1 - k}\cos\theta_1}\right\|\\
+            &= -\(1 + \frac{2a}{r_2}\)\frac{\arccos \sqrt{\frac{r_1}{r_2}}}{2} - \frac{1}{2}\sqrt{\frac{r_1}{r_2}\(1 - \frac{r_1}{r_2}\)} - \frac{\sqrt{k}^3}{2\sqrt{1 - k}} \log \left\|\frac{\sqrt{\frac{a}{r_2}\(1 - \frac{r_1}{r_2}\)} + \sqrt{\(1 - \frac{a}{r_2}\)\frac{r_1}{r_2}}}{\sqrt{\frac{a}{r_2}\(1 - \frac{r_1}{r_2}\)} - \sqrt{\(1 - \frac{a}{r_2}\)\frac{r_1}{r_2}}}\right\|
+    \end{align*}
+    よって
+    \begin{align*}
+        \Delta t(r_1, r_2)
+            &= \frac{r_2 + 2a}{c}\sqrt{\frac{r_2}{a} - 1}\arccos\sqrt{\frac{r_1}{r_2}} + \frac{r_2}{c}\sqrt{\frac{r_2}{a} - 1}\sqrt{\frac{r_1}{r_2}\(1 - \frac{r_1}{r_2}\)}\\
+            & \quad + \frac{a}{c} \log \left\|\frac{\sqrt{a(r_2 - r_1)} + \sqrt{(r_2 - a)r_1}}{\sqrt{a(r_2 - r_1)} - \sqrt{(r_2 - a)r_1}}\right\|
+    \end{align*}
+    第三項は$r_1 \to a$で発散する。つまり外部の観測者から見ると物体は事象の地平面まで到達できない。
+
+\subsection{軌道の安定性}
+
+\subsection{光の軌道}
+    光の場合、固有時をパラメータとして用いることはできないので適当なパラメータ$\lambda$を用いてオイラー=ラグランジュ方程式を導く。$t, \theta, \phi$については質量を持つ物体と同様に
+    \begin{align*}
+        \(1 - \frac{a}{r}\)\dot{t} &= \epsilon\\
+        \theta &= \frac{\pi}{2}\\
+        r^2\dot{\phi} &= h
+    \end{align*}
+    となる。$r$については$ds = 0$という条件から
+    \begin{align*}
+        -\(1 - \frac{a}{r}\)c^2\dot{t}^2 + \(1 - \frac{a}{r}\)^{-1}\dot{r}^2 + r^2\dot{\phi}^2 &= 0\\
+        \dot{r}^2 + \(1 - \frac{a}{r}\)r^2\dot{\phi}^2 &= \(1 - \frac{a}{r}\)^2c^2\dot{t}^2\\
+        \dot{r}^2 + r^2\dot{\phi}^2 &= c^2\epsilon^2 + \frac{2GM}{r^3c^2}h^2\\
+        \frac{1}{r^4}\(\dv{r}{\phi}\)^2 + \frac{1}{r^2} &= \frac{c^2\epsilon^2}{h^2} + \frac{2GM}{r^3c^2}
+    \end{align*}
+    同様に$u = 1 / r$とおくと
+        \[\(\dv{u}{\phi}\)^2 = \frac{c^2\epsilon^2}{h^2} - u^2 + \frac{2GM}{c^2}u^3\]
+    両辺を$\phi$で微分して$\dv*{u}{\phi}$で割る。
+    \begin{align*}
+        2\dv{u}{\phi}\dv[2]{u}{\phi} &= -2u\dv{u}{\phi} + \frac{2GM}{c^2} \cdot 3u^2\dv{u}{\phi}\\
+        \dv[2]{u}{\phi} &= -u + \frac{3GM}{c^2}u^2
+    \end{align*}
+
+    光が落下する時間を求める。$ds = 0$より、$d\phi = 0$として
+        \[\dv{r}{t} = \pm c\(1 - \frac{a}{r}\)\]
+    である。$r_1 < r_2$として、$r = r_2$から$r = r_1$に到達するまでの座標時間は
+    \begin{align*}
+        \Delta t(r_1, r_2)
+            &= \frac{1}{c} \int_{r_1}^{r_2} \(1 - \frac{a}{r}\)^{-1} dr\\
+            &= \frac{1}{c} \int_{r_1}^{r_2} 1 + \frac{a}{r - a} dr\\
+            &= \frac{1}{c} \left[r + a\log(r - a)\right]_{r_1}^{r_2}\\
+            &= \frac{r_2 - r_1}{c} + \frac{a}{c}\log\frac{r_2 - a}{r_1 - a}
+    \end{align*}
+    となる。つまり物体の落下時間と同様$r_1 \to a$で発散する。ただし逆数の対数発散なので、事象の地平面付近までには速やかに到達する。
+
+\subsection{重力赤方偏移}

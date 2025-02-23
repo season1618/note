@@ -1,0 +1,48 @@
+\section{変分原理}
+\subsection{変分原理}
+    同じことを変分原理からも導出する。特殊相対論における作用は
+    \begin{align*}
+        S &= S_m + S_{qm} + S_{em}\\
+        S_m    &= \int -mc\sqrt{-\eta_{\mu\nu} u^\mu u^\nu} d\tau\\
+        S_{qm} &= \int q u^\mu A_\mu d\tau\\
+        S_{em} &= \int -\frac{1}{4\mu_0}F^{\mu\nu}F_{\mu\nu} + A^\mu j_\mu d(ct)dxdydz
+    \end{align*}
+    であった。これらを一般座標系に変換すると
+    \begin{align*}
+        S &= S_m + S_{qm} + S_{em}\\
+        S_m    &= \int -mc\sqrt{-g_{\mu\nu} u^\mu u^\nu} d\tau\\
+        S_{qm} &= \int q u^\mu A_\mu d\tau\\
+        S_{em} &= \int \left[-\frac{1}{4\mu_0}F^{\mu\nu}F_{\mu\nu} + A^\mu j_\mu\right] \sqrt{-g}dx^4
+    \end{align*}
+    となる。
+
+    自由粒子の軌道は計量$-g_{\mu\nu}$の導入された四次元擬リーマン多様体上の測地線である。つまり物体の運動方程式はこの擬リーマン多様体における測地線の方程式となる。$-g_{\mu\nu}$のクリストッフェル記号が$g_{\mu\nu}$と同じなので、
+        \[\dv[2]{x^\lambda}{\tau} + \Gamma^\lambda_{\mu\nu}\dv{x^\mu}{\tau}\dv{x^\nu}{\tau} = 0\]
+    となる。
+
+\subsection{エネルギーと運動量}
+
+\subsection{重力場のゲージ変換}
+    無限小の座標変換
+        \[x^\mu \mapsto x'^\mu = x^\mu + \xi(x)\]
+    を考える。リーマン計量は
+    \begin{align*}
+        g'_{\mu\nu}(x') &= \pdv{x^\alpha}{x'^\mu}\pdv{x^\beta}{x'^\nu}g_{\alpha\beta}(x)\\
+        g'_{\mu\nu}(x + \xi) &= (\delta_\mu^\alpha - \partial_\mu \xi^\alpha)(\delta_\nu^\beta - \partial_\nu \xi^\beta)g_{\alpha\beta}(x)\\
+        g'_{\mu\nu}(x) + \partial_\lambda g'_{\mu\nu}\xi^\lambda &= g_{\mu\nu}(x) - \partial_\mu \xi^\alpha g_{\alpha\nu} - \partial_\nu \xi^\beta g_{\mu\beta}\\
+        g'_{\mu\nu}(x) + \partial_\lambda g'_{\mu\nu}\xi^\lambda &= g_{\mu\nu}(x) - (\partial_\mu(g_{\alpha\nu}\xi^\alpha) - \xi^\alpha \partial_\nu g_{\alpha\nu}) - (\partial_\nu(g_{\mu\beta}\xi^\beta) - \xi^\beta \partial_\mu g_{\mu\beta})\\
+        g'_{\mu\nu}(x) &= g_{\mu\nu}(x) - \partial_\mu \xi_\nu - \partial_\nu \xi_\mu\\
+            &\quad + (\partial_\mu g_{\mu\sigma} + \partial_\nu g_{\nu\sigma} - \partial_\sigma g_{\mu\nu})g^{\lambda\sigma}\xi_\lambda\\
+        g'_{\mu\nu}(x) &= g_{\mu\nu}(x) - (\partial_\mu\xi_\nu - \Gamma^\lambda_{\mu\nu}\xi_\lambda) - (\partial_\nu\xi_\mu - \Gamma^\lambda_{\mu\nu}\xi_\lambda)\\
+            &= g_{\mu\nu}(x) - \nabla_\mu\xi_\nu - \nabla_\nu\xi_\mu
+    \end{align*}
+    となる。
+        \[g_{\mu\nu}(x) \mapsto g'_{\mu\nu}(x) = g_{\mu\nu}(x) - \nabla_\mu\xi_\nu - \nabla_\nu\xi_\mu\]
+    をゲージ変換という。
+
+
+
+\subsection{エネルギー・運動量テンソル}
+    \begin{align*}
+        L_\text{int}
+    \end{align*}
