@@ -130,11 +130,11 @@
     それぞれのポインティングベクトルの時間平均は、
     \begin{align*}
         |\overline{S_i}| &= \frac{|\overline{E_i}|^2}{\mu c} = \frac{|E_0|^2}{2\mu c}\\
-        |\overline{S_s}| &= \frac{|\overline{E_s}|^2}{\mu c} = \frac{1}{\mu c}\lr{\frac{\mu}{4\pi}\frac{\omega^2}{r}|p(\omega)|}^2\sin^2\phi = \frac{|E_0|^2}{2\mu c}\lr{\frac{\mu}{4\pi}\frac{\omega^2}{r}\alpha}^2\sin^2\phi
+        |\overline{S_s}| &= \frac{|\overline{E_s}|^2}{\mu c} = \frac{1}{\mu c}\left(\frac{\mu}{4\pi}\frac{\omega^2}{r}|p(\omega)|\right)^2\sin^2\phi = \frac{|E_0|^2}{2\mu c}\left(\frac{\mu}{4\pi}\frac{\omega^2}{r}\alpha\right)^2\sin^2\phi
     \end{align*}
     ただし$\alpha$は分極率である。したがって微分断面積は
     \begin{align*}
-        \de[\sigma]{\Omega} = \lr{\frac{\mu}{4\pi}\omega^2\alpha}^2\sin^2\phi           
+        \de[\sigma]{\Omega} = \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2\sin^2\phi           
     \end{align*}
     無偏光の場合は、散乱角を$\theta$としたとき$n = (\sin\theta, 0, \cos\theta), \quad E_0 / |E_0| = (\cos\psi, \sin\psi, 0)$と置くと
     \begin{align*}
@@ -146,11 +146,11 @@
     \end{align*}
     よって
     \begin{align*}
-        \de[\sigma]{\Omega} = \lr{\frac{\mu}{4\pi}\omega^2\alpha}^2\frac{1 + \cos^2\theta}{2}
+        \de[\sigma]{\Omega} = \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2 \frac{1 + \cos^2\theta}{2}
     \end{align*}
     となる。$\alpha = e^2 / m\omega^2$を代入すれば
     \begin{align*}
-        \de[\sigma]{\Omega} = \lr{\frac{e^2}{4\pi mc^2\epsilon_0}}^2\frac{1 + \cos^2\theta}{2} = a_0^2\frac{1 + \cos^2\theta}{2}
+        \de[\sigma]{\Omega} = \left(\frac{e^2}{4\pi mc^2\epsilon_0}\right)^2 \frac{1 + \cos^2\theta}{2} = a_0^2\frac{1 + \cos^2\theta}{2}
     \end{align*}
     である。光の進行方向に対して最も強く散乱することが分かる。$a_0$は静電エネルギーと静止エネルギーが一致する半径を示し、古典的電子半径と呼ばれる。全立体角で積分すれば
     \begin{align*}
@@ -166,12 +166,13 @@
     である。微分散乱断面積は
     \begin{align*}
         \de[\sigma]{\Omega}
-            &= \lr{\frac{\mu}{4\pi}\omega^2\alpha}^2\frac{1 + \cos^2\theta}{2}\\
-            &= \lr{\epsilon_0\mu\omega^2\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}a^3}^2\frac{1 + \cos^2\theta}{2} = \lr{\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}}^2\lr{\frac{\omega}{c}}^4a^6\frac{1 + \cos^2\theta}{2}
+            &= \left(\frac{\mu}{4\pi}\omega^2\alpha\right)^2 \frac{1 + \cos^2\theta}{2}\\
+            &= \left(\epsilon_0\mu\omega^2\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}a^3\right)^2 \frac{1 + \cos^2\theta}{2}\\
+            &= \left(\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}\right)^2 \left(\frac{\omega}{c}\right)^4 a^6 \frac{1 + \cos^2\theta}{2}
     \end{align*}
     全断面積は
     \begin{align*}
-        \sigma = \frac{8\pi}{3}\lr{\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}}^2\lr{\frac{\omega}{c}}^4a^6
+        \sigma = \frac{8\pi}{3}\left(\frac{\epsilon - \epsilon_0}{\epsilon + 2\epsilon_0}\right)^2 \left(\frac{\omega}{c}\right)^4 a^6
     \end{align*}
     つまり青い光は赤い光より多く散乱される。青空の原因はこのレイリー散乱である。光は空気中の微粒子にぶつかる度に散乱を繰り返し、青い光は垂直方向に離散していく。結果朝焼けや夕焼けが起こる。それでも地平線から離れた上空では青く見え、その中間当たりは白く見える。
     太陽のない場所を見上げたとき、視線の先からやってくる光は散乱光である。
