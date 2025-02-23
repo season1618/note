@@ -7,10 +7,14 @@
 \newcommand{\pdd}[2][]{\frac{\partial^2 #1}{\partial #2^2}}
 
 \renewcommand{\epsilon}{\varepsilon}
-\newcommand{\grad}{\operatorname{grad}}
-\newcommand{\rot}{\operatorname{rot}}
-\renewcommand{\div}{\operatorname{div}}
-\renewcommand{\Re}{\operatorname{Re}}
+
+\let\div\relax
+\DeclareMathOperator{\grad}{grad}
+\DeclareMathOperator{\rot}{rot}
+\DeclareMathOperator{\div}{div}
+
+\let\Re\relax
+\DeclareMathOperator{\Re}{Re}
 
 \title{電磁気学}
 \author{season07001674}
