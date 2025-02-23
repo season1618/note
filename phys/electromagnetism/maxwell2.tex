@@ -20,7 +20,7 @@
         \frac{1}{r_1}
             &= \frac{1}{\sqrt{r^2 + (s/2)^2 - rs\cos\theta}}\\
             &= \frac{1}{r}\left(1 + \left(\frac{s}{2r}\right)^2 - \frac{s}{r}\cos\theta\right)^{-1/2}\\
-            &\simeq \frac{1}{r}\left(1 - \frac{1}{2}\llr{\left(\frac{s}{2r}\right)^2 - \frac{s}{r}\cos\theta}\right)\\
+            &\simeq \frac{1}{r}\left(1 - \frac{1}{2}\left[\left(\frac{s}{2r}\right)^2 - \frac{s}{r}\cos\theta\right]\right)\\
             &= \frac{1}{r}\left(1 - \frac{s^2}{8r^2} + \frac{s}{2r}\cos\theta\right)
     \end{align*}
     同様に
@@ -34,11 +34,11 @@
     電場は
     \begin{align*}
         E_x &= -\pd{x}\left(\frac{1}{4\pi\epsilon_0}\frac{p_x x + p_y y + p_z z}{(x^2+y^2+z^2)^{3/2}}\right)\\
-            &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{(x^2 + y^2 + z^2)^{3/2}} - \frac{3}{2}(p_x x + p_y y + p_z z)(x^2 + y^2 + z^2)^{-5/2}(2x)}\\
-            &= -\frac{1}{4\pi\epsilon_0}\llr{\frac{p_x}{r^3} - \frac{3x(p \cdot r)}{r^5}}
+            &= -\frac{1}{4\pi\epsilon_0}\left[\frac{p_x}{(x^2 + y^2 + z^2)^{3/2}} - \frac{3}{2}(p_x x + p_y y + p_z z)(x^2 + y^2 + z^2)^{-5/2}(2x)\right]\\
+            &= -\frac{1}{4\pi\epsilon_0}\left[\frac{p_x}{r^3} - \frac{3x(p \cdot r)}{r^5}\right]
     \end{align*}
     $y, z$も同様なので、結局
-        \[E(r) = \frac{1}{4\pi\epsilon_0}\llr{\frac{p}{r^3} - \frac{3r(p\cdot r)}{r^5}}\]
+        \[E(r) = \frac{1}{4\pi\epsilon_0}\left[\frac{p}{r^3} - \frac{3r(p\cdot r)}{r^5}\right]\]
     となる。
 
 \subsection{磁気モーメント}
@@ -47,14 +47,14 @@
     電気双極子と同じように、エネルギーと磁場はそれぞれ、
     \begin{align*}
         U &= -m \cdot H\\
-        H(r) &= -\frac{1}{4\pi\mu_0}\llr{\frac{m}{r^3} - \frac{3r(m\cdot r)}{r^5}}
+        H(r) &= -\frac{1}{4\pi\mu_0}\left[\frac{m}{r^3} - \frac{3r(m\cdot r)}{r^5}\right]
     \end{align*}
     となる。
 
     ところが現代ではモノポールは存在しないとするのが主流なので、代わりに微小な円形電流を考える。この円形電流の作る磁場は十分遠方では磁気双極子が作るものと同じと見なせる。磁気モーメント$m'$を、
         \[U = -m' \cdot B\]
     が成り立つようにすると、$m' = m / \mu_0$とすれば良いことがわかる。すると磁束密度は、
-        \[B(r) = -\frac{\mu_0}{4\pi}\llr{\frac{m'}{r^3} - \frac{3r(m'\cdot r)}{r^5}}\]
+        \[B(r) = -\frac{\mu_0}{4\pi}\left[\frac{m'}{r^3} - \frac{3r(m'\cdot r)}{r^5}\right]\]
     となる。
 
 \subsection{誘電体と電束密度}
