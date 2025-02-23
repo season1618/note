@@ -33,7 +33,7 @@
     \end{align*}
     電場は
     \begin{align*}
-        E_x &= -\pd{x}\left(\frac{1}{4\pi\epsilon_0}\frac{p_x x + p_y y + p_z z}{(x^2+y^2+z^2)^{3/2}}\right)\\
+        E_x &= -\pdv{x}\left(\frac{1}{4\pi\epsilon_0}\frac{p_x x + p_y y + p_z z}{(x^2+y^2+z^2)^{3/2}}\right)\\
             &= -\frac{1}{4\pi\epsilon_0}\left[\frac{p_x}{(x^2 + y^2 + z^2)^{3/2}} - \frac{3}{2}(p_x x + p_y y + p_z z)(x^2 + y^2 + z^2)^{-5/2}(2x)\right]\\
             &= -\frac{1}{4\pi\epsilon_0}\left[\frac{p_x}{r^3} - \frac{3x(p \cdot r)}{r^5}\right]
     \end{align*}
@@ -76,18 +76,18 @@
         \[\rot J = \mu_0i_m\]
     また、分極ベクトルの時間変化によっても電流が発生する。密度$\rho$の電荷が$u$だけ変位したとき、発生する電流は
     \begin{gather*}
-        i_p = \rho\pd[u]{t} = \pd[P]{t}\\
-        \rot B - \epsilon\mu_0\pd[E]{t} = \mu_0 (i + i_m)
+        i_p = \rho\pdv{u}{t} = \pdv{P}{t}\\
+        \rot B - \epsilon\mu_0\pdv{E}{t} = \mu_0 (i + i_m)
     \end{gather*}
     $i_p$を分極電流と呼ぶ。磁場を
         \[H = \frac{1}{\mu_0}(B - J)\]
     と定義するとアンペールの法則は、
     \begin{align*}
-        \frac{1}{\mu_0}\rot B - \epsilon_0 \pd[E]{t}
+        \frac{1}{\mu_0}\rot B - \epsilon_0 \pdv{E}{t}
             &= i + i_m + i_p\\
-            &= i + \frac{1}{\mu_0}\rot J + \pd[P]{t}\\
-        \frac{1}{\mu_0}\rot(B - J) &- \pd[(\epsilon E + P)]{t} = i\\
-        \rot H &- \pd[D]{t} = i
+            &= i + \frac{1}{\mu_0}\rot J + \pdv{P}{t}\\
+        \frac{1}{\mu_0}\rot(B - J) &- \pdv{(\epsilon E + P)}{t} = i\\
+        \rot H &- \pdv{D}{t} = i
     \end{align*}
     となる。多くの物質では$J = \mu_0\chi_m H$という関係が近似的に成り立つ。$\chi_m$は磁化率と呼ばれる。磁場が一定以上強くなると分子電流の向きがすべて揃い、それ以上磁化ベクトルが大きくならないため、この比例関係は崩れる。$\mu = \mu_0(1 + \chi_m)$と置くと、$B = \mu H$と表せる。$\mu$を物質の透磁率という。磁性体の場合は$\mu$が正にも負にもなりうる。また$\mu / \mu_0$を比透磁率という。
 
@@ -96,6 +96,6 @@
     \begin{align*}
         \div D &= \rho\\
         \div B &= 0\\
-        \rot E &+ \pd[B]{t} = 0\\
-        \rot H &- \pd[D]{t} =  i
+        \rot E &+ \pdv{B}{t} = 0\\
+        \rot H &- \pdv{D}{t} =  i
     \end{align*}

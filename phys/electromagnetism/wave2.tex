@@ -38,7 +38,7 @@
     \end{align*}
     より変位電流は
     \begin{align*}
-        I_p(t) = \pd[P]{t} = -\omega\chi_1(\omega)|E_0|\sin(\omega t + \alpha) + \omega\chi_2(\omega)|E_0|\cos(\omega t + \alpha)
+        I_p(t) = \pdv{P}{t} = -\omega\chi_1(\omega)|E_0|\sin(\omega t + \alpha) + \omega\chi_2(\omega)|E_0|\cos(\omega t + \alpha)
     \end{align*}
     なので、電場が単位体積単位時間当たりに電子に行う仕事を周期$T = 2\pi / \omega$について平均すると、
     \begin{align*}
@@ -70,13 +70,13 @@
     \begin{align*}
         \div E = 0\\
         \div B = 0\\
-        \rot E + \pd[B]{t} &= 0\\
-        \rot B - \epsilon\mu\pd[E]{t} &= \mu i
+        \rot E + \pdv{B}{t} &= 0\\
+        \rot B - \epsilon\mu\pdv{E}{t} &= \mu i
     \end{align*}
     第一式の$\rot$と第二式の時間偏微分を取り、磁場の項を消去すると
     \begin{align*}
-        \grad\div E - \Delta E + \epsilon\mu\pdv[2]{E}{t} &= - \mu \pd[i(r, t)]{t}\\
-        \left(-\epsilon\mu\pdv[2]{t} + \Delta\right)E(r, t) &= \mu\pd[i(r, t)]{t}
+        \grad\div E - \Delta E + \epsilon\mu\pdv[2]{E}{t} &= - \mu \pdv{i(r, t)}{t}\\
+        \left(-\epsilon\mu\pdv[2]{t} + \Delta\right)E(r, t) &= \mu\pdv{i(r, t)}{t}
     \end{align*}
     右辺に電流密度の項があるため波動方程式ではなく、もはや同じ形を保って進む解は存在しない。電場と電流密度のラプラス変換を考え、それぞれ
     \begin{align*}

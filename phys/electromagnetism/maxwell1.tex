@@ -24,14 +24,14 @@
         \rot E &= 0
     \end{align*}
     ファラデーの電磁誘導の法則より、コイルに発生する起電力$V$はコイルを貫く磁束$\Phi$の変化に比例する。
-        \[V = -\dv[\Phi]{t}\]
+        \[V = -\dv{\Phi}{t}\]
     起電力は回路によって測られるが、近接作用の立場からコイルの有無に関わらず電場が存在していると考える。起電力は回路に沿って電場を線積分したものなので、
-        \[\int E \cdot ds = -\pd{t} \int B \cdot dS\]
+        \[\int E \cdot ds = -\pdv{t} \int B \cdot dS\]
     ストークスの定理より
     \begin{align*}
-        \int \rot E \cdot dS = \int E \cdot ds &= -\pd{t} \int B \cdot dS\\
-        \int \left(\rot E + \pd[B]{t}\right) \cdot dS &= 0\\
-        \rot E + \pd[B]{t} &= 0
+        \int \rot E \cdot dS = \int E \cdot ds &= -\pdv{t} \int B \cdot dS\\
+        \int \left(\rot E + \pdv{B}{t}\right) \cdot dS &= 0\\
+        \rot E + \pdv{B}{t} &= 0
     \end{align*}
 
 \subsection{磁束保存の法則}
@@ -49,11 +49,11 @@
         \[\rot B = \mu_0i\]
     の両辺の$\div$をとると、
         \[\mu_0\div i = 0\]
-    となる。これは電荷の保存則$\div i = -\pd[\rho]{t}$に反しているので、これを満たすように書き換える。$\div E = -\frac{\rho}{\epsilon_0}$より、アンペールの法則に付け加えると
-        \[\rot B - \epsilon_0\mu_0\pd[E]{t} = \mu_0 i\]
+    となる。これは電荷の保存則$\div i = -\pdv{\rho}{t}$に反しているので、これを満たすように書き換える。$\div E = -\frac{\rho}{\epsilon_0}$より、アンペールの法則に付け加えると
+        \[\rot B - \epsilon_0\mu_0\pdv{E}{t} = \mu_0 i\]
     となる。左辺第二項を移行して
-        \[\rot B = \mu_0\left(i + \epsilon_0\pd[E]{t}\right)\]
-    と書いたとき、右辺第二項$\epsilon_0\pd[E]{t}$を電荷の移動を伴わないある種の電流と見なせる。これを変位電流と呼ぶ。
+        \[\rot B = \mu_0\left(i + \epsilon_0\pdv{E}{t}\right)\]
+    と書いたとき、右辺第二項$\epsilon_0\pdv{E}{t}$を電荷の移動を伴わないある種の電流と見なせる。これを変位電流と呼ぶ。
 
 \subsection{ローレンツ力}
     平行に流れる二つの電流間には引力が働き、アンペールの力という。その大きさは
@@ -82,7 +82,7 @@
     によって試験電流の受ける力によって定義する。ある閉曲面$S$を貫く磁束$\Phi$は
         \[\Phi = \int_S B \cdot dS\]
     となる。磁束の単位$\mathrm{Wb}$(ウェーバ)はファラデーの電磁誘導の法則
-        \[V = -\pd[\Phi]{t}\]
+        \[V = -\pdv{\Phi}{t}\]
     に基づいて、1$\mathrm{V}$の誘導起電力を生じるのに必要な1$\mathrm{s}$あたりの磁束の変化量として定義される。磁場$H$はアンペールの法則
         \[\oint H \cdot dl = I\]
     を満たす量である。

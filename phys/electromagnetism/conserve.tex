@@ -36,12 +36,12 @@
         電場$E$に距離をかけたものが電圧であり、電流密度$i$に面積をかけたものが電流だから、右辺はジュール熱を意味する。つまりジュール熱とは荷電粒子の運動エネルギーである。右辺をさらに変形すると
         \begin{align*}
             E \cdot i
-                &= E \cdot \left(\rot H - \pd[D]{t}\right)\\
-                &= H \cdot \rot E - \div(E \times H) - \pd[(E \cdot D)]{t}\\
-                &= -\pd[(E \cdot D)]{t} - \pd[(H \cdot B)]{t} - \div(E \times H)
+                &= E \cdot \left(\rot H - \pdv{D}{t}\right)\\
+                &= H \cdot \rot E - \div(E \times H) - \pdv{(E \cdot D)}{t}\\
+                &= -\pdv{(E \cdot D)}{t} - \pdv{(H \cdot B)}{t} - \div(E \times H)
         \end{align*}
         エネルギー密度$u = (E \cdot D + H \cdot B) / 2$、$S = E \times H$とすれば、
-            \[-\pd[u]{t} = E \cdot i + \div S\]
+            \[-\pdv{u}{t} = E \cdot i + \div S\]
         これをポインティング(Poynting)の定理と呼ぶ。$S$はポインティングベクトルと呼ばれており、電磁場のエネルギー流の密度を表している。つまり、領域内のエネルギーの減少量は、荷電粒子の運動エネルギーと放出された電磁波のエネルギーの和に等しい。
 
 \subsection{マクスウェルの応力}
@@ -50,12 +50,12 @@
     ここで
     \begin{align*}
         \div D &= \rho\\
-        \rot H &- \pd[D]{t} = i
+        \rot H &- \pdv{D}{t} = i
     \end{align*}
     を代入すれば
     \begin{align*}
-        F   &= \int \left[E \div D + \left(\rot H - \pd[D]{t}\right) \times B\right] dV\\
-            &= \int \left[E \div D - B \times \rot H - \pd[D]{t} \times B\right] dV\\
+        F   &= \int \left[E \div D + \left(\rot H - \pdv{D}{t}\right) \times B\right] dV\\
+            &= \int \left[E \div D - B \times \rot H - \pdv{D}{t} \times B\right] dV\\
             &= \int \left(\epsilon_0E \div E - \frac{1}{\mu_0}B \times \rot B - \epsilon_0E \times \rot E - \epsilon_0\mu_0\dv{t}(E \times H)\right) dV
     \end{align*}
     $\div B = 0$なので、対称性を保つために$B \div B$という項を付け加える。
@@ -66,13 +66,13 @@
     右辺第二項の積分の中身はポインティングベクトルである。マイナスの符号は電磁波が放出したことによる反作用を表している。ここで近接作用的な見方をするために、第一項を面積分に変換することを考える。つまり、積分の中身をあるベクトル場の発散として表すことができないか検討する。$x$成分だけを取り出せば
     \begin{align*}
         (E\div E - E \times \rot E)_x
-            &= E_x\left(\pd[E_x]{x} + \pd[E_y]{y} + \pd[E_z]{z}\right) - E_y\left(\pd[E_y]{x} - \pd[E_x]{y}\right) + E_z\left(\pd[E_x]{z} - \pd[E_z]{x}\right)\\
-            &= E_x\pd[E_x]{x} - E_y\pd[E_y]{x} - E_z\pd[E_z]{x}\\
-            &\quad + E_x\pd[E_y]{y} + E_y\pd[E_x]{y}\\
-            &\quad + E_x\pd[E_z]{z} + E_z\pd[E_x]{z}\\
-            &= \frac{1}{2}\pd[E_x^2]{x} - \frac{1}{2}\pd[E_y^2]{x} - \frac{1}{2}\pd[E_z^2]{x}\\
-            &\quad + \pd[(E_xE_y)]{y} + \pd[(E_xE_z)]{z}\\
-            &= \pd[(E_x^2 - \frac{1}{2}E^2)]{x} + \pd[(E_xE_y)]{y} + \pd[(E_xE_z)]{z}
+            &= E_x\left(\pdv{E_x}{x} + \pdv{E_y}{y} + \pdv{E_z}{z}\right) - E_y\left(\pdv{E_y}{x} - \pdv{E_x}{y}\right) + E_z\left(\pdv{E_x}{z} - \pdv{E_z}{x}\right)\\
+            &= E_x\pdv{E_x}{x} - E_y\pdv{E_y}{x} - E_z\pdv{E_z}{x}\\
+            &\quad + E_x\pdv{E_y}{y} + E_y\pdv{E_x}{y}\\
+            &\quad + E_x\pdv{E_z}{z} + E_z\pdv{E_x}{z}\\
+            &= \frac{1}{2}\pdv{E_x^2}{x} - \frac{1}{2}\pdv{E_y^2}{x} - \frac{1}{2}\pdv{E_z^2}{x}\\
+            &\quad + \pdv{(E_xE_y)}{y} + \pdv{(E_xE_z)}{z}\\
+            &= \pdv{(E_x^2 - \frac{1}{2}E^2)}{x} + \pdv{(E_xE_y)}{y} + \pdv{(E_xE_z)}{z}
     \end{align*}
     従って領域内の力は
     \begin{align*}
@@ -105,7 +105,7 @@
     に
     \begin{align*}
         \div D &= \sum_i q_i\delta(r' - r_i)\\
-        \rot H - \pd[D]{t} &= \sum_i q_i\delta(r' - r_i)\dv{r_i}{t}\\
+        \rot H - \pdv{D}{t} &= \sum_i q_i\delta(r' - r_i)\dv{r_i}{t}\\
     \end{align*}
     を代入すると、右辺は領域$V$内に働く電磁場による力と等しいので、マクスウェルの応力を用いると
     \begin{align*}

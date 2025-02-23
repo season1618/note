@@ -5,13 +5,13 @@
     \begin{align*}
         \div E &= 0\\
         \div B &= 0\\
-        \rot E &+ \pd[B]{t} = 0\\
-        \rot B &- \epsilon_0\mu_0\pd[E]{t} = 0
+        \rot E &+ \pdv{B}{t} = 0\\
+        \rot B &- \epsilon_0\mu_0\pdv{E}{t} = 0
     \end{align*}
     第3式の両辺の$\rot$を計算すると
     \begin{align*}
-        \rot\rot E + \pd{t}(\rot B) &= 0\\
-        \grad\div E - \Delta E + \pd{t}\left(\epsilon_0\mu_0\pd[E]{t}\right) &= 0\\
+        \rot\rot E + \pdv{t}(\rot B) &= 0\\
+        \grad\div E - \Delta E + \pdv{t}\left(\epsilon_0\mu_0\pdv{E}{t}\right) &= 0\\
         \left(-\epsilon_0\mu_0\pdv[2]{t} + \Delta\right)E &= 0
     \end{align*}
     第4式も同様に
@@ -37,9 +37,9 @@
     従って電場は電磁波の進行方向に対して変化しない。つまり電磁波の平面波解は横波である。
         \[(E_x, E_y, E_z) = (f_x(k \cdot r - \omega t), f_y(k \cdot r - \omega t), f_z(k \cdot r - \omega t))\]
     をファラデーの法則に代入する。
-        \[-\pd[B_x]{t} = k_yf_z'(k \cdot r - \omega t) - k_zf_y'(k \cdot r - \omega t)\]
+        \[-\pdv{B_x}{t} = k_yf_z'(k \cdot r - \omega t) - k_zf_y'(k \cdot r - \omega t)\]
     だから
-        \[\left(\pd[B_x]{t}, \pd[B_y]{t}, \pd[B_z]{t}\right) = -k \times f'(k \cdot r - \omega t)\]
+        \[\left(\pdv{B_x}{t}, \pdv{B_y}{t}, \pdv{B_z}{t}\right) = -k \times f'(k \cdot r - \omega t)\]
     となる。この両辺を積分する。積分定数は静磁場を意味するので省略すると
         \[(B_x, B_y, B_z) = \frac{k}{\omega} \times f(k \cdot r - \omega t)\]
     つまり電場と磁場は互いに直交する方向に振動し、全く同じ形で伝わっていくことになる。
@@ -74,11 +74,11 @@
 
 \subsection{球面波}
     球対称な波動を考える。球座標におけるラプラシアンの角度に依存しない部分は
-        \[\Delta f = \frac{1}{r}\pd[^2]{r^2}(rf)\]
+        \[\Delta f = \frac{1}{r}\pdv[2]{r}(rf)\]
     で表される。
     \begin{align*}
-        \frac{1}{r}\pd[^2]{r^2}(rE) &= \frac{1}{c^2}\pd[^2E]{t^2}\\
-        \pd[^2]{r^2}(rE) &= \frac{1}{c^2}\pd[^2]{t^2}(rE)
+        \frac{1}{r}\pdv[2]{r}(rE) &= \frac{1}{c^2}\pdv[2]{E}{t}\\
+        \pdv[2]{r}(rE) &= \frac{1}{c^2}\pdv[2]{t}(rE)
     \end{align*}
     これは$rE$に関する一次元波動方程式である。
         \[E(r, t) = \frac{1}{|r|}{f(k|r| - \omega t)}\]
@@ -128,8 +128,8 @@
 \subsection{遅延ポテンシャルと先進ポテンシャル}
     電磁場の原因が電荷密度$\rho$と電流密度$i$のみで、かつそれらが自己場の影響を受けないとした場合に、ローレンツゲージにおけるマクスウェル方程式の解を求める。
     \begin{align*}
-        \left(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\right)\phi &= -\frac{\rho}{\epsilon_0}\\
-        \left(-\frac{1}{c^2}\pd[^2]{t^2} + \Delta\right)A &= -\mu_0 i
+        \left(-\frac{1}{c^2}\pdv[2]{t} + \Delta\right)\phi &= -\frac{\rho}{\epsilon_0}\\
+        \left(-\frac{1}{c^2}\pdv[2]{t} + \Delta\right)A &= -\mu_0 i
     \end{align*}
     二つの解があったとき、それらの差は波動方程式の解なので、特殊解に任意の電磁波を重ねたものとなる。
 
@@ -228,7 +228,7 @@
     となる。点電荷から見たとき、等ポテンシャル面は$yz$方向に引き伸ばされた回転楕円体であり、形を保ったまま点電荷に纏った状態で移動していく。つまり等速運動はエネルギーを必要としない。電場を計算すると
     \begin{align*}
         E(r, t)
-        &= -\grad\phi - \pd[A]{t}\\
+        &= -\grad\phi - \pdv{A}{t}\\
         &= \frac{q}{4\pi\epsilon_0}\frac{(x - vt, \left(1 - \frac{v^2}{c^2}\right)y, \left(1 - \frac{v^2}{c^2}\right)z)}{\{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)\}^{3/2}} - \frac{\mu_0q}{4\pi}\frac{(v^2(x - vt), 0, 0)}{\{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)\}^{3/2}}\\
         &= \frac{q}{4\pi\epsilon_0}\left(1 - \frac{v^2}{c^2}\right)\frac{(x - vt, y, z)}{\{(x - vt)^2 + \left(1 - \frac{v^2}{c^2}\right)(y^2 + z^2)\}^{3/2}}
     \end{align*}

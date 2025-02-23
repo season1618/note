@@ -2,12 +2,12 @@
 
 \subsection{電磁場の境界条件}
     $xy$平面を境に2つの物質が存在しているとする。境界に垂直な長方形の周にファラデーの法則を適用して
-        \[\int (E_1 - E_2) \cdot t ds + \int \pd[B]{t} \cdot n dS = 0\]
+        \[\int (E_1 - E_2) \cdot t ds + \int \pdv{B}{t} \cdot n dS = 0\]
     長方形を小さくしていけば第二項は0に近づくので
         \[E_1 \cdot t = E_2 \cdot t\]
     同じ領域にアンペールの法則を適用する。電流密度は0として
     \begin{gather*}
-        \int (H_1 - H_2) \cdot t ds - \int \pd[D]{t} \cdot n dS = 0\\
+        \int (H_1 - H_2) \cdot t ds - \int \pdv{D}{t} \cdot n dS = 0\\
         H_1 \cdot t = H_2 \cdot t
     \end{gather*}
     次に境界面の一部を覆うような直方体に電場に関するガウスの法則を適用する。直方体内の電荷を0として
