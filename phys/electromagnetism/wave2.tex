@@ -75,8 +75,8 @@
     \end{align*}
     第一式の$\rot$と第二式の時間偏微分を取り、磁場の項を消去すると
     \begin{align*}
-        \grad\div E - \Delta E + \epsilon\mu\pdd[E]{t} &= - \mu \pd[i(r, t)]{t}\\
-        \left(-\epsilon\mu\pdd{t} + \Delta\right)E(r, t) &= \mu\pd[i(r, t)]{t}
+        \grad\div E - \Delta E + \epsilon\mu\pdv[2]{E}{t} &= - \mu \pd[i(r, t)]{t}\\
+        \left(-\epsilon\mu\pdv[2]{t} + \Delta\right)E(r, t) &= \mu\pd[i(r, t)]{t}
     \end{align*}
     右辺に電流密度の項があるため波動方程式ではなく、もはや同じ形を保って進む解は存在しない。電場と電流密度のラプラス変換を考え、それぞれ
     \begin{align*}
@@ -85,7 +85,7 @@
     \end{align*}
     とおく。平面波解が存在しないので、形式的においた波数ベクトルや振動数が実数とは限らないことに注意する。
     \begin{align*}
-        \epsilon\mu\pdd{t}E(r, t) &= -\epsilon\mu\omega^2 E(k, \omega)\exp(i(k \cdot r - \omega t))\\
+        \epsilon\mu\pdv[2]{t}E(r, t) &= -\epsilon\mu\omega^2 E(k, \omega)\exp(i(k \cdot r - \omega t))\\
         \Delta E(r, t) &= - (k_x^2 + k_y^2 + k_z^2)E(k, \omega)\exp(i(k \cdot r - \omega t))
     \end{align*}
     だから
