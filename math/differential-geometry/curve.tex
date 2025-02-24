@@ -1,0 +1,44 @@
+\section{曲線}
+
+空間曲線を分類する。
+
+\subsection{曲線の表示}
+    滑らかな空間曲線$p(t) = (x(t), y(t), z(t))$を考える。$p(t)$が動かなければ尖った部分ができてしまうので、$p'(t) \neq 0$と仮定する。ここで、時刻が0から$t$まで動いたときの曲線の長さは、
+        \[s(t) = \int_0^t |p'(t')| \dd{t'}\]
+    である。これを弧長パラメータという。$s$は$t$の単調関数なので逆関数$t(s)$が存在し、$p(s)$を考えることができる。
+
+\subsection{Frenet-Serretの公式}
+    曲線上を一定の速さで移動することを考える。進行方向の単位ベクトルを$e_1$とすると、$|p'(s)| = 1$より$e_1 = p'(s)$である。また
+        \[p'(s) \cdot p'(s) = 1\]
+    の両辺を微分すると
+        \[p'(s) \cdot p''(s) = 0\]
+    だから加速度ベクトル$p''(s)$は速度ベクトルと直交する。直感的には速度ベクトルが単位球面上を移動する様子を表している。点$p$が加速する方向を主法線方向と呼び、単位ベクトルを$e_2$とする。そして$e_3 = e_1 \times e_2$の方向を従法線方向と呼ぶ。$(e_1, e_2, e_3)$は正規直交基底になっており、Frenet-Serret標構と呼ばれる。
+
+    $(e_1', e_2', e_3')$と$(e_1, e_2, e_3)$の関係式を導く。まず、$|p''(s)| = \kappa(s)\ (> 0)$とすれば
+        \[e_1' = p''(s) = \kappa(s)e_2\]
+    である。$|e_2| = 1$なので、$e_1$と同様に$e_2$と$e_2'$は直交する。つまり$e_2'$は$e_1, e_3$のなす平面上にある。$e_2' = k(s)e_1 + \tau(s)e_3$とおく。$e_1 \cdot e_2 = 0$の両辺を微分して
+    \begin{align*}
+        e_1' \cdot e_2 + e_1 \cdot e_2' &= 0\\
+        \kappa e_2\cdot e_2 + e_1\cdot (ke_1 + \tau e_3) &= 0\\
+        \kappa + k &= 0
+    \end{align*}
+    よって$k = -\kappa$である。また$e_3 = e_1 \times e_2$の両辺を微分して
+    \begin{align*}
+        e_3' &= e_1' \times e_2 + e_1 \times e_2'\\
+             &= \kappa e_2 \times e_2 + e_1 \times (-\kappa e_1 + \tau e_3)\\
+             &= \tau e_1 \times e_3\\
+             &= -\tau e_2
+    \end{align*}
+    まとめると
+    \begin{align*}
+        e_1' &= \qquad\qquad \kappa e_2\\
+        e_2' &= -\kappa e_1 \quad\qquad +\tau e_3\\
+        e_3' &= \quad\qquad -\tau e_2
+    \end{align*}
+    が成立する。これをFrenet-Serretの公式という。$\kappa$を曲率、$\tau$を捩率(第二曲率)と呼ぶ。曲率と捩率はパラメータの始点と曲線の向きに依存する。つまり$\kappa(s), \tau(s)$に対して$\kappa(\pm s - c), \tau(\pm s - c)$も同じ曲線を表す。
+    \begin{thm}[空間曲線の基本定理]
+        曲率$\kappa(s)(> 0)$と捩率$\tau(s)$が与えられたとき$p(s)$が合同変換を除いて一意に存在する。
+    \end{thm}
+    \begin{proof}
+        常微分方程式の解の一意性より従う。
+    \end{proof}

@@ -1,0 +1,188 @@
+\section{ユークリッド空間内の超曲面}
+
+\subsection{基本テンソルとガウス=ワインガルテンの公式}
+    $n$次元多様体$M$とユークリッド空間$E^{n+1}$へのはめ込み$f$が与えられている。$p \in M$に対して$M$上のリーマン計量を$E^{n+1}$内の通常の内積を用いて
+        \[g_p(X, Y) = \<df(X), df(Y)\>\]
+    と定義する。これを$M$の第一基本形式または誘導されたリーマン計量という。$M$の局所座標を$\{x^1, x^2, \dots, x^n\}$、$E^{n+1}$のユークリッド座標を$\{y^1, y^2, \dots, y^{n+1}\}$とすると
+        \[f*\(\pdv{x^i}\) = \sum_{k=1}^{n+1} \pdv{f^k}{x^i}\pdv{y^k}\]
+    なので
+    \begin{align*}
+        g_{ij} &= g\(\pdv{x^i}, \pdv{x^j}\)\\
+        &= \<\sum_{k=1}^{n+1} \pdv{f^k}{x^i}\pdv{y^k}, \sum_{k=1}^{n+1} \pdv{f^k}{x^j}\pdv{y^k}\>\\
+        &= \sum_{k=1}^{n+1} \pdv{f^k}{x^i}\pdv{f^k}{x^j}
+    \end{align*}
+    となる。
+
+    $E^{n+1}$の通常の共変微分を$D$とおく。$(D_Xdf(Y))_p$を$M$に接する成分と垂直な成分に分解すると
+        \[(D_Xdf(Y))_p = df(\nabla_XY)_p + \alpha_p(X, Y)\]
+    となる。$\alpha_p$は単位法ベクトル場$\xi \in \mathfrak{X}(E^{n+1})\ (\inner{\xi}{df(X)} = 0, \inner{\xi}{\xi} = 1)$を用いて
+        \[\alpha_p(X, Y) = h(X, Y)\xi_p\]
+    と書くことができる。$h(X, Y)$は双線形写像であり、第二基本形式と呼ぶ。また$\xi \in \mathfrak{X}_f$とすると
+    \begin{align*}
+        \inner{\xi}{\xi} = 1\\
+        \inner{D_X\xi}{\xi} = 0
+    \end{align*}
+    より$D_X\xi$は$M$に接しており、$X \mapsto D_X\xi$は線形写像であるから
+        \[D_X\xi = -df(SX)\]
+    となる$(1, 1)$型テンソル場$S$が存在する。これをシェイプ(Shape)作用素と呼ぶ。シェイプ作用素は曲面の外界への入り方を表す外在的な量である。まとめると
+    \begin{align*}
+        D_Xdf(Y) &= df(\nabla_XY) + h(X, Y)\xi \tag{ガウスの公式}\\
+        D_X\xi &= -df(SX) \tag{ワインガルテンの公式}
+    \end{align*}
+    それぞれの公式は$M$上を移動したときの接ベクトル、法ベクトルの変化率を与えるもので、$M$上のベクトルと$E^{n+1}$上のベクトルの関係を表す。
+
+\subsection{ガウス=コダッチ方程式}
+    \begin{align*}
+        \<df(Y), \xi\> = 0\\
+        \<D_Xdf(Y), \xi\> + \<df(Y), D_X\xi\> = 0\\
+        h(X, Y) + \<df(Y), -df(SX)\> = 0\\
+        h(X, Y) - g(SX, Y) = 0
+    \end{align*}
+
+    ガウス=ワインガルテンの公式を満たす超曲面が存在するためにシェイプ作用素が満たすべき条件を求める。$E^{n+1}$の共変微分$D$が満たす性質を$M$の共変微分$\nabla$を用いて書き換える。$D$は曲率テンソル、捩率テンソルが共に0で、ユークリッド計量に対して計量的である。つまり
+    \begin{gather*}
+        D_XD_Ydf(Z) - D_YD_Xdf(Z) - D_[X, Y]df(Z) = 0\\
+        D_Xdf(Y) - D_Ydf(X) - df([X, Y]) = 0\\
+        X\<df(Y), df(Z)\> - \<D_Xdf(Y), df(Z)\> - \<df(Y), D_Xdf(Z)\> = 0\\
+    \end{gather*}
+
+    捩率テンソルの式にガウスの公式を適用すると
+    \begin{align*}
+        (df(\nabla_XY) + h(X, Y)\xi) - (df(\nabla_YX) + h(Y, X)\xi) - df([X, Y]) = 0
+    \end{align*}
+    $M$に接する成分と垂直な成分に分解すると
+    \begin{gather*}
+        \nabla_XY - \nabla_YX - [X, Y] = 0\\
+        h(X, Y) = h(Y, X)
+    \end{gather*}
+    つまり$\nabla$の捩率テンソルも0になる。また$h(X, Y), S$が対称線形であることが分かる。
+
+    次に計量条件の式を書き換える
+    \begin{align*}
+        Xg(Y, Z) - \<df(\nabla_XY), df(Z)\> - \<df(Y), df(\nabla_XZ)\> &= 0\\
+        Xg(Y, Z) - g(\nabla_XY, Z) - g(Y, \nabla_XZ) &= 0
+    \end{align*}
+    つまり$\nabla$も計量的である。捩率テンソルが0でかつ計量的なので$\nabla$はレヴィ=チヴィタ接続である必要がある。
+
+    曲率テンソルの式にガウス=ワインガルテンの公式を適用すると
+    \begin{align*}
+        D_XD_Ydf(Z)
+        &= D_X(df(\nabla_YZ) + h(Y, Z)\xi)\\
+        &= df(\nabla_X\nabla_YZ) + h(X, \nabla_YZ)\xi + X(h(Y, Z))\xi + h(Y, Z)D_X\xi\\
+        &= df(\nabla_X\nabla_YZ - h(Y, Z)SX) + (h(X, \nabla_YZ) + X(h(Y, Z)))\xi
+    \end{align*}
+    同様に
+        \[D_YD_Xdf(Z) = df(\nabla_Y\nabla_XZ - h(X, Z)SY) + (h(Y, \nabla_XZ) + Y(h(X, Z)))\xi\]
+    であり、また
+        \[D_[X, Y]df(Z) = df(\nabla_[X, Y]Z) + h([X, Y], Z)\xi\]
+    より
+    \begin{align*}
+        \{df(\nabla_X\nabla_YZ - h(Y, Z)SX) - df(\nabla_Y\nabla_XZ - h(X, Z)SY) - df(\nabla_[X, Y]Z)\} + \{(h(X, \nabla_YZ) + X(h(Y, Z)))\xi - (h(Y, \nabla_XZ) + Y(h(X, Z)))\xi - h([X, Y], Z)\xi\} = 0
+    \end{align*}
+    $M$に接する成分と垂直な成分に分解する。接する成分は
+    \begin{align*}
+        \nabla_X\nabla_YZ - \nabla_Y\nabla_XZ - \nabla_[X, Y]Z &= h(Y, Z)SX - h(X, Z)SY\\
+        R(X, Y)Z &= g(SY, Z)SX - g(SX, Z)SY
+        R(X, Y) &= SX \wedge SX
+    \end{align*}
+    垂直な成分は
+    \begin{align*}
+        X(h(Y, Z)) - Y(h(X, Z)) + h(X, \nabla_YZ) - h(Y, \nabla_XZ) - h([X, Y], Z) = 0\\
+        X(h(Y, Z)) - Y(h(X, Z)) + h(X, \nabla_YZ) - h(Y, \nabla_XZ) + h(\nabla_YX, Z) - h(\nabla_XY, Z) = 0\\
+        \nabla_Xh(Y, Z) = \nabla_Yh(X, Z)\\
+        \nabla_XS(Y) = \nabla_YS(X)
+    \end{align*}
+    まとめると
+    \begin{gather*}
+        R(X, Y) = SX \wedge SX \tag{ガウスの方程式}\\
+        \nabla_XS(Y) = \nabla_YS(X) \tag{コダッチの方程式}\\
+    \end{gather*}
+    ガウス=コダッチの方程式はリーマン計量によって定まる曲率テンソルとシェイプ作用素が満足すべき条件を示す。実際次の定理が成り立つ。
+    \begin{thm}[超曲面の基本定理]
+        単連結なリーマン多様体$(M, g)$上で$(1, 1)$型テンソル場$S$が$g$のレヴィ=チヴィタ接続に関してコダッチの方程式を満たすとき、$M$から$E^{n+1}$への等長的なはめ込みが合同変換を除いて一意的に存在する。
+    \end{thm}
+
+\subsection{驚異の定理}
+    $M$が$E^3$の2次元リーマン多様体つまり曲面のときを考える。$S$の固有値を$\lambda_1, \lambda_2$、それに対応する単位固有ベクトルを$X_1, X_2$とおく。ここで$S$は対称変換である。つまり
+    \begin{gather*}
+        h(X_1, X_2) = g(AX_1, X_2) = \lambda_1g(X_1, X_2)\\
+        h(X_1, X_2) = g(X_1, AX_2) = \lambda_2g(X_1, X_2)\\
+        (\lambda_2 - \lambda_1)g(X_1, X_2) = 0
+    \end{gather*}
+    なので、異なる固有値に属する固有ベクトルは直交する。固有値が縮退する場合も直交する固有ベクトルを取ることができる。つまり$g(X_1, X_1) = g(X_2, X_2) = 1, g(X_1, X_2) = 0$である。$K = \lambda_1\lambda_2 = \det S$をガウス曲率という。ガウスの方程式より
+    \begin{align*}
+        R(X_1, X_2)
+            &= SX_1 \wedge SX_2 = \lambda_1X_1 \wedge \lambda_2X_2\\
+            &= KX_1 \wedge X_2
+    \end{align*}
+    断面曲率は
+    \begin{align*}
+        K(\sigma)
+            &= g(R(X_1, X_2)X_2, X_1)\\
+            &= g(K(X_1 \wedge X_2)X_2, X_1)\\
+            &= g(Kg(X_2, X_2)X_1, X_1)\\
+            &= Kg(X_1, X_1)g(X_2, X_2) = K
+    \end{align*}
+    となりガウス曲率に一致する。断面曲率は基底に依らないので、ガウス曲率はリーマン計量によって完全に決定する。
+
+\section{定曲率空間}
+断面曲率が一定のリーマン多様体を定曲率空間という。
+
+\subsection{$n$次元球面}
+    $E^{n+1}$内の半径$r$の$n$次元球面を
+        \[S^n(r) = {x \in E^{n+1} \mid \<x, x\> = r^2}\]
+    と定義する。また$n$次元単位球面を単に$S^n = S^n(1)$と書く。点$p$における接ベクトル$X \in T_p(S^n(r))$、単位法ベクトル$\xi = -p/r$に対して
+        \[D_X\xi = -\frac{X}{r}\]
+    よりシェイプ作用素は
+        \[S = \frac{1}{r}I\]
+    となる。ガウスの方程式より
+    \begin{align*}
+        R(X, Y) = \frac{1}{r^2}X \wedge Y\\
+        K(\sigma) = \frac{1}{r^2}
+    \end{align*}
+    となる。
+
+\subsection{双曲空間}
+        \[\<x, y\> = \sum_{i=1}^n x^iy^i - x^{n+1}y^{n+1}\]
+    をローレンツ内積と呼ぶ。$R^{n+1}$にローレンツ内積が定義された空間を$n+1$次元ローレンツ空間$L^{n+1}$と呼ぶ。
+        \[\{x \in L^{n+1} \mid \<x, x\> = -r^2\}\]
+    は$x^{n+1} > 0$と$x^{n+1} < 0$の二つの連結成分を持つ。そこで$n$次元双曲空間を
+        \[H^n(r) = \{x \in L^{n+1} \mid \<x, x\> = -r^2, x^{n+1} > 0\}\]
+    と定義する。点$p$における接ベクトル$X \in T_p(H^n(r))$、単位法ベクトル$\xi = -p/r$に対して
+        \[D_X\xi = -\frac{X}{r}\]
+    よりシェイプ作用素は
+        \[S = \frac{1}{r}I\]
+    ガウスの方程式より
+    \begin{align*}
+        R(X, Y) &= -\frac{1}{r^2}X \wedge Y\\
+        K(\sigma) &= -\frac{1}{r^2}
+    \end{align*}
+    となる。
+
+\begin{thm}
+    $M_1, M_2$が同じ曲率を持つ$n$次元定曲率空間であるとする。$x_0 \in M_1$と$T_{x_0}(M_1)$の正規直交基底$\{X_1, X_2, \dots, X_n\}$、$y_0 \in M_2$と$T_{y_0}(M_2)$の正規直交基底$\{Y_1, Y_2, \dots, Y_n\}$に対して、$x_0$の近傍から$y_0$の近傍への等長変換$f$で
+        \[f(x_0) = y_0, df(X_i) = Y_i\]
+    となるものが存在する。
+\end{thm}
+\begin{thm}
+    $n$次元局所対称的リーマン多様体$M_1, M_2$に対して、$x_0 \in M_1$の近傍から$y_0 \in M_2$の近傍への等長変換$f$で
+        \[f(x_0) = y_0, df(R_1(X, Y)Z) = R_2(df(X), df(Y))df(Z)\]
+    となるものが存在する。
+\end{thm}
+\begin{cor}
+    一定曲率$c$を持つ$n$次元リーマン多様体は
+    \[\begin{cases}
+        E^n & (c = 0)\\
+        S^n(r) & (c > 0, r = \frac{1}{\sqrt{c}})\\
+        H^n(r) & (c < 0, r = \frac{1}{-\sqrt{c}})
+    \end{cases}\]
+    のいずれかと局所等長的である。
+\end{cor}
+\begin{cor}
+    $n$次元定曲率空間の2点$x, y$とその正規直交基底$\{X_1, X_2, \dots, X_n\}, \{Y_1, Y_2, \dots, Y_n\}$に対して、局所等長写像
+        \[f(x) = y, df(X_i) = Y_i\]
+    が存在する。
+\end{cor}
+\begin{cor}
+    局所対称的リーマン多様体の2点$x, y$に対して、$x$の近傍から$y$の近傍への等長変換が存在する。
+\end{cor}

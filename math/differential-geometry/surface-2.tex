@@ -1,0 +1,247 @@
+\section{曲面の方程式(ガウス枠)}
+第一種及び第二種のクリストッフェル記号を次のように定義する。
+\begin{align*}
+    [jk, l] &= \frac{1}{2}\(\pdv{g_{kl}}{u^j} + \pdv{g_{jl}}{u^k} - \pdv{g_{jk}}{u^l}\)\\
+    \chr{i}{jk} &= \frac{1}{2}g^{ih}\(\pdv{g_{jh}}{u^k} + \pdv{g_{kh}}{u^j} - \pdv{g_{jk}}{u^h}\)
+\end{align*}
+ここで$[jk, l] = g_{il}\chr{i}{jk}, \chr{i}{jk} = g^{ih}[jk, h]$が成り立っている。
+
+\subsection{ガウス=ワインガルテンの公式}
+    曲線におけるフレネ=セレの公式に当たるものを導出する。
+    
+    ガウス枠$\{B_1, B_2, n\}$をとる。ここで
+        \[n = \frac{B_1 \times B_2}{|B_1 \times B_2|} = \frac{B_1 \times B_2}{\sqrt{g_{11}g_{22} - g_{12}^2}}\]
+    である。三つのベクトルは線形独立なので、
+        \[\pdv{B_j}{u^k} = \Gamma_{jk}^iB_i + h_{jk}n\]
+    と書ける。$h_{jk} = \pdv*{B_j}{u^k} \cdot n$は定義より第二基本量である。また$g_{ij} = B_i \cdot B_j$を微分した
+        \[\pdv{B_i}{u^k} \cdot B_j + B_i\cdot \pdv{B_j}{u^k} = \pdv{g_{ij}}{u^k}\]
+    に代入して、
+        \[\Gamma_{ik}^hg_{hj} + \Gamma_{jk}^hg_{ih} = \pdv{g_{ij}}{u^k}\]
+    を得る。$\Gamma_{jk|i} = \Gamma_{jk}^hg_{ih}$と置けば、
+        \[\Gamma_{ik|j} + \Gamma_{jk|i} = \pdv{g_{ij}}{u^k}\]
+    となる。$\pdv*{B_j}{u^k} = \pdv*{p}{u^j}{u^k}$は$j,k$に関して対称なので、上式の添え字を循環的に入れ替えて、$\Gamma_{jk|i}$に関する連立方程式とみれば、
+    \begin{align*}
+        \Gamma_{jk|i} &= \frac{1}{2}\(\pdv{g_{ki}}{u^j} + \pdv{g_{ij}}{u^k} - \pdv{g_{jk}}{u^i}\) = [jk,i]\\
+        \Gamma_{jk}^i &= g^{ih}\Gamma_{jk|h} = \chr{i}{jk}
+    \end{align*}
+    となることが分かる。次に$n \cdot n = 1$を微分すると$\pdv*{n}{u^j} \cdot n = 0$だから
+        \[\pdv{n}{u^k} = r_k^hB_h\]
+    となる$r_j^h$が一意に決まる。$B_i \cdot n = 0$を微分した$\pdv*{B_i}{u^k} \cdot n + B_i \cdot \pdv*{n}{u^k} = 0$に先程の式を代入して、
+        \[h_{ij} + r_j^hg_{ih} = 0\]
+    これは行列の積を成分ごとに表したものなので、両辺に右から$g$の逆行列をかけて、
+        \[r_k^i = -h_{kl}g^{li}\]
+    二つを合わせて
+    \begin{align*}
+        \pdv{B_j}{u^k} &= \chr{i}{jk}B_i + h_{jk}n \tag{ガウスの公式}\\
+        \pdv{n}{u^k} &= -h_{kl}g^{li}B_i \tag{ワインガルテンの公式}
+    \end{align*}
+
+\subsection{ガウス=コダッチの方程式}
+    ガウス=ワインガルテンの公式の係数は第一及び第二基本量から求められる。この方程式を解くことで求められたガウス枠$\{B_1, B_2, n\}$が実際の曲面と矛盾しないためには以下の条件が必要となる。
+    \begin{align*}
+        \pdv{p}{u^j}{u^i} &= \pdv{p}{u^i}{u^j}\\
+        \pdv{B_i}{u^k}{u^j} &= \pdv{B_i}{u^j}{u^k}\\
+        \pdv{n}{u^j}{u^i} &= \pdv{n}{u^i}{u^j}
+    \end{align*}
+    である。第一式に関しては既に成り立っている。なぜなら
+        \[\pdv{p}{u^j}{u^i} = \pdv{B_i}{u^j} = \chr{h}{ij}B_h + h_{ij}n\]
+    は$i,j$に関して対称だからである。次に第二式の条件を求める。
+    \begin{align*}
+        \pdv{B_i}{u^k}{u^j}
+            &= \pdv{u^k}\(\chr{h}{ij}B_h + h_{ij}n\)\\
+            &= \pdv{u^k}\chr{h}{ij}B_h + \chr{h}{ij}\pdv{B_h}{u^k} + \pdv{h_{ij}}{u^k}n + h_{ij}\pdv{n}{u^k}\\
+            &= \sum_h \pdv{u^k}\chr{h}{ij}B_h + \sum_{h,l} \chr{h}{ij}\chr{l}{hk}B_l + \sum_h \chr{h}{ij}h_{hk}n\\
+            &\quad + \pdv{h_{ij}}{u^k}n + h_{ij} \sum_{l,h}(-h_{kl}g^{lh}B_h)
+    \end{align*}
+    第二項で添え字$h, l$を入れ替えると
+    \begin{align*}
+        \pdv{B_i}{u^k}{u^j}
+            &= \left[\pdv{u^k}\chr{h}{ij} + \chr{h}{kl}\chr{l}{ij} - h_{ij}h_{kl}g^{lh}\right]B_h\\
+            &\quad + \left[\pdv{h_{ij}}{u^k} + \chr{h}{ij}h_{hk}\right]n
+    \end{align*}
+    となる。これが$j, k$に関して対称となる。$B_h, n$は線形独立なので、
+    \begin{gather*}
+        R^h_{ijk} = h_{ik}h_{jl}g^{lh} - h_{ij}h_{kl}g^{lh} \tag{ガウスの方程式}\\
+        \pdv{h_{ij}}{u^k} - \pdv{h_{ik}}{u^j} + \chr{h}{ij}h_{hk} - \chr{h}{ik}h_{hj} = 0 \tag{コダッチの方程式}
+    \end{gather*}
+    となる。ただし
+        \[R^h_{ijk} = \pdv{u^j}\chr{h}{ik} - \pdv{u^k}\chr{h}{ij} + \chr{l}{ik}\chr{h}{jl} - \chr{l}{ij}\chr{h}{kl}\]
+    である。また両辺に$g^{hl}$をかけて縮約を取ったものを、
+        \[R_{lijk} = g^{hl}R^h_{ijk} = \pdv{u^j}\chr{h}{ik}g^{hl} - \pdv{u^k}\chr{h}{ij}g^{hl} + \chr{a}{ik}\chr{h}{ja}g^{hl} - \chr{a}{ij}\chr{h}{ka}g^{hl}\]
+    これらをリーマン曲率テンソルと呼ぶ。リーマン曲率テンソルを用いてガウスの方程式を表すと、
+    \begin{align*}
+        g^{ha}R^h_{ijk}
+            &= h_{ik}h_{ja}g^{ah}g^{hl} - h_{ij}h_{ka}g^{ah}g^{hl}\\
+        R_{lijk}
+            &= h_{ik}h_{ja}\delta_l^a - h_{ij}h_{ka}\delta_l^a\\
+            &= h_{ik}h_{jl} - h_{ij}h_{kl}
+    \end{align*}
+    また第三式については、コダッチの方程式と同じものが導かれるため、条件はこれで十分である。よって次の定理が成り立つ。
+    \begin{thm}[曲面論の基本定理]
+        対称テンソル$g_{ij}, h_{ij}$が与えられ、$g_{ij}$は正定値であるとする。これらがガウス=コダッチの方程式を満たすとき、これらを第一及び第二基本量とする曲面$p(u, v)$が合同変換を除いて一意に存在する。
+    \end{thm}
+
+\subsection{驚異の定理}
+    上の式は右辺が第二基本量のみに依存している。元々リーマン曲率テンソル及びその定義に含まれるクリストッフェル記号は第一基本量のみから求めることができた。つまり第一基本テンソルと第二基本テンソルは独立ではない。特に
+        \[R_{1212} = h_{11}h_{22} - h_{12}^2\]
+    である。これを用いると、
+        \[K = \frac{h_{11}h_{22} - h_{12}^2}{g_{11}g_{22} - g_{12}^2} = \frac{R_{1212}}{g_{11}g_{22}-g_{12}^2}\]
+    となる。曲面のガウス曲率を第一基本テンソルだけから求めることができる。これを驚異の定理(Theorem Egregium)という。元々外在的な量から定義されたガウス曲率が、内在的な量のみから決定できることが示された。外界の情報を用いることなく空間の曲がり方を考察することができることを示唆している。
+
+
+    % \paragraph{等長写像}
+    %     二つの曲面が距離を保ったまま変形できるとき、等長的であると言い、そのような写像を等長写像という。等長的な二つの曲面は、伸縮せずに折り曲げることで変形できる。折り紙は平面と等長的な曲面(可展面)を作る遊びである(ウェットフォールディングをする場合はこの限りではない)。等長変換によって第一基本形式およびガウス曲率は不変である。対偶を取ると、ガウス曲率の一致しない曲面は等長的でない。平面のガウス曲率は任意の点で0であり、半径$r$の球面では$1/r^2$なので、球面を歪ませることなく平面に展開することはできない。つまり地球の正確な平面図を作成することは不可能である。
+    % \paragraph{共形写像}
+    %     始点が同じ任意の二つのベクトルの成す角を保存する写像を共形写像(等角写像)という。
+    % \paragraph{等温座標}
+    %     パラメータ$(u,v)$から平面への共形写像が存在するとき、$(u,v)$を等温座標という。これは第一基本形式が$ds^2 = E(du^2 + dv^2)$となることと同値である。複素数$z = u + iv$を使えば、$ds^2 = E|dz|^2$とも書ける。曲面上の任意の点で局所的には等温座標が存在することが証明できる。ここで、
+    %     \begin{align*}
+    %         \partial = \pd{z} = \frac{1}{2}\(\pd{u} - i\pd{v}\)\\
+    %         \overline{\partial} = \pd{\overline{z}} = \frac{1}{2}\lr{\pd[]{u}+i\pd[]{v}}
+    %     \end{align*}
+    %     とするとガウス曲率は、
+    %         \[K = -\frac{2\partial\overline{\partial}\log E}{E} = -\frac{\Delta \log E}{2E}\]
+    %     となる。 
+
+\section{曲面の方程式(正規直交枠)}
+\subsection{構造方程式}
+    正規直交枠$\{e_1, e_2, e_3\}$を取る。ただし$e_3$を法線ベクトルとして、$e_1 \times e_2 = e_3$となるように取る。$\{e_1, e_2\}$は接平面の基底なので
+    \begin{align*}
+        \pdv{p}{u} &= a^1_1e_1 + a^2_1e_2\\
+        \pdv{p}{v} &= a^1_2e_1 + a^2_2e_2
+    \end{align*}
+    と書ける。係数行列の行列式は非零である。
+        \[\theta^1 = a^1_1\dd{u} + a^1_2\dd{v}, \quad \theta^2 = a^2_1\dd{u} + a^2_2\dd{v}\]
+    とおくと
+    \begin{align*}
+        \dd{p} &= \pdv{p}{u}\dd{u} + \pdv{p}{v}\dd{v}\\
+                &= (a^1_1e_1 + a^2_1e_2)\dd{u} + (a^1_2e_1 + a^2_2e_2)\dd{v}\\
+                &= (a^1_1\dd{u} + a^1_2\dd{v})e_1 + (a^2_1\dd{u} + a^2_2\dd{v})e_2\\
+                &= \theta^1e_1 + \theta^2e_2
+    \end{align*}
+    となる。第一基本形式は
+        \[I = \dd{p} \cdot \dd{p} = \theta^1\theta^1 + \theta^2\theta^2\]
+    と表すことができる。
+
+    正規直交枠$\{e_1, e_2, e_3\}$と第一基本形式$I = \theta^1\theta^1 + \theta^2\theta^2$が与えらえているとする。ここで
+    \begin{align*}
+        \dd{e_1} &= \omega^1_1e_1 + \omega^2_1e_2 + \omega^3_1e_3\\
+        \dd{e_2} &= \omega^1_2e_1 + \omega^2_2e_2 + \omega^3_2e_3\\
+        \dd{e_3} &= \omega^1_3e_1 + \omega^2_3e_2 + \omega^3_3e_3
+    \end{align*}
+    と表すことができる。$\omega_i^j$は1次微分形式である。$e_i \cdot e_j = \delta_{ij}$を微分して
+        \[\dd{e_i} \cdot e_j + e_i \cdot \dd{e_j} = 0\]
+    なので$\omega_i^j + \omega_j^i = 0$であり、特に$\omega_i^i = 0$である。これを用いると第二基本形式は
+    \begin{align*}
+        II  &= -\dd{p} \cdot \dd{e_3}\\
+            &= - (\theta^1e_1 + \theta^2e_2) \cdot (\omega^1_3e_1 + \omega^2_3e_2)\\
+            &= - \theta^1\omega^1_3 - \theta^2\omega^2_3\\
+            &= \theta^1\omega^3_1 + \theta^2\omega^3_2
+    \end{align*}
+    $\omega^i_j$は$\theta^1, \theta^2$の線形結合だから、
+    \begin{align*}
+        \omega^3_1 &= b_{11}\theta^1 + b_{12}\theta^2\\
+        \omega^3_2 &= b_{21}\theta^1 + b_{22}\theta^2
+    \end{align*}
+    となるので結局
+        \[II = b_{11}\theta^1\theta^1 + b_{12}\theta^1\theta^2 + b_{21}\theta^2\theta^1 + b_{22}\theta^2\theta^2\]
+    対称行列$B$の固有値は主曲率となる。つまりガウス曲率と平均曲率は
+    \begin{align*}
+        K &= \det B = b_{11}b_{22} - b_{12}^2\\
+        2H &= \tr B = b_{11} + b_{22}
+    \end{align*}
+    となる。
+
+    次に
+        \[\dd{p} = \theta^1e_1 + \theta^2e_2\]
+    の両辺の外微分を取ると
+    \begin{align*}
+        0   &= \dd{\theta^1}e_1 - \theta^1 \wedge \dd{e_1} + \dd{\theta^2}e_2 - \theta^2 \wedge \dd{e_2}\\
+            &= \dd{\theta^1}e_1 - \theta^1 \wedge \sum_i \omega^i_1e_i + \dd{\theta^2}e_2 - \theta^2 \wedge \sum_i \omega^i_2e_i\\
+            &= (\dd{\theta^1} - \theta^2 \wedge \omega^1_2)e_1 + (\dd{\theta^2} - \theta^1 \wedge \omega^2_1)e_2 - (\theta^1 \wedge \omega^3_1 + \theta^2 \wedge \omega^3_2)e_3
+    \end{align*}
+    成分ごとに比較すれば
+    \begin{align*}
+        \dd{\theta^1} &= \theta^2 \wedge \omega^1_2\\
+        \dd{\theta^2} &= \theta^1 \wedge \omega^2_1\\
+        0 &= \theta^1 \wedge \omega^3_1 + \theta^2 \wedge \omega^3_2
+    \end{align*}
+    これを第一構造式という。
+        \[de_i = \sum_j \omega^j_ie_j\]
+    の両辺の外微分を取ると
+    \begin{align*}
+        0    &= \sum_j d\omega^j_ie_j - \omega^j_i \wedge de_j\\
+            &= \sum_j d\omega^j_ie_j - \omega^j_i \wedge \sum_k \omega^k_je_k\\
+            &= \(d\omega^1_i - \sum_j \omega^j_i \wedge \omega^1_j\)e_1 + \(d\omega^2_i - \sum_j \omega^j_i \wedge \omega^2_j\)e_2 + \(d\omega^3_i - \sum_j \omega^j_i \wedge \omega^3_j\)e_3
+    \end{align*}
+    成分ごとに比較すると
+        \[d\omega^j_i = \sum_k \omega^k_i \wedge \omega^j_k\]
+    である。これを第二構造式という。$d\omega^1_2$は
+    \begin{align*}
+        d\omega^1_2
+            &= \sum_k \omega^k_2 \wedge \omega^1_k\\
+            &= \omega^3_2 \wedge \omega^1_3\\
+            &= (b_{21}\theta^1 + b_{22}\theta^2) \wedge -(b_{11}\theta^1 + b_{12}\theta^2)\\
+            &= (b_{11}b_{22} - b_{12}b_{21})\theta^1 \wedge \theta^2\\
+            &= K\theta^1 \wedge \theta^2
+    \end{align*}
+    $K$は基底に依らないことが分かるので、第一基本形式のみに依存する。
+
+    % $d\omega^3_i$は
+    % \begin{align*}
+    %     d\omega^3_i &= \sum_k \omega^k_i \wedge \omega^3_k\\
+    %     &= \omega^1_i \wedge \omega^3_1 + \omega^2_i \wedge \omega^3_2\\
+    % \end{align*}
+    % $i = 1$のとき
+    % \begin{align*}
+    %     d\omega^3_1 &= \omega^2_1 \wedge \omega^3_2\\
+    %     d(b_{11}\theta^1 + b_{12}\theta^2) &= \omega^2_1 \wedge (b_{21}\theta^1 + b_{22}\theta^2)\\   
+    % \end{align*}
+
+\subsection{ガウス=ボネの定理}
+    平面の領域$D$上の正規直交基底を$\{e_1, e_2\}$、双対基底を$\{\theta^1, \theta^2\}$とする。第一基本形式$I = \theta^1\theta^1 + \theta^2\theta^2$が与えられている。
+
+    $A \subset D$を考える。$\partial A$は滑らかな曲線$\alpha_1, \dots, \alpha_n$を繋いだものであり、$\alpha_i$から$\alpha_{i+1}$に移るときの内角と外角を$\tau_i, \epsilon_i\ (\tau_i + \epsilon_i = \pi)$とする。$\partial A$を弧長パラメータを用いて$\alpha(s)$と表すことにする。
+        \[\frac{\alpha'(s)}{|\alpha'(s)|} = \cos\phi(s)e_1 + \sin\phi(s)e_2\]
+    とおくと
+    \begin{align*}
+        \alpha''(s)
+            &= \dv{s}(\cos\phi(s)e_1 + \sin\phi(s)e_2)\\
+            &= -\sin\phi(s)\phi'(s)e_1 + \cos\phi(s)\dv{e_1}{s} + \cos\phi(s)\phi'(s)e_2 + \sin\phi(s)\dv{e_2}{s}\\
+            &= -\sin\phi(s)\phi'(s)e_1 + \cos\phi(s)\frac{\omega^2_1}{\dd{s}}e_2 + \cos\phi(s)\phi'(s)e_2 + \sin\phi(s)\frac{\omega^1_2}{\dd{s}}e_1\\
+            &= \sin\phi(s)\(-\dv{\phi}{s} + \frac{\omega^1_2}{\dd{s}}\)e_1 + \cos\phi(s)\(\dv{\phi}{s} + \frac{\omega^2_1}{\dd{s}}\)e_2
+    \end{align*}
+    測地的曲率$k_g$は
+    \begin{align*}
+        k_g &= |\alpha''(s)|\\
+            &= \sqrt{\sin^2\phi(s)\(\(\dv{\phi}{s}\)^2 - 2\dv{\phi}{s}\frac{\omega^1_2}{\dd{s}} + \(\frac{\omega^1_2}{\dd{s}}\)^2\) + \cos^2\phi(s)\(\(\dv{\phi}{s}\)^2 + 2\dv{\phi}{s}\frac{\omega^2_1}{\dd{s}} + \(\frac{\omega^2_1}{\dd{s}}\)^2\)}\\
+            &= \sqrt{\(\dv{\phi}{s}\)^2 - 2\dv{\phi}{s}\frac{\omega^1_2}{\dd{s}} + \(\frac{\omega^1_2}{\dd{s}}\)^2}\\
+            &= \dv{\phi}{s} - \frac{\omega^1_2}{\dd{s}}\\
+        k_g\dd{s} &= \dd{\phi} - \omega^1_2
+    \end{align*}
+    曲線に沿って一周積分すると
+        \[\int_{\partial A} \omega^1_2 + \int_{\partial A} k_g \dd{s} = \int_{\partial A} \dd{\phi} = 2\pi - \sum_i \epsilon\]
+    ストークスの定理より
+        \[\int_{\partial A} \omega^1_2 = \int_A \dd{\omega^1_2} = \int_A K\theta^1 \wedge \theta^2\]
+    だから
+        \[\int_A K\theta^1 \wedge \theta^2 + \int_{\partial A} k_g \dd{s} = 2\pi - \sum_i \epsilon\]
+    となる。$A$が3つの滑らかな曲線からなる場合は
+        \[\int_A K\theta^1 \wedge \theta^2 + \int_{\partial A} k_g \dd{s} = \tau_1 + \tau_2 + \tau_3 - \pi\]
+    特に測地三角形の場合は
+        \[\int_A K\theta^1 \wedge \theta^2 = \tau_1 + \tau_2 + \tau_3 - \pi\]
+    つまりガウス曲率$K$の符号によって三角形の内角の和と$\pi$の大小が決まる。
+
+    向き付け可能な閉曲面$S$について考える。ここで三角形分割を、三角形を敷き詰めたものであって、
+    \begin{enumerate}
+        \item 点$p$がある三角形の面上にあり辺上にないとき、$p$を含む三角形は1つ。
+        \item 点$p$がある三角形の辺上にあり頂点でないとき、$p$を含む三角形は2つ。
+        \item 点$p$がある三角形の頂点であるとき、$p$を含む三角形は有限個。
+    \end{enumerate}
+    を満たすものとする。曲面を必ずこのように三角形分割することができる。閉曲面を三角形分割したとき、頂点の数を$v$、辺の数を$e$、面の数を$f$とすると、
+    \begin{align*}
+        \sum_i \int_{T_i} K\theta^1 \wedge \theta^2 + \sum_i \int_{\partial T_i} k_g \dd{s} &= \sum_i \tau_{i1} + \tau_{i2} + \tau_{i3} - \pi\\
+        \int_S K\theta^1 \wedge \theta^2 &= (2v - f)\pi
+    \end{align*}
+    ここで$2e = 3f$だから、$2v - f = 2v - 3f + 2f = 2(v - e + f)$より
+        \[\int_S K\theta^1 \wedge \theta^2 = 2\pi(v - e + f)\]
+    となる。これをガウス=ボネの定理という。閉曲面$S$が与えられたとき、左辺はリーマン計量のみに依存し、右辺は三角形分割のみに依存する。よって両辺ともにリーマン計量にも三角形分割にも依存しない。特に右辺に関して、$\chi(S) = v - e + f$と書くことができる。これを曲面のオイラー標数という。

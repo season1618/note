@@ -1,0 +1,228 @@
+\section{アフィン接続}
+
+\subsection{アフィン接続}
+    \begin{dfn}[接$n$枠束(frame bundle)]
+        線形同型写像$u: (a_1, a_2, \dots, a_n) \in \R^n \mapsto a_1X_1 + a_2X_2 + \dots + a_nX_n \in T_p(M)$を$p \in M$における接$n$枠と呼ぶ。$p$における接$n$枠全体を$L_p(M)$として、$L(M) = \cup \{p\} \times L_p(M)$を接$n$枠束という。
+    \end{dfn}
+
+    \begin{dfn}[アフィン接続]
+        主ファイバー束$L(M)$の切断をアフィン接続(線形接続)という。
+    \end{dfn}
+
+    \begin{dfn}[アフィン接続(線形接続)]
+        接束$TM$の接続を$M$のアフィン接続または線形接続という。
+    \end{dfn}
+
+    \begin{dfn}[共変微分]
+        アフィン接続の共変微分は写像$\nabla: (X, Y) \in \mathfrak{X}(M) \times \mathfrak{X}(M) \mapsto \nabla_XY \in \mathfrak{X}(M)$であって、以下を満たすものを言う。
+        \begin{enumerate}
+            \item $\nabla_X(Y_1 + Y_2) = \nabla_XY_1 + \nabla_XY_2$
+            \item $\nabla_{X_1 + X_2}(Y) = \nabla_{X_1}Y + \nabla_{X_2}Y$
+            \item $\nabla_{fX}Y = f\nabla_XY$
+            \item $\nabla_X(fY) = (Xf)Y + f\nabla_XY$
+        \end{enumerate}
+        ただし$f \in \mathfrak{F}(M)$である。
+    \end{dfn}
+
+    % \begin{thm}
+    %     多様体$M$と上の条件を満たす写像$\nabla$が与えられているとき、これを共変微分とするアフィン接続が存在する。
+    % \end{thm}
+    % つまり共変微分を与えることでアフィン接続を考えることができる。
+
+    座標系$(x^i)$を定めたとき$\nabla_{\pdv{x^i}}Y$を単に$\nabla_iY$と書く。
+        \[\nabla_{\pdv{x^i}}\pdv{x^j} = \sum_k \Gamma^k_{ij}\pdv{x^k}\]
+    となる$\Gamma^k_{ij}$を座標系$(x^i)$に関する接続係数またはクリストッフェル記号という。$X = \sum X^i\pdv*{x^i}, Y = \sum Y^i\pdv*{x^i}$のとき
+    \begin{align*}
+        \nabla_XY
+            &= \sum_i X^i\nabla_{\pdv{x^i}}\(\sum_j Y^j\pdv{x^j}\)\\
+            &= \sum_{i,j} X^i\nabla_{\pdv{x^i}}\(Y^j\pdv{x^j}\)\\
+            &= \sum_{i,j} X^i\pdv{Y^j}{x^i}\pdv{x^j} + X^iY^j\nabla_{\pdv{x^i}}\pdv{x^j}\\
+            &= \sum_{i,j} X^i\pdv{Y^j}{x^i}\pdv{x^j} + X^iY^j\sum_k \Gamma^k_{ij}\pdv{x^k}
+    \end{align*}
+    となる。
+
+    アフィン接続の不変量として曲率と捩率がある。
+
+    % 可微分写像$f: M_1 \rightarrow M_2$に対して、可微分写像
+    %     \[X: p \in M_1 \mapsto X_p \in T(M_2)\]
+    % であって、
+    %     \[\pi(X_p) = f(p)\]
+    % を満たすようなものを$f$に沿うベクトル場という。$f$に沿うベクトル場全体を$\mathfrak{X}_f$で表す。
+
+    % $M$がアフィン接続を持ち、共変微分$\nabla$が与えられているとする。写像
+    %     \[(X, Y) \in \mathfrak{X}(M) \times \mathfrak{X}_f \mapsto \nabla_XY \in \mathfrak{X}\]
+    % で
+    % \begin{enumerate}
+    %     \item $\nabla_{X_1 + X_2}Y = \nabla_{X_1}Y + \nabla_{X_2}Y$
+    %     \item $\nabla_{\phi X}Y = \phi\nabla_XY$
+    %     \item $\nabla_X(Y_1 + Y_2) = \nabla_XY_1 + \nabla_XY_2$
+    %     \item $\nabla_X \phi Y = (X\phi)Y + \phi\nabla_XY$
+    % \end{enumerate}
+    % を満たすものがただ一つ存在する。これを$f$に沿う共変微分という。
+
+\subsection{曲率テンソル}
+    \begin{dfn}[曲率テンソル]
+        接ベクトル場$X, Y, Z \in \mathfrak{X}(M)$に対して$(1, 3)$型テンソル場
+            \[R(X, Y)Z = (\nabla_X\nabla_Y - \nabla_Y\nabla_X - \nabla_{[X, Y]})Z\]
+        を曲率テンソル場という。曲率テンソルまたは単に曲率ともいう。
+    \end{dfn}
+    \begin{proof}
+        $R$がテンソルになることを示す。和に関しては自明。関数倍については
+        \begin{align*}
+            R(fX, Y)Z &= \nabla_{fX}\nabla_YZ - \nabla_Y\nabla_{fX}Z - \nabla_{[fX, Y]}Z\\
+                      &= f\nabla_X\nabla_YZ - \nabla_Y(f\nabla_XZ) - \nabla_{[fXY - Y(fX)]}Z\\
+                      &= f\nabla_X\nabla_YZ - Yf\nabla_XZ - f\nabla_Y\nabla_XZ - \nabla_{[fXY - YfX - fYX]}Z\\
+                      &= f\nabla_X\nabla_YZ - Yf\nabla_XZ - f\nabla_Y\nabla_XZ - f\nabla_{[XY - YX]}Z + Yf\nabla_XZ\\
+                      &= fR(X, Y)Z
+        \end{align*}
+        同様に
+            \[R(X, fY)Z = fR(X, Y)Z\]
+        また
+        \begin{align*}
+            R(X, Y)(fZ)
+                &= \nabla_X\nabla_Y(fZ) - \nabla_Y\nabla_X(fZ) - \nabla_{[X, Y]}(fZ)\\
+                &= \nabla_X(YfZ + f\nabla_YZ) - \nabla_Y(XfZ + f\nabla_XZ) - ([X, Y]fZ + f\nabla_{[X, Y]}Z)\\
+                &= (XYfZ + Yf\nabla_XZ + Xf\nabla_YZ + f\nabla_X\nabla_YZ)\\
+                &\quad - (YXfZ + Xf\nabla_YZ + Yf\nabla_XZ + f\nabla_Y\nabla_XZ)\\
+                &\quad - ([X, Y]fZ + f\nabla_{[X, Y]}Z)\\
+                &= fR(X, Y)Z
+        \end{align*}
+        だから、$R(X, Y)Z$は多重線形写像つまりテンソルである。
+    \end{proof}
+
+    $R$の成分を
+        \[R\(\pdv{x^i}, \pdv{x^j}\)\pdv{x^k} = \sum_l R^l_{kij}\pdv{x^l}\]
+    とする。
+
+    $Z = Z^k\pdv*{x^k}$について
+    \begin{align*}
+        R\(\pdv{x^i}, \pdv{x^j}\)Z
+            &= \sum_{k, l} R^l_{kij}Z^k \pdv{x^l}\\
+        R\(\pdv{x^i}, \pdv{x^j}\)Z
+            &= \sum_k Z^k R\(\pdv{x^i}, \pdv{x^j}\)\pdv{x^k}\\
+            &= \sum_k Z^k[\nabla_i, \nabla_j]\pdv{x^k}
+    \end{align*}
+    つまり
+        \[[\nabla_X, \nabla_Y]A^\mu = R^\mu_{ijk}A^i\]
+    である。通常の偏微分が可換、つまり$[\partial_X, \partial_Y] = 0$なのに対して、共変微分は非可換であることが分かる。また非可換さの度合いを表す$R^\mu_{ijk}$が空間の曲がり具合を表すことが確認できる。
+    
+    曲率テンソルの成分を接続係数を用いて表す。
+    \begin{align*}
+        R\(\pdv{x^i}, \pdv{x^j}\)\pdv{x^k}
+            &= \nabla_{\pdv{x^i}}\sum_l \Gamma^l_{jk}\pdv{x^l} - \nabla_{\pdv{x^j}}\sum_l \Gamma^l_{ik}\pdv{x^l} - \nabla_0Z\\
+            &= \sum_l \nabla_{\pdv{x^i}}\(\Gamma^l_{jk}\pdv{x^l}\) - \sum_l \nabla_{\pdv{x^j}}\(\Gamma^l_{ik}\pdv{x^l}\)\\
+            &= \sum_l \pdv{\Gamma^l_{jk}}{x^i}\pdv{x^l} + \Gamma^l_{jk}\nabla_{\pdv{x^i}}\pdv{x^l} - \sum_l \pdv{\Gamma^l{ik}}{x^j}\pdv{x^l} + \Gamma^l_{ik}\nabla_{\pdv{x^j}}\pdv{x^l}\\
+            &= \sum_l \pdv{\Gamma^l_{jk}}{x^i}\pdv{x^l} + \Gamma^l_{jk}\sum_m \Gamma^m_{il}\pdv{x^m} - \sum_l \pdv{\Gamma^l_{ik}}{x^j}\pdv{x^l} + \Gamma^l_{ik}\sum_m \Gamma^m_{jl}\pdv{x^m}\\
+            &= \sum_l \pdv{\Gamma^l_{jk}}{x^i}\pdv{x^l} + \sum_l\sum_m \Gamma^l_{jk}\Gamma^m_{il}\pdv{x^m} - \sum_l \pdv{\Gamma^l_{ik}}{x^j}\pdv{x^l} - \sum_l\sum_m \Gamma^l_{ik}\Gamma^m_{jl}\pdv{x^m}\\
+    \intertext{第二項と第四項で添え字$l, m$を入れ替える。}
+            &= \sum_l \pdv{\Gamma^l_{jk}}{x^i}\pdv{x^l} + \sum_l\sum_m \Gamma^m_{jk}\Gamma^l_{im}\pdv{x^l} - \sum_l \pdv{\Gamma^l_{ik}}{x^j}\pdv{x^l} - \sum_l\sum_m \Gamma^m_{ik}\Gamma^l_{jm}\pdv{x^l}\\
+            &= \sum_l \(\pdv{\Gamma^l_{jk}}{x^i} - \pdv{\Gamma^l_{ik}}{x^j} + \sum_m \Gamma^m_{jk}\Gamma^l_{im} - \Gamma^m_{ik}\Gamma^l_{jm}\)\pdv{x^l}\\
+        R^l_{kij}
+            &= \pdv{\Gamma^l_{jk}}{x^i} - \pdv{\Gamma^l_{ik}}{x^j} + \sum_m \Gamma^m_{jk}\Gamma^l_{im} - \Gamma^m_{ik}\Gamma^l_{jm}
+    \end{align*}
+    となる。$R^l_{kij} = - R^l_{kji}$が成り立つ。
+
+\subsection{捩率テンソル}
+    \begin{dfn}[標準形式]
+        局所標構場$e$が与えらえたとき、双対基底(1次微分形式)$\theta^i: \mathfrak{X}(M) \rightarrow \mathfrak{F}(M)$は
+            \[\theta^i(e_j) = \delta^i_j\]
+        となる。$\theta = (\theta^i)$を標準形式(solder form)という。
+    \end{dfn}
+
+    \begin{dfn}[捩率形式]
+        局所標構場$e$が与えられたとき、2次微分形式$\Theta^i: \mathfrak{X}(M) \times \mathfrak{X}(M) \rightarrow \mathfrak{F}(M)$を標準形式によって
+            \[\Theta^i = d\theta^i + \sum_j \omega^i_j \wedge \theta^j\]
+        と定義する。$\Theta = (\Theta^i)$を捩率形式(torsion form)という。
+    \end{dfn}
+
+    曲率形式と捩率形式の定義
+    \begin{align*}
+        \Omega^i_j &= d\omega^i_j + \sum_k \omega^i_k \wedge \omega^k_j\\
+        \Theta^i   &= d\theta^i + \sum_j \omega^i_j \wedge \theta^j
+    \end{align*}
+    を第一及び第二構造式と呼ぶ。
+
+    \begin{dfn}[標準形式]
+        1次微分形式$\theta: \mathfrak{X}(M) \rightarrow \mathfrak{F}(M)$であって、$u \in L_p(M), X \in T_u(L(M))$に対して
+            \[\theta(X) = u^{-1}(d\pi^*(X))\]
+        となるものを標準形式(solder form)と呼ぶ。
+    \end{dfn}
+
+        \[\theta(X) = 0 \iff \pi^*(X) = 0(\text{ファイバーに沿ったベクトル、つまり垂直})\]
+    $u = (e_1, e_2, \dots, e_n), X = d\pi^{-1}(a_1e_1 + a_2e_2 + \dots + a_ne_n)$なら
+        \[\theta(X) = (a_1, a_2, \dots, a_n)\]
+    となる。$\theta^i(e_j) = \delta^i_j$だから$\{\theta^i\}$は双対基底となる。
+
+    % \begin{dfn}[捩率形式]
+    %     標準形式の共変外微分
+    %         \[\Theta = D\theta = \dd{\theta} + \omega \wedge \theta\]
+    %     で定義される2次微分形式$\Theta: T_u(P) \times T_u(P) \rightarrow \R^n$を捩率形式(torsion form)と呼ぶ。
+    % \end{dfn}
+
+    \begin{dfn}[捩率テンソル]
+        $u \in P$、ベクトル場$X, Y$に対して$(1, 2)$型テンソル場
+            \[T(X, Y)_u = u(2\Theta_u(\pi^{-1}(X), \pi^{-1}(Y)))\]
+        を捩率テンソル場という。捩率テンソルまたは単に捩率ともいう。共変微分を用いて表すと
+        \begin{align*}
+            2\Theta(X*, Y*)
+                &= 2d\theta(X*, Y*) = X*\theta(Y*) - Y*\theta(X*) - \theta([X*, Y*])\\
+                &= \nabla_XY - \nabla_YX - \theta([X, Y]*)\\
+            T(X, Y)_u
+                &= u(2\Theta_u(\pi^{-1}(X), \pi^{-1}(Y)))\\
+                &= \nabla_XY - \nabla_YX - [X, Y]
+        \end{align*}
+        となる。
+    \end{dfn}
+    \begin{proof}
+        $T$がテンソルであることを示す。曲率テンソルと同様に和に関しては自明。関数倍に関しては
+        \begin{align*}
+            T(fX, Y)
+                &= (\nabla_{fX}Y - \nabla_Y(fX)) - (fXY - YfX)\\
+                &= (f\nabla_XY - ((Yf)X + f\nabla_YX)) - (fXY - ((Yf)X + fYX))\\
+                &= f\nabla_XY - f\nabla_YX - f(XY - YX)\\
+                &= fT(X, Y)
+        \end{align*}
+        同様に
+            \[T(X, fY) = fT(X, Y)\]
+        だから、$T(X, Y)$は双線形写像つまりテンソルである。
+    \end{proof}
+
+    捩率テンソルは
+        \[T(X, Y) = -T(Y, X)\]
+    なので反対称テンソルである。
+
+    捩率テンソルの成分を
+        \[T\(\pdv{x^i}, \pdv{x^j}\) = \sum_k T^k_{ij}\pdv{x^k}\]
+    とおくと
+    \begin{align*}
+        T\(\pdv{x^i}, \pdv{x^j}\)
+            &= \nabla_{\pdv{x^i}}\pdv{x^j} - \nabla_{\pdv{x^j}}\pdv{x^i} - 0\\
+            &= \sum_k \(\Gamma^k_{ij} - \Gamma^k_{ji}\)\pdv{x^k}\\
+        T^k_{ij} &= \Gamma^k_{ij} - \Gamma^k_{ji}
+    \end{align*}
+    となる。$T^k_{ij} = -T^k_{ji}$が成り立つことからも反対称であることが分かる。
+
+    % 曲率形式を曲率テンソルを用いて書くと
+    %    \[\Omega_i^j = \sum_{k,l}\frac{1}{2}R^j_{ikl}\theta^k \wedge \theta^l\]
+    % 捩率形式を捩率テンソルを用いて書くと
+    %     \[\Theta^k = \sum_{i,j} T^k_{ij}\theta^i \wedge \theta^j\]
+
+\subsection{ビアンキの恒等式}
+    $K(X, Y, Z)$の巡回和を
+        \[\mathfrak{G}{K(X, Y, Z)} = K(X, Y, Z) + K(Y, Z, X) + K(Z, X, Y)\]
+    とすると以下の定理が成り立つ。
+    \begin{thm}[ビアンキの恒等式]
+        任意のベクトル場$X, Y, Z$に対して
+        \begin{gather*}
+            \mathfrak{G}{R(X, Y)Z} = \mathfrak{G}{T(T(X, Y), Z)} + \mathfrak{G}{(\nabla_XT)(Y, Z)}\\
+            \mathfrak{G}{(\nabla_ZR)(X, Y) + R(T(X, Y), Z)} = 0
+        \end{gather*}
+        が成り立つ。
+    \end{thm}
+
+    % \begin{align*}
+    %     D\Omega &= 0\\
+    %     D\Theta &= \Omega \wedge \theta\\
+    % \end{align*}
+
+% \subsection{測地線}

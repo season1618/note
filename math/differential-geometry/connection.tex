@@ -1,0 +1,259 @@
+\section{接続}
+多様体上のスカラー場の微分は接ベクトルを作用させるだけで良かった。同様に、多様体上の点$p$における$X(p)$に沿ったベクトル場$Y$の方向微分として、ユークリッド空間の場合に倣い、
+    \[D_XY(p) = \lim_{t \to 0} \frac{Y(p + X(p)t) - Y(p)}{t}\]
+が考えられる。しかし、$Y(p)$と$Y(p + X(p)t)$はもはや異なる接空間に属する接ベクトルであり、単純に引き算を考えることはできない。ユークリッド空間の場合は異なる位置にあるベクトルに対して自然な対応を考えることができたのだった。異なる接空間に属する接ベクトルを比較するには、接空間を何らかの方法で結び付ける必要がある。これを接続と呼ぶ。
+
+\subsection{ベクトル束の接続}
+    空間$M$の各点に対してベクトル空間を対応させたものを$M$上のベクトル束という。
+
+    \begin{dfn}[ベクトル束]
+        位相空間$M, E$、写像$\pi: E \rightarrow M$を考える。$E_p = \pi^{-1}(p)$が$r$次元のベクトル空間を成し、$p$上のファイバーと呼ばれる。$E$が局所的に$M$とファイバーの直積となる、つまり$p \in M$に対して、近傍$U$と微分同相写像$\phi: \pi^{-1}(U) \rightarrow U \times \R^r$が存在し、$v \in \pi^{-1}(p) \iff \phi(v) \in \{p\} \times \R^r$であり、線形同型となっている。このとき、$(E, \pi, M, \phi)$または単に$E$を$M$上のベクトル束と呼ぶ。ベクトル束$(E, \pi, M, \phi)$に対して、$M$を底空間、$E$を全空間、$\pi$を射影という。
+
+        $p \in M \mapsto v_p \in E_p$を$E$の切断という。
+    \end{dfn}
+    
+    可微分多様体の各点に接空間を対応させた接ベクトル束(接束)や余接空間を対応させた余接ベクトル束(余接束)はベクトル束の例である。接ベクトル束の切断は(接)ベクトル場であり、余接ベクトル束の切断は1次微分形式である。
+
+    ベクトル束の直和、テンソル積、双対空間、外積、対称積をそれぞれ各点上のファイバーに適用することで定義することができる。
+    
+    $E$の微分可能な切断全体を$\Gamma(E)$と書く。$\Gamma(E)$は$\Omega^0(M)$上の無限次元ベクトル空間である。また$T^*M \otimes E$の切断は$p \in M \mapsto \omega_p \otimes v_p \in T_p^*(M) \otimes E_p$となる。
+    \begin{dfn}[共変微分]
+        $n$次元多様体$M$上のベクトル束$(E, \pi, M)$に対して、線形写像$\nabla: \Gamma(E) \rightarrow \Gamma(T^*M \otimes E)$であって、$f \in \Omega^0(M), v \in \Gamma(E)$に対して
+            \[\nabla(fv) = df \otimes v + f\nabla v\]
+        を満たすものを$E$の共変微分という。また$X: p \in M \mapsto X_p \in T_p(M)$に対して
+            \[\nabla_Xv(p) = \nabla v(X_p) \in E_p\]
+        なる$\nabla_Xv \in \Gamma(E)$を$X$に沿った$v$の共変微分という。
+    \end{dfn}
+    $M$の各点$p$にベクトル空間$\R^r$の基底$\{e_1, e_2, \dots, e_r\}$を対応させたものを局所標構場という。
+    
+    \begin{dfn}[接続形式]
+        ファイバー$\R^r$の局所標構場$e = \{e_1, e_2, \dots, e_r\}$を定めたとき、その共変微分は1次微分形式$\omega_i^j: \mathfrak{X}(M) \rightarrow \mathfrak{F}(M)$を用いて
+            \[\nabla e_i = \sum_j \omega_i^j \otimes e_j\]
+        と書ける。行列$\omega = (\omega_i^j)$を$\nabla$の接続形式(connection form)という。
+    \end{dfn}
+    一般のベクトル$v = \sum_i v^i e_i$に対して、
+    \begin{align*}
+        \nabla v &= \nabla \sum_i v^i e_i\\
+                 &= \sum_i (dv^i \otimes e_i + v^i \nabla e_i)\\
+                 &= \sum_i \(dv^i \otimes e_i + v^i \sum_j \omega_i^j \otimes e_j\)\\
+                 &= \sum_i \(dv^i + \sum_j \omega^i_j v^j\) \otimes e_i\\
+        (\nabla v)^i &= dv^i + \sum_j \omega^i_j v^j
+    \end{align*}
+    なので
+        \[\nabla = d + \omega\]
+    となる。つまり接続形式は外微分からのずれを表す。
+
+\subsection{曲率}
+    微分形式の外微分の拡張として、共変外微分$D: \Omega^k(M, E) \rightarrow \Omega^{k+1}(M, E)$を
+    \begin{align*}
+        D\omega(X_0, X_1, X_2, \dots, X_k)
+            &= \frac{1}{n!}\sum_i (-1)^i \nabla_{X_i}(\omega(X_0, \dots, X_{i-1}, X_{i+1}, \dots, X_k))\\
+            &\quad + \sum_{i<j} (-1)^{i+j} \omega([X_i, X_j], X_0, \dots, X_{i-1}, X_{i+1}, \dots, X_{j-1}, X_{j+1}, \dots, X_k)
+    \end{align*}
+    と定義する。共変外微分は
+    \begin{enumerate}
+        \item $f \in \Omega^0(M, E) = \Gamma(E)$に対して$Df = \nabla f \in \Gamma(T^*M \otimes E) \simeq \Omega^1(M, E)$
+        \item $D(f\omega) = \nabla f \wedge \omega + f d\omega$
+        \item $\omega_1 \in \Omega^r(M, E), \omega_2 \in \Omega^s(M, E)$に対して、$D(\omega_1 \wedge \omega_2) = D\omega_1 \wedge \omega_2 + (-1)^r \omega_1 \wedge D\omega_2$
+    \end{enumerate}
+    を満たす。特に$\omega^0 \in \Omega^0(M, E), \omega^1 \in \Omega^1(M, E)$に対して
+    \begin{align*}
+        D\omega^0(X) &= \nabla_X\omega\\
+        D\omega^1(X, Y) &= \frac{1}{2}(\nabla_X\omega^1(Y) - \nabla_Y\omega^1(X) - \omega^1([X, Y]))
+    \end{align*}
+    である。$D^2\omega^0(X, Y)$を計算すると
+    \begin{align*}
+        D^2\omega^0(X, Y)
+            &= D(\nabla_X\omega)(X, Y)\\
+            &= \frac{1}{2}(\nabla_X\nabla_Y\omega^0 - \nabla_Y\nabla_X\omega^0 - \nabla_{[X, Y]}\omega^0)
+    \end{align*}
+    外微分と異なり$D^2$は一般に0にはならない。$R(X, Y)v = 2(D^2v)(X, Y)$は曲面の曲がり具合を表す量であり、曲率と呼ばれる。
+    \begin{align*}
+        &R(X, Y): \Gamma(E) \rightarrow \Gamma(E)\\
+        &R(X, Y)v = (\nabla_X\nabla_Y - \nabla_Y\nabla_X - \nabla_{[X, Y]})v
+    \end{align*}
+    である。
+
+    \begin{align*}
+        D^2 e_i &= D\(\sum_j \omega_i^j e_j\)\\
+                &= \sum_j (d\omega_i^j e_j - \omega_i^j \wedge De_j)\\
+                &= \sum_j \(d\omega_i^j \otimes e_j - \omega_i^j \wedge \(\sum_k \omega_j^k e_k\)\)\\
+                &= \sum_j \(d\omega_i^j - \sum_k \omega_i^k \wedge \omega_k^j\)e_j\\
+                &= \sum_j \(d\omega_i^j + \sum_k \omega_k^j \wedge \omega_i^k\)e_j
+    \end{align*}
+    となる。
+    \begin{dfn}[曲率形式]
+        局所標構場$e$が与えらえたとき、2次微分形式$\Omega_i^j: \mathfrak{X}(M) \times \mathfrak{X}(M) \rightarrow \mathfrak{F}(M)$を接続形式によって
+            \[\Omega_i^j = d\omega_i^j + \sum_k \omega_k^j \wedge \omega_i^k\]
+        と定義したとき、$\Omega = (\Omega_i^j)$を曲率形式(curvature form)という。
+    \end{dfn}
+        \[Re_i = \sum_j \Omega_i^j e_j\]
+    となる。これを構造方程式という。
+
+\subsection*{平行移動}
+    \begin{dfn}[平行]
+        任意のスカラー場$f$に対して$Xf(c(t)) = \dv*{t}f(c(t))$なる$M$上の曲線$c(t)\ (a \leq t \leq b)$を考える。この曲線上において$E$の切断$v$の共変微分$\nabla_Xv$が常に0になるとき、$v$は$c(t)$に沿って平行であるという。
+    \end{dfn}
+    一般に二点におけるファイバーの元が平行かどうかは経路に依存する。
+
+    曲線と始点におけるファイバーの元を定めれば、終点においてそれと平行であるようなファイバーの元が一意に定まる。これを$c(t)$に沿った平行移動という。
+
+    $p \in M$に対して、$p$から$p$へと至る閉曲線$c(t)\ (a \leq t \leq b, c(a) = c(b) = p)$を考える。この閉曲線に沿ってファイバーの元を平行移動させることによってファイバーの自己同型写像$\tau_c$が得られる。$c$を逆に辿った曲線を$c^{-1}$、$c_1, c_2$の連結を$c_2 \circ c_1$として
+        \[\tau_{c^{-1}} = \tau_c^{-1}, \quad \tau_{c_2 \circ c_1} = \tau_{c_2} \circ \tau_{c_1}\]
+    と定義すれば、$\tau_c$の全体は群となる。これを$p$を基点とするホロノミ―群$\Psi_p$と呼ぶ。
+
+\subsection{主ファイバー束の接続}
+    \begin{dfn}[主ファイバー束]
+        多様体$P, M$、全射な微分可能写像$\pi: P \rightarrow M$、リー群$G$を考え、以下の条件を満たすとき、$(P, \pi, M, G)$または単に$P$を、$G$を構造群とする$M$上の主ファイバー束(主$G$束)という。
+        \begin{enumerate}
+            \item $G$は$P$に右から作用する。つまり
+                \[(u, a) \in P \times G \mapsto ua \in P\]
+            は微分可能であり、$a \in G$を固定したとき
+                \[R_a: u \in P \mapsto ua \in P\]
+            は微分同相写像であり、
+            \begin{align*}
+                (ua)b &= u(ab)\\
+                ue &= u
+            \end{align*}
+            となる。
+            \item $u \in \pi^{-1}(x)$ならば$ua \in \pi^{-1}(x)$である。
+            \item $R_a$は単純推移的である、つまり$\pi(u_1) = \pi(u_2)$ならば$a \in G$が唯一存在して$u_1a = u_2$となる。
+            \item $P$は局所的に$M \times G$と微分同相になる。$p \in M$に対してその近傍$U$があり、微分同相写像
+                \[\phi: u \in \pi^{-1}(U) \mapsto (\pi(u), \phi(u)) \in U \times G\]
+            であって、任意の$u, a$に対して$\phi(ua) = \phi(u)a$が成り立つものがある。
+        \end{enumerate}
+    \end{dfn}
+
+    \begin{dfn}[基本ベクトル場]
+        主$G$束$P$とリー群$G$に付随するリー環$\mathfrak{g}$を考える。$u \in P$に対して、軌道$u\exp(tA)$の$t = 0$における接ベクトル$A^*_u \in T_uP$を対応させる。$P$上のベクトル場
+            \[A^*: u \in P \mapsto A^*_u \in T_uP\]
+        を$A$に対応する基本ベクトル場という。
+    \end{dfn}
+
+    \begin{dfn}[接続(主ファイバー束)]
+        $M$の近傍$U_1, U_2$について同型写像
+            \[\phi_1(x): E_x \rightarrow \R^r, \quad \phi_2(x): E_x \rightarrow \R^r\]
+        があり、変換関数を
+            \[\phi: U_1 \cap U_2 \rightarrow GL(r, \R)\]
+        と定義する。$\mathfrak{gl}(r, \R)$に値を取る$P$上の1次微分形式であって、
+            \[\omega_2 = \phi^{-1}\omega_1\phi + \phi^{-1}d\phi\]
+        なる変換を受けるものを$P$の接続と呼ぶ。
+    \end{dfn}
+
+    \begin{thm}
+        リー環$\mathfrak{g}$に値を持つ$P$上の1次微分形式
+        $\omega$について、$\omega$が$P$の接続形式であることは以下と同値である。
+        \begin{enumerate}
+            \item $R_a^*\omega = a^{-1}\omega a$
+            \item $\omega(A^*) = A$
+        \end{enumerate}
+    \end{thm}
+
+    \begin{dfn}[接続]
+        $G$を構造群とする$M$上の主ファイバー束$P$の点$u$において、$T_u(P)$の垂直部分空間及び水平部分空間を
+        \begin{align*}
+            V_u &= \{X \in T_uP \mid \pi^*(X) = 0\}\\
+            H_u &= \{X \in T_uP \mid \omega_u(X) = 0\}
+        \end{align*}
+        で定義する。
+        \begin{enumerate}
+            \item $T_u(P) = V_u \oplus H_u$
+            \item $H_{ua} = R_a(H_u)$
+        \end{enumerate}
+        を満たすとき対応$\Gamma: u \mapsto H_u$を$P$の接続という。
+    \end{dfn}
+
+    $P$上の1次微分形式$\omega$と$H_u \subset T_u(P)$に対して、$\omega$が接続形式となることと$H_u$が以下を満たすことは同値である。
+    \begin{enumerate}
+        \item $T_u(P) = V_u \oplus H_u$
+        \item $H_{ua} = R_a(H_u)$
+    \end{enumerate}
+
+    $X \in T_u(P)$に対して
+        \[X = vX + hX \quad vX \in V_u, hX \in H_u\]
+    と書けるとき、$k$次微分形式$\omega: P \rightarrow V$に対して共変外微分を
+        \[D\omega(X_1, \dots, X_{k+1}) = (d\omega)(hX_1, \dots, hX_{k+1})\]
+    と定義することができる。
+    \begin{gather*}
+        D(fX) = X \otimes df + f DX\\
+        D(\omega_1 \wedge \omega_2) = D\omega_1 \wedge \omega_2 + (-1)^{\deg\omega_1}\omega_1 \wedge d\omega_2
+    \end{gather*}
+    が成り立つ。
+
+% \subsection{接続形式}
+%         \[L_a: x \mapsto ax\]
+%     を左移動という。$G$上のベクトル場$X$が任意の$a, x \in G$に対して$L_aX_x = X_{ax}$を満たすとき、左不変と呼ぶ。$G$上の左不変なベクトル場全体$\mathfrak{g}$をリー環と呼ぶ。任意の$A \in T_e(G)$に対して
+%         \[X_x = dL_x(A)\]
+%     と定義すると、$X \in \mathfrak{g}$となる。
+
+%     $A$の局所1パラメータ変換群$\{\phi_t\}$に対して$a_t = \phi_t(e) = \exp tX$とおく。$R_{a_t}: u \mapsto ua_t$が引き起こすベクトル場を基本ベクトル場$A*$という。
+%     $a \in G$に対して
+%         \[ad(a): x \in \mathfrak{g} \mapsto axa^{-1} \in \mathfrak{g}\]
+%     を随伴表現という。
+%     \begin{dfn}[接続形式]
+%         1次微分形式$\omega: T_u(P) \rightarrow \mathfrak{g}$であって、
+%         \begin{enumerate}
+%             \item $\omega(A*) = A$
+%             \item $\omega(dR_a(X)) = ad(a^{-1})(\omega(X))$
+%         \end{enumerate}
+%         を満たすものを接続形式(connection form)と呼ぶ。
+%     \end{dfn}
+
+%     \begin{dfn}[曲率形式]
+%         接続形式$\omega$に対して、その共変外微分
+%             \[\Omega = D\omega = d\omega + \omega \wedge \omega\]
+%         で定義される2次微分形式$\Omega: T_u(P) \times T_u(P) \rightarrow \mathfrak{g}$を曲率形式(curvature form)と呼ぶ。
+%     \end{dfn}
+    % \begin{proof}
+    %     (1)$X, Y \in H_u$のとき
+    %     $\omega(X) = \omega(Y) = 0$より$\Omega(X, Y) = d\omega(X, Y)$は定義そのもの。
+    %     (2)$X = A*, Y = B*(A, B \in \mathfrak{g})$のとき
+    %     \begin{align*}
+    %         d\omega(A*, B*)
+    %         &= \frac{1}{2}(A*\omega(B*) - B*\omega(A*) - \omega([A*, B*]))\\
+    %         &= \frac{1}{2}(A*B - B*A - [A, B]) = 0\\
+    %         d\omega(A*, B*) + \frac{1}{2}(\omega(A*)\omega(B*) - \omega(B*)\omega(A*)) = 0\\
+    %         \Omega(A*, B*) = 0\\
+    %     \end{align*}
+    %     (3)$X \in H_u, Y = A*(A \in \mathfrak{g})$
+    %     \begin{align*}
+    %         d\omega(X, A*)
+    %         &= \frac{1}{2}(X\omega(A*) - A*\omega(X) - \omega([X, A*]))\\
+    %         &= XA - A*\omega(X) - \omega([X, A*])\\
+    %         &= A*\omega(X)
+    %     \end{align*}
+    % \end{proof}
+
+    % $\omega$は1次微分形式なので、水平ベクトル場$X, Y$に関して
+    %     \[2d\omega(X, Y) = X\omega(Y) - Y\omega(X) - \omega([X, Y])\]
+    % $\omega = \alpha dx$なら
+    % \begin{align*}
+    %     2d\omega(X, Y)
+    %     &= 2d\alpha \wedge dx(X, Y) = d\alpha(X)dx(Y) - d\alpha(Y)dx(X)\\
+    %     &= X\alpha dx(Y) - Y\alpha dx(X)\\
+    %     &= X(\alpha dx(Y)) - Y(\alpha dx(X)) - \alpha X(dx(Y)) + \alpha Y(dx(X))\\
+    %     &= X(\alpha dx(Y)) - Y(\alpha dx(X)) - (\alpha dx(XY) - \alpha dx(YX))\\
+    %     &= X\omega(Y) - Y\omega(X) - \omega([X, Y])\\
+    % \end{align*}
+
+    %     \[2\Omega(X, Y) = 2d\omega(X, Y) = -\omega([X, Y])\]
+
+% \begin{dfn}{持ち上げ}
+%     $M$上の曲線$\tau = \{x(t) \mid 0 \leq t \leq 1\}$に対して$P$上の曲線$\tau^{*} = \{u(t) \mid 0 \leq t \leq 1\}$が
+%     \begin{enumerate}
+%         \item $\tau^{*}$の各点での接ベクトルは水平
+%         \item $\pi(u(t)) = x(t)$
+%     \end{enumerate}
+%     を満たすとき持ち上げと呼ぶ。
+% \end{dfn}
+% \begin{thm}
+%     $M$上の曲線$\tau = \{x(t) \mid 0 \leq t \leq 1\}$が与えられたとき、$\pi(u_0) = x(0)$となるような$u_0$に対して$u(0) = u_0$であるような持ち上げ$\tau^{*} = \{u(t) \mid 0 \leq t \leq 1\}$がただ一つ存在する。
+% \end{thm}
+% \begin{thm}
+%     リー群$G$、リー環$\mathfrak{g}$として、$\mathfrak{g}$を$e$における接空間と同一視する。$\mathfrak{g}$上の曲線$Y(t)(0 \leq t \leq 1)$が与えられたとき、$G$上の曲線$a(t)(0 \leq t \leq 1)$であって、
+%     \begin{align*}
+%         a'(t)a(t)^{-1} = Y(t)\\
+%         a(0) = e
+%     \end{align*}
+%     を満たすものがただ一つ存在する。
+% \end{thm}

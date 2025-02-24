@@ -1,0 +1,243 @@
+\section{リーマン幾何学}
+
+リーマン多様体または擬リーマン多様体に関する微分幾何学をリーマン幾何学という。
+
+\subsection{リーマン計量}
+    \begin{dfn}[リーマン計量]
+        $n$次元可微分多様体$M$に関して、$(0, 2)$型テンソル$g: \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{F}$が
+        \begin{description}
+            \item[対称性] $g(X, Y) = g(Y, X)$
+            \item[正値性] $g(X, X) \geq 0, g(X, X) = 0 \iff X = 0$
+        \end{description}
+        を満たすとき$M$のリーマン計量という。
+    \end{dfn}
+    余接束の双対基底$\{dx^1, dx^2, \dots, dx^n\}$を用いて
+        \[g = \sum_{i,j} g_{ij} dx^i \otimes dx^j\]
+    と書くこともできる。つまり
+        \[g_{ij} = g\(\pdv{x^i}, \pdv{x^j}\)\]
+    である。また内積を持つベクトル空間$V$に対して
+        \[X \wedge Y: Z \in V \mapsto g(Y, Z)X - g(X, Z)Y \in V\]
+    と定義する。
+    \begin{dfn}[リーマン多様体]
+        $(M, g)$をリーマン多様体と呼ぶ。
+    \end{dfn}
+
+    \begin{dfn}[等長写像]
+        リーマン多様体$(M_1, g_1), (M_2, g_2)$の間の写像$f: M_1 \to M_2$であって
+            \[g_1(X, Y) = g_2(df(X), df(Y))\]
+        を満たすものを等長写像という。全単射な等長写像を等長変換という。
+    \end{dfn}
+
+\subsection{レヴィ=チヴィタ接続}
+    \begin{dfn}[レヴィ=チヴィタ接続(リーマン接続)，リーマン幾何学の基本定理]
+        リーマン多様体$(M, g)$について、捩れのない計量接続(計量テンソルを保存する接続)が一意に存在する。これをレヴィ=チヴィタ接続またはリーマン接続という。
+        \begin{enumerate}
+            \item $T(X, Y) = \nabla_XY - \nabla_YX - [X, Y] = 0$
+            \item $\nabla_Xg(Y, Z) = Xg(Y, Z) - g(\nabla_XY, Z) - g(Y, \nabla_XZ) = 0$
+        \end{enumerate}
+    \end{dfn}
+    レヴィ=チヴィタ接続の条件より、接続係数をリーマン計量で表すことができる。第一式より
+        \[\Gamma^k_{ij} = \Gamma^k_{ji}\]
+    第二式で$X = \pdv*{x^i}, Y = \pdv*{x^j}, Z = \pdv*{x^k}$として
+    \begin{align*}
+        \nabla_{\pdv{x^i}}g\(\pdv{x^j}, \pdv{x^k}\)
+            &= \pdv{x^i}g\(\pdv{x^j}, \pdv{x^k}\) - g\(\sum_l \Gamma^l_{ij}\pdv{x^l}, \pdv{x^k}\) - g\(\pdv{x^j}, \sum_l \Gamma^l_{ik}\pdv{x^l}\)\\
+            &= \pdv{g_{jk}}{x^i} - \sum_l \Gamma^l_{ij}g_{lk} - \sum_l \Gamma^l_{ik}g_{jl}\\
+            &= 0
+    \end{align*}
+    添え字を巡回的に入れ替えることで同様に
+    \begin{align*}
+        \sum_l \Gamma^l_{ij}g_{lk} + \sum_l \Gamma^l_{ik}g_{jl} &= \pdv{g_{jk}}{x^i}\\
+        \sum_l \Gamma^l_{jk}g_{li} + \sum_l \Gamma^l_{ji}g_{kl} &= \pdv{g_{ki}}{x^j}\\
+        \sum_l \Gamma^l_{ki}g_{lj} + \sum_l \Gamma^l_{kj}g_{il} &= \pdv{g_{ij}}{x^k}
+    \end{align*}
+    第一式$+$第二式$-$第三式を計算する。$\Gamma^k_{ij} = \Gamma^k_{ji}, g_{ij} = g_{ji}$であることに注意すると
+        \[2\sum_l \Gamma^l_{ij}g_{lk} = \pdv{g_{jk}}{x^i} + \pdv{g_{ki}}{x^j} - \pdv{g_{ij}}{x^k}\]
+    $g_{ij}$の逆行列の成分を$g^{ij}$とおく。両辺に$g^{mk}$を掛けて$k$について和を取ると
+        \[\Gamma^m_{ij} = \frac{1}{2}\sum_k g^{mk}\(\pdv{g_{jk}}{x^i} + \pdv{g_{ki}}{x^j} - \pdv{g_{ij}}{x^k}\)\]
+    となる。
+
+    % \subsection{共変微分}
+    % 反変ベクトル$A^i(X^j)$を座標変換したものが$a^i(x^j)$であるとする。
+    % \begin{align*}
+    %     \pd[a^i]{x^j} &= \pdv{x^j}\lr{\pd[x^i]{X^l}A^l}\\
+    %     &= \ppd{x^i}{x^j}{X^l}A^l + \pd[x^i]{X^l}\pd[X^k]{x^j}\pd[A^l]{X^k}\\
+    %     \intertext{共変ベクトルも同様に、}
+    %     \pd[a_i]{x^j} &= \pdv{x^j}\lr{\pd[X^l]{x^i}A^l}\\
+    %     &= \ppd{X^l}{x^i}{x^j}A_l + \pd[X^l]{x^i}\pd[X^k]{x^j}\pd[A_l]{X^k}
+    % \end{align*}
+    % 第二項だけを見ればそれぞれ混合テンソル、共変テンソルのようになっている。
+    % \begin{align*}
+    %     \na_ja^i &= \pd[a^i]{x^j}-\ppd{x^i}{x^j}{X^l}A^l\\
+    %     &= \pd[a^i]{x^j}-\ppd{x^i}{x^j}{X^l}\pd[X^l]{x^k}a^k\\
+    %     \na_ja_i &= \pd[a_i]{x^j}-\ppd{X^l}{x^i}{x^j}A_l\\
+    %     &= \pd[a_i]{x^j}-\ppd{X^l}{x^i}{x^j}\pd[x^k]{X^l}a_k
+    % \end{align*}
+    % とすれば$X$と$x$の二つの座標系間の変換で不変となる。これを共変微分という。第二項の$a^k,a_k$の係数は接続係数と呼ばれる。座標に依存しないように計量を使って書き直す。ユークリッド計量を$\delta_{ij}$とすると、
+    %     \[g_{ij} = \pd[X^m]{x^i}\pd[X^n]{x^j}\delta_{mn}\]
+    % これを微分して、
+    %     \[\pd[g_{ij}]{x^k} = \delta_{mn}\(\ppd{X^m}{x^i}{x^k}\pd[X^n]{x^j} + \pd[X^m]{x^i}\ppd{X^n}{x^j}{x^k}\)\]
+    % 計量は対称テンソルなので、添え字を巡回的に入れ替えて足し引きする。
+    %     \[\frac{1}{2}\(\pd[g_{jk}]{x^i}+\pd[g_{ki}]{x^j}-\pd[g_{ij}]{x^k}\) = \delta_{mn}\ppd{X^m}{x^i}{x^j}\pd[X^n]{x^k}\]
+    % とすると左辺は第一種クリストッフェル記号そのものであり$\Ga_{kij}$と書く。第二種クリストッフェル記号を$\Ga^l_{ij}$と書き、
+    % \begin{align*}
+    %     \Ga^l_{ij} &= g^{lk}\Ga_{kij}\\
+    %     &= g^{lk}\delta_{mn}\ppd{X^m}{x^i}{x^j}\pd[X^n]{x^k}\\
+    %     &= \pd[x^l]{X^u}\pd[x^k]{X^v}\delta^{uv}\delta_{mn}\ppd{X^m}{x^i}{x^j}\pd[X^n]{x^k}\\
+    %     \intertext{$\delta^{ij},\delta_{ij}=0(i\neq j)$なので}
+    %     &= \pd[x^l]{X^u}\pd[x^k]{X^u}\ppd{X^m}{x^i}{x^j}\pd[X^m]{x^k}\\
+    %     &= \ppd{X^m}{x^i}{x^j}\pd[x^l]{X^u}\pd[X^m]{X^u}\\
+    %     \intertext{$\pd[X^m]{X^u}=\delta^m_u$より}
+    %     &= \ppd{X^m}{x^i}{x^j}\pd[x^l]{X^m}
+    % \end{align*}
+    % となって共変ベクトルの共変微分の接続係数となる。一方、反変ベクトルの共変微分の接続係数は、
+    % \begin{align*}
+    %     \ppd{x^i}{x^j}{X^l}\pd[X^l]{x^k} &= \pdv{x^j}\lr{\pd[x^i]{X^l}}\pd[X^l]{x^k}\\
+    %     &= \pdv{x^j}\lr{\pd[x^i]{X^l}\pd[X^l]{x^k}}-\pd[x^i]{X^l}\pdv{x^j}\pd[X^l]{x^k}\\
+    %     &= \ppd{x^i}{x^j}{x^k}-\ppd{X^l}{x^j}{x^k}\pd[x^i]{X^l}\\
+    %     &= -\Ga^i_{jk}
+    % \end{align*}
+    % となる。つまり接続係数はどちらもクリストッフェル記号で表すことができる。共変微分の定義を書き直すと、
+    % \begin{gather*}
+    %     \na_ja^i = \pd[a^i]{x^j}+\Ga^i_{jk}a^k\\
+    %     \na_ja_i = \pd[a_i]{x^j}-\Ga^k_{ij}a_k
+    % \end{gather*}
+    % となる。一般のテンソルに対しても同様に定義することができる。二階のテンソルの場合は、
+    % \begin{align*}
+    %     \na_kT^{ij} &= \pd[T^{ij}]{x^k}+\Ga^i_{km}T^{mj}+\Ga^j_{km}T^{mj}\\
+    %     \na_kT^i_j &= \pd[T^i_j]{x^k}+\Ga^i_{km}T^m_j-\Ga^m_{jk}T^i_m\\
+    %     \na_kT_{ij} &= \pd[T_{ij}]{x^k}-\Ga^m_{ik}T_{mj}-\Ga^m_{jk}T_{im}
+    % \end{align*}
+    % となる。
+    % 計量テンソルを共変微分すると、デカルト座標で考えることにより、
+    %     \[\na_kg_{ij} = \pa_k\delta_{ij} = 0\]
+    % となる。これを計量条件という。反変の計量テンソルについても同様に0となる。
+
+\subsection{リーマン曲率}
+    アフィン接続における曲率テンソル及び、それによって定義される$(0, 4)$型テンソル
+        \[R(X, Y, Z, W) = g(R(Z, W)Y, X)\]
+    をリーマン曲率テンソルという。
+    \begin{align*}
+        R_{ijkl}
+            &= R\(\pdv{x^i}, \pdv{x^j}, \pdv{x^k}, \pdv{x^l}\)\\
+            &= g\(R\(\pdv{x^k}, \pdv{x^l}\)\pdv{x^j}, \pdv{x^i}\)\\
+            &= g\(\sum_h R^h_{jkl}\pdv{x^h}, \pdv{x^i}\)\\
+            &= \sum_h R^h_{jkl}g\(\pdv{x^h}, \pdv{x^i}\)\\
+            &= g_{ih}R^h_{jkl}
+    \end{align*}
+    となる。
+
+    リッチテンソル$\Ric(X, Y)$を線形変換$V \mapsto R(V, X)Y$のトレースとして定義する。
+        \[\Ric = \sum_{i,j} R_{ij} dx^i \otimes dx^j\]
+    とおくと
+        \[R\(\pdv{x^k}, \pdv{x^i}\)\pdv{x^j} = R^l_{jki}\pdv{x^l}\]
+    より
+        \[R_{ij} = \sum_k R^k_{ikj}\]
+    また$\Ric$のトレースをリッチスカラー(スカラー曲率)$R$と呼ぶ。(0, 2)型テンソル
+        \[G = \Ric - \frac{1}{2}Rg\]
+    をアインシュタインテンソルと呼ぶ。
+
+\subsection{ビアンキの恒等式}
+    アフィン接続におけるビアンキの恒等式で$T = 0$とすると
+    \begin{gather*}
+        \mathfrak{G}{R(X, Y)Z} = 0\\
+        \mathfrak{G}{(\nabla_ZR)(X, Y)} = 0
+    \end{gather*}
+    これをさらに局所座標の成分で書くと
+    \begin{gather*}
+        R^l_{ijk} + R^l_{jki} + R^l_{kij} = 0\\
+        \nabla_mR^i_{jkl} + \nabla_kR^i_{jlm} + \nabla_lR^i_{jmk} = 0
+    \end{gather*}
+    となる。
+
+    % 共変微分のヤコビ恒等式や曲率テンソルの接続係数による表示から導出することもできる。
+    % \begin{align*}
+    %     [\nabla_i, \nabla_j]\(X^k\pdv{x^k}\)
+    %     &= R\(\pdv{x^i}, \pdv{x^j}\)\(X^k\pdv{x^k}\)\\
+    %     &= R\(\pdv{x^i}, \pdv{x^j}\)\pdv{x^k} = \sum_l R^l_{kij}\pdv{x^l}\\
+    % \end{align*}
+    % だから
+    % \begin{align*} 
+    %     \nabla_i[\nabla_j, \nabla_k]\(X^l\pdv{x^l}\)
+    %     &= \nabla_i\(X^l\sum_h R^h_{ljk}\pdv{x^h}\)\\
+    %     &= \sum_h \(\pd[X^l]{x^i}R^h_{ljk} + X^l\pd[R^h_{ljk}]{x^i}\)\pdv{x^h} + \sum_h X^lR^h_{ljk}\nabla_i\pdv{x^h}\\
+    % \end{align*}
+    % となる。また
+    % \begin{align*}
+    %     [\nabla_j, \nabla_k]\nabla_i\(X^l\pdv{x^l}\)
+    %     &= \pd[X^l]{x^i}[\nabla_j, \nabla_k]\pdv{x^l}\\
+    %     &= \pd[X^l]{x^i}\sum_h R^h_{ljk}\pdv{x^h}
+    %     \nabla_j\nabla_k\nabla_i\pdv{x^l} - \nabla_k\nabla_j\nabla_i\pdv{x^l}
+    %     \nabla_j[\nabla_k, \nabla_i]\pdv{x^l} + \nabla_j\nabla_i\nabla_k\pdv{x^l} - \nabla_k[\nabla_j, \nabla_i]\pdv{x^l} - \nabla_k\nabla_i\nabla_j\pdv{x^l}
+
+    %     [\nabla_i, [\nabla_j, \nabla_k]]\(X^l\pdv{x^l}\)
+    % \end{align*}
+    % \begin{gather*}
+    %     R^l_{ijk} + R^l_{jki} + R^l_{kij} = 0\\
+    %     \nabla_mR^i{jkl} + \nabla_kR^i_{jlm} + \nabla_lR^i_{jmk} = 0\\
+    % \end{gather*}
+    % となる。
+
+        \[\mathfrak{G}{(\nabla_ZR)(X, Y)} = 0\]
+
+
+    ビアンキの第二恒等式を変形する。
+        \[\nabla_k R^h_{ilj} - \nabla_jR^h_{ilk} + \nabla_lR^h_{ijk} = 0\]
+    $h=l$として縮約し、第三項を書き換える。
+        \[\nabla_kR_{ij} - \nabla_jR^h_{ik} + \nabla_lg^{ih}R_{hijk} = 0\]
+    両辺に$g^{ij}$を掛ける。計量条件より共変微分の中に入れることができて、
+    \begin{align*}
+        \nabla_kR - \nabla_jR^j_k - \nabla_lg^{ih}R^j_{hjk}
+        &= \nabla_kR - \nabla_jR^j_k - \nabla_lR^i_k\\
+        &= \nabla_kR - 2\nabla_jR^j_k\\
+        \intertext{第一項を書き換えて、}
+        &= \nabla_j(\delta^j_kR) - 2\nabla_jR^j_k = 0
+    \end{align*}
+    となる。
+        \[G^j_k = R^j_k - \frac{1}{2}\delta^j_kR\]
+    とおく。添え字を下げて二階の共変テンソルにすれば、
+        \[G^{ij} = g^{ik}G^j_k = R^{ij} - \frac{1}{2}Rg^{ij}\]
+    計量条件より
+        \[\nabla_jG^{ij} = 0\]
+    である。
+
+\subsection{断面曲率}
+    $T_p(M)$の2次元部分空間$\sigma$を平面または平面切り口という。$\sigma$の基底$\{X, Y\}$を取ると、シュワルツの不等式より$g(X, X)g(Y, Y) - g(X, Y)^2 > 0$となる。そこで$\sigma$の断面曲率を
+        \[K(\sigma) = \frac{g(R(X, Y)Y, X)}{g(X, X)g(Y, Y) - g(X, Y)^2}\]
+    と定義する。
+    % $K(\sigma)$が基底に依らないことを示す。$ad - bc \neq 0$なる$a,b,c,d$を取って
+    %     \[X' = aX + bY, Y' = cX + dY\]
+    % とする。
+    % \begin{align*}
+    %     g(R(X', Y')Y', X')
+    %     &= g(R(aX + bY, cX + dY)(cX + dY), aX + bY)\\
+    %     &= g((adR(X, Y) + bcR(Y, X))(cX + dY), aX + bY)\\
+    %     &= (ad - bc)g(R(X, Y)(cX + dY), aX + bY)\\
+    %     &= (ad - bc)g(cR(X, Y)X + dR(X, Y)Y, aX + bY)\\
+    %     \bmat{g(X', X') & g(X', Y')\\ g(Y', X') & g(Y', Y')}
+    %     &= \bmat{a^2g(X, X) + 2abg(X, Y) + b^2g(Y, Y) & acg(X, X) + (ad + bc)g(X, Y) + bdg(Y, Y)\\ acg(X, X) + (ad + bc)g(X, Y) + bdg(Y, Y) & c^2g(X, X) + 2cdg(X, Y) + d^2g(Y, Y)}\\
+    %     &= \bmat{a & c\\ b & d}\bmat{g(X, X) & g(X, Y)\\ g(Y, X) & g(Y, Y)}\bmat{a & b\\ c & d}
+    %     g(X', X')g(Y', Y') - g(X', Y')^2 = (ad - bc)^2(g(X, X)g(Y, Y) - g(X, Y)^2)
+    % \end{align*}
+    % より示された。
+    正規直交基底$\{X, Y\}$を取れば
+        \[K(\sigma) = g(R(X, Y)Y, X)\]
+    である。
+    \begin{thm}
+        $p \in M$について以下は同値である。
+        \begin{itemize}
+            \item $T_p(M)$の任意の平面$\sigma$に対して$K(\sigma) = c$
+            \item $R(X, Y) = cX \wedge Y$
+        \end{itemize}
+    \end{thm}
+    \begin{thm}[シューアの定理]
+        $n(\geq 3)$次元の連結リーマン多様体$M$の各点で$K(\sigma)$が定数なら、$M$全体で$K(\sigma)$は定数
+    \end{thm}
+
+    $T_p(M)$の正規直交基底を$\{X_1, X_2, \dots, X_n\}$とする。$X_1, X_i(i \geq 2)$で張られる平面を$\sigma_i$とすると、リッチテンソルは
+    \begin{align*}
+        Ric(X, X)
+            &= \sum_{i=1}^n g(R(X_i, X)X, X_i)\\
+            &= \sum_{i=2}^n g(R(X_i, X)X, X_i)\\
+            &= \sum_{i=2} K(\sigma_i)
+    \end{align*}

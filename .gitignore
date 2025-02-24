@@ -1,3 +1,4 @@
 *.synctex.gz
 *.dvi
 *.pdf
+*.bbl

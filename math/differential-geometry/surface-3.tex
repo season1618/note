@@ -1,0 +1,90 @@
+\section{変分問題}
+
+\subsection{測地線}
+    曲面上の二点を結ぶ曲線のうち、最も短いものを最短線という。曲線が最短線となる必要条件を考える。助変数を$(u_1(t), u_2(t))\ (a \leq t \leq b)$とし、対応する端点を$A, B$とする。すると$AB$の長さは汎関数
+        \[s[r(t)] = \int_a^b F(u(t),\dot{u}(t)) \dd{t}\]
+    で与えられる。ただし$F(u(t), \dot{u}(t)) = \sqrt{g_{ij}(u)\dot{u}^i\dot{u}^j}$である。また$\dd{s} = F\dd{t}$である。汎関数$s[r(t)]$が極値をとる条件は$F$がEuler-Lagrange方程式を満たすことである。そのような曲線を測地線と呼ぶ。最短線は測地線だが測地線は最短線ではない。まずEuler-Lagrange方程式は、
+        \[\dv{t}\pdv{F}{\dot{u}^i} - \pdv{F}{u^i} = 0\]
+    で表される。第一項は、
+        \[\pdv{F}{\dot{u}^l} = \frac{1}{2F}g_{jk}\left\{\pdv{\dot{u}^j}{\dot{u}^l}\dot{u}^k + \dot{u}^j\pdv{\dot{u}^k}{\dot{u}^l}\right\}\]
+    $\pdv*{\dot{u}^j}{\dot{u}^l}$は$j = l$のときに限り1なので、
+    \begin{align*}
+        \pdv{F}{\dot{u}^l}
+            &= \frac{1}{2F}\(\sum_k g_{lk}\dot{u}^k + \sum_j g_{jl}\dot{u}^j\)\\
+            &= \frac{1}{F}g_{il}\dot{u}^i = g_{il}\dv{u^i}{s}
+    \end{align*}
+    従って
+        \[\dv{t}\(\pdv{F}{\dot{u}^l}\) = \(\sum_i g_{il}\dv[2]{u^i}{s} + \sum_{j,k} \pdv{g_{jl}}{u^k}\dv{u^k}{s}\dv{u^j}{s}\)\dv{s}{t}\]
+    $\pdv*{g_{jl}}{u^k} = [jk, l] + [lk, j]$より、
+    \begin{align*}
+        &= \left[g_{il}\dv{u^i}{s} + ([jk,l] + [lk,j])\dv{u^j}{s}\dv{u^k}{s}\right]\dv{s}{t}
+    \end{align*}
+    そして第二項は、$[jk,l] = [kj,l], \pdv*{g_{jk}}{u^l} = [jl,k] + [kl,j]$であることに注意すれば、
+    \begin{align*}
+        \pdv{F}{u^l}
+            &= \frac{1}{2F}\pdv{g_{jk}}{u^l}\dot{u}^j\dot{u}^k\\
+            &= \frac{1}{2F}([jl, k] + [kl, j])\dot{u}^j\dot{u}^k\\
+            &= \frac{1}{F}[kl, j]\dot{u}^j\dot{u}^k\\
+            &= [kl, j]\dv{u^j}{s}\dv{u^k}{s}\dv{s}{t}
+    \end{align*}
+    なので、
+    \begin{align*}
+        \dv{t}\pdv{F}{\dot{u}^l} - \pdv{F}{u^l}
+            &= \(g_{il}\dv[2]{u^i}{s} + [jk, l]\dv{u^j}{s}\dv{u^k}{s}\)\dv{s}{t}\\
+            &= g_{il}\(\dv[2]{u^i}{s} + \chr{i}{jk}\dv{u^j}{s}\dv{u^k}{s}\)\dv{s}{t}\\
+            &= 0
+    \end{align*}
+    $\det g_{il} \neq 0, \dv*{s}{t} = F \neq 0$であるので、
+        \[
+            \begin{aligned}
+                \dv[2]{u^i}{s} + \chr{i}{jk}\dv{u^j}{s}\dv{u^k}{s} &= 0 & (i = 1, 2, \dots, n)
+            \end{aligned}
+        \]
+    これを測地線の方程式という。またこれを
+    \begin{align*}
+        \dv{u^i}{s} &= v^i\\
+        \dv{v^i}{s} &= -\chr{i}{jk}v^jv^k
+    \end{align*}
+    と書き換えると、1階の連立常微分方程式となるので、次の定理が導かれる。
+    \begin{thm}[測地線]
+        リーマン多様体$M$の任意の点で任意の方向にただ1本の測地線が引ける。
+    \end{thm}
+
+\subsection{Weierstrassの表現}
+    二次元リーマン多様体、つまり曲面の場合を考える。このとき$k > 0$として$F(u, v, k\dot{u}, k\dot{v}) = kF(u, v, \dot{u}, \dot{v})$となって$F$は$\dot{u}, \dot{v}$について正斉次である。この式を$k$で微分し、$k = 1$とすると、
+        \[\pdv{F}{\dot{u}}\dot{u} + \pdv{F}{\dot{v}}\dot{v} = F\]
+    となる。両辺を$\dot{u^i}$で微分して
+    \begin{align*}
+        \pdv[2]{F}{\dot{u}}\dot{u} + \pdv{F}{\dot{v}}{\dot{u}}\dot{v} &= 0\\
+        \pdv{F}{\dot{u}}{\dot{v}}\dot{u} + \pdv[2]{F}{\dot{v}}\dot{v} &= 0
+    \end{align*}
+    が導かれ、
+        \[\pdv[2]{F}{\dot{u}} : \pdv{F}{\dot{u}}{\dot{v}} : \pdv[2]{F}{\dot{v}} = \dot{v}^2 : -\dot{u}\dot{v} : \dot{u}^2\]
+    となる。比例因子を$c$として
+    \begin{align*}
+        \pdv[2]{F}{\dot{u}} &= c\dot{v}^2\\
+        \pdv{F}{\dot{u}}{\dot{v}} &= -c\dot{u}\dot{v}\\
+        \pdv[2]{F}{\dot{v}} &= c\dot{u}^2
+    \end{align*}
+    また
+    \begin{align*}
+        \pdv{F}{\dot{u}} &= \frac{g_{11}\dot{u} + g_{12}\dot{v}}{F}\\
+        \pdv{F}{\dot{v}} &= \frac{g_{21}\dot{u} + g_{22}\dot{v}}{F}
+    \end{align*}
+    なので
+    \begin{align*}
+        c   &= \frac{F_{\dot{u}\dot{u}}}{\dot{v}^2}\\
+            &= \frac{1}{\dot{v}^2}\frac{g_{11}F - (g_{11}\dot{u} + g_{12}\dot{v})F_{\dot{u}}}{F^2}\\
+            &= \frac{1}{\dot{v}^2}\frac{g_{11}F^2 - (g_{11}\dot{u} + g_{12}\dot{v})^2}{F^3}\\
+            &= \frac{g_{11}g_{22} - g_{12}^2}{F^3}
+    \end{align*}
+    これをEuler-Lagrange方程式に代入すると
+    \begin{align*}
+        F_{u} - \dv{t}F{\dot{u}} &= \dot{v}T\\
+        F_{v} - \dv{t}F{\dot{v}} &= -\dot{u}T
+    \end{align*}
+    ただし
+        \[T = F_{u\dot{v}} - F_{\dot{u}v} + c(\dot{u}\ddot{v} - \dot{v}\ddot{u})\]
+    従って曲面の場合、測地線の方程式は$T = 0$と同値である。これをWeierstrassの表現という。
+            
+% \subsection{極小曲面}
